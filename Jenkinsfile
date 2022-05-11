@@ -4,7 +4,7 @@ buildNPM {
     publishModDescriptor = 'yes'
     runRegression = 'no'
     runLint = 'yes'
-    runSonarqube = false
+    runSonarqube = 'true'
     runTest = 'yes'
     runScripts = [
       ['formatjs-compile': ''],
