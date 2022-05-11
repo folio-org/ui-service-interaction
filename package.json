@@ -12,10 +12,9 @@
     "start": "stripes serve",
     "build": "stripes build --output ./output",
     "lint": "eslint .",
-    "test": "yarn run test:unit",
-    "test:jest": "jest --ci --coverage",
-    "test:unit": "yarn run test:jest && yarn run test:unit:report",
-    "test:unit:report": "cp -r ./artifacts/coverage-jest ./artifacts/coverage"
+    "test": "yarn run test:jest",
+    "test:jest": "jest --ci --coverage --passWithNoTests",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-service-interaction ./translations/ui-service-interaction/compiled"
   },
   "stripes": {
     "actsAs": [
@@ -56,6 +55,7 @@
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^6.1.0",
     "@folio/stripes": "^7.1.0",
+    "@folio/stripes-erm-components": "^6.1.0",
     "@folio/stripes-cli": "^2.5.0",
     "@folio/stripes-testing": "^4.2.0",
     "@formatjs/cli": "^4.2.31",
