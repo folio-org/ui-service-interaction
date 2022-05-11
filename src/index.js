@@ -11,4 +11,4 @@ const App = ({ actAs }) => {
 };
 
 export default App;
-export * from './components/public';
+export * from './public';
