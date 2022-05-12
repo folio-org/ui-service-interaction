@@ -42,8 +42,12 @@
       }
     ]
   },
+  "stripesDeps": [
+    "@k-int/stripes-kint-components"
+  ],
   "dependencies": {
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "@k-int/stripes-kint-components": "^2.4.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
