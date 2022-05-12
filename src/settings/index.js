@@ -1,12 +1,20 @@
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 
-const ServintSettings = (props) => {
+import NumberGeneratorConfig from './NumberGeneratorConfig';
+import NumberGeneratorSequenceConfig from './NumberGeneratorSequenceConfig';
+
+const ServintSettings = (settingProps) => {
   const pages = [
     {
       route: 'numberGenerators',
       label: <FormattedMessage id="ui-service-interaction.settings.numberGenerators" />,
-      component: () => (<div> Hello world </div>),
+      component: () => (<NumberGeneratorConfig {...settingProps} />),
+    },
+    {
+      route: 'numberGeneratorSequences',
+      label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences" />,
+      component: () => (<NumberGeneratorSequenceConfig {...settingProps} />),
     },
   ];
 
@@ -14,7 +22,7 @@ const ServintSettings = (props) => {
     <Settings
       pages={pages}
       paneTitle={<FormattedMessage id="ui-service-interaction.meta.title" />}
-      {...props}
+      {...settingProps}
     />
   );
 };

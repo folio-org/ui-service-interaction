@@ -1,4 +1,4 @@
-import { Button, Modal } from '@folio/stripes/components';
+import { Button, Modal, Select } from '@folio/stripes/components';
 import { ModalButton } from './utilities';
 
 const NumberGeneratorButton = ({
@@ -8,7 +8,22 @@ const NumberGeneratorButton = ({
     <Modal
       {...modalProps}
     >
-      <div>Hello world modal</div>
+      <Select
+        dataOptions={[
+          {
+            id: '12345',
+            value: 'staff'
+          },
+          {
+            id: '23456',
+            value: 'patron'
+          },
+          {
+            id: '34567',
+            value: 'noformat'
+          }
+        ]}
+      />
     </Modal>
   );
 

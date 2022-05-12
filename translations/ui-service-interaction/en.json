@@ -1,4 +1,6 @@
 {
   "meta.title": "Service interaction",
-  "settings.numberGenerators": "Number generators"
+  "settings.numberGenerators": "Number generators",
+  "settings.numberGeneratorSequences": "Number generator sequences",
+  "settings.numberGeneratorSequences.edit": "Number generator sequence edit"
 }
