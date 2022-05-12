@@ -11,7 +11,7 @@ const useMutateNumberGenerator = ({
     put: false,
     delete: false
   }
-}) => {
+} = {}) => {
   const returnObj = {};
   const queryClient = useQueryClient();
   const ky = useOkapiKy();

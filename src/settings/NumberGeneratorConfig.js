@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import PropTypes, { number } from 'prop-types';
+import { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Pane } from '@folio/stripes/components';
+import { Button, Pane, PaneMenu } from '@folio/stripes/components';
 import { ActionList } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators, useMutateNumberGenerator } from '../public';
@@ -15,8 +15,11 @@ const NumberGeneratorConfig = ({
   const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators();
   console.log("DATA: %o", data);
 
+  const configRef = useRef();
+
   const {
     put: editNumberGenerator,
+    post: addNumberGenerator
   } = useMutateNumberGenerator();
 
   const actionAssigner = () => {
@@ -41,18 +44,22 @@ const NumberGeneratorConfig = ({
         paneTitle={<FormattedMessage id="ui-service-interaction.settings.numberGenerators" />}
       >
         <ActionList
+          ref={configRef}
           actionAssigner={actionAssigner}
           contentData={data}
+          creatableFields={{
+            sequences: () => false
+          }}
+          createCallback={(ng) => addNumberGenerator(ng)}
           editableFields={{
-            'code': () => false,
-            'sequences': () => false
+            code: () => false,
+            sequences: () => false
           }}
           formatter={{
             sequences: (rowData) => (
               rowData?.sequences?.length
             )
           }}
-          hideCreateButton
           visibleFields={['name', 'code', 'sequences']}
         />
       </Pane>

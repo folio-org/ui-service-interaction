@@ -28,6 +28,7 @@ const NumberGeneratorSequenceConfig = ({
 
   const {
     put: editSeq,
+    post: addSeq
   } = useMutateNumberGeneratorSequence({
     id: numberGenerator?.id
   });
@@ -52,9 +53,18 @@ const NumberGeneratorSequenceConfig = ({
       >
         <ActionList
           actionAssigner={actionAssigner}
-          contentData={numberGenerator?.sequences?.sort((a, b) => (
-            a.code > b.code ? -1 : (a.code < b.code ? 1 : 0)
-          ))}
+          contentData={numberGenerator?.sequences?.sort((a, b) => {
+            if (a.code > b.code) {
+              return 1;
+            }
+
+            if (b.code > a.code) {
+              return -1;
+            }
+
+            return 0;
+          })}
+          createCallback={(ngSeq) => addSeq(ngSeq)}
           editableFields={{
             code: () => false,
             nextValue: () => false
@@ -64,7 +74,6 @@ const NumberGeneratorSequenceConfig = ({
               rowData.nextValue ?? 0
             )
           }}
-          hideCreateButton
           visibleFields={['code', 'prefix', 'postfix', 'nextValue']}
         />
       </Pane>

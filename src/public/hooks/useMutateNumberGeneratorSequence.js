@@ -13,7 +13,7 @@ const useMutateNumberGeneratorSequence = ({
     put: false,
     delete: false
   }
-}) => {
+} = {}) => {
   const returnObj = {};
   const queryClient = useQueryClient();
   const ky = useOkapiKy();
@@ -70,7 +70,7 @@ const useMutateNumberGeneratorSequence = ({
       {
         json: {
           id,
-          values: [
+          sequences: [
             data
           ]
         }
