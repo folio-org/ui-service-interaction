@@ -1,34 +1,34 @@
-import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Pane, PaneMenu } from '@folio/stripes/components';
+import { Pane } from '@folio/stripes/components';
 import { ActionList } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators, useMutateNumberGenerator } from '../public';
 
 const NumberGeneratorConfig = ({
   history,
-  location,
   match
 }) => {
-  const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators();
-  console.log("DATA: %o", data);
-
-  const configRef = useRef();
+  const { data: { results: data = [] } = {} } = useNumberGenerators();
 
   const {
     put: editNumberGenerator,
-    post: addNumberGenerator
+    post: addNumberGenerator,
+    delete: removeNumberGenerator
   } = useMutateNumberGenerator();
 
   const actionAssigner = () => {
     return [
       {
+        name: 'edit',
+        label: <FormattedMessage id="ui-service-interaction.settings.numberGenerator.edit" />,
+        icon: 'edit',
+        callback: (newData) => editNumberGenerator(newData)
+      },
+      {
         name: 'delete',
-        callback: () => {
-          alert("should delete number generator")
-        },
+        callback: (rowdata) => removeNumberGenerator(rowdata?.id),
         icon: 'trash'
       }
     ];
@@ -44,7 +44,6 @@ const NumberGeneratorConfig = ({
         paneTitle={<FormattedMessage id="ui-service-interaction.settings.numberGenerators" />}
       >
         <ActionList
-          ref={configRef}
           actionAssigner={actionAssigner}
           contentData={data}
           creatableFields={{

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Pane } from '@folio/stripes/components';
+import { Pane, Select } from '@folio/stripes/components';
 import { ActionList } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators } from '../public';
@@ -10,14 +10,14 @@ import { useMutateNumberGeneratorSequence } from '../public/hooks';
 
 const NumberGeneratorSequenceConfig = ({
   history,
-  location,
   match
 }) => {
   const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators();
-  const [numberGenerator, setNumberGenerator] = useState();
-  console.log("NG: %o", numberGenerator);
+  const [numberGenerator, setNumberGenerator] = useState({});
 
-  console.log("DATA: %o", data);
+  const findNumberGenerator = (ngId) => {
+    return data?.find(ng => ng?.id === ngId);
+  };
 
   // Once data has loaded, default selected number generator to top of list
   useEffect(() => {
@@ -28,7 +28,8 @@ const NumberGeneratorSequenceConfig = ({
 
   const {
     put: editSeq,
-    post: addSeq
+    post: addSeq,
+    delete: removeSeq
   } = useMutateNumberGeneratorSequence({
     id: numberGenerator?.id
   });
@@ -39,6 +40,11 @@ const NumberGeneratorSequenceConfig = ({
       label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.edit" />,
       icon: 'edit',
       callback: (newData) => editSeq(newData)
+    },
+    {
+      name: 'delete',
+      callback: (rowData) => removeSeq(rowData?.id),
+      icon: 'trash'
     }
   ]);
 
@@ -51,6 +57,11 @@ const NumberGeneratorSequenceConfig = ({
         onClose={() => history.push(match.url)}
         paneTitle={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences" />}
       >
+        <Select
+          dataOptions={[...data?.map(ng => ({ value: ng.id, label: ng.name }))]}
+          onChange={e => setNumberGenerator(findNumberGenerator(e.target.value))}
+          value={numberGenerator.id}
+        />
         <ActionList
           actionAssigner={actionAssigner}
           contentData={numberGenerator?.sequences?.sort((a, b) => {
