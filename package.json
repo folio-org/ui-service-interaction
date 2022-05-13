@@ -13,7 +13,7 @@
     "build": "stripes build --output ./output",
     "lint": "eslint .",
     "test": "yarn run test:jest",
-    "test:jest": "jest --ci --coverage --passWithNoTests",
+    "test:jest": "jest --ci --coverage",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-service-interaction ./translations/ui-service-interaction/compiled"
   },
   "stripes": {

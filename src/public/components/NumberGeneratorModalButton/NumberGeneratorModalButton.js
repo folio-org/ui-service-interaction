@@ -9,11 +9,11 @@ import { useNumberGenerators } from '../../hooks';
 import NumberGeneratorButton from '../NumberGeneratorButton';
 
 const NumberGeneratorModalButton = ({
+  callback,
   // This is the numberGenerator code, and is optional.
   // Omitting will result in all sequences appearing in select
   generator,
-  id,
-  onGenerate
+  id
 }) => {
   const modalButtonRef = useRef();
 
@@ -54,7 +54,7 @@ const NumberGeneratorModalButton = ({
       />
       <NumberGeneratorButton
         callback={(generated) => {
-          onGenerate(generated);
+          callback(generated);
           modalButtonRef?.current?.close();
         }}
         generator={selectedNG?.code}
@@ -80,9 +80,9 @@ const NumberGeneratorModalButton = ({
 };
 
 NumberGeneratorModalButton.propTypes = {
+  callback: PropTypes.func.isRequired,
   generator: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  onGenerate: PropTypes.func.isRequired
+  id: PropTypes.string.isRequired
 };
 
 export default NumberGeneratorModalButton;

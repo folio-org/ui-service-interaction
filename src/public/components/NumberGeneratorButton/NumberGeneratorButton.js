@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import { Button } from '@folio/stripes/components';
 import { useGenerateNumber } from '../../hooks';
 
-
 const NumberGeneratorButton = ({
   callback,
   id,
