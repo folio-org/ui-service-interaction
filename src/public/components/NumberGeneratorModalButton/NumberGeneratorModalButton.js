@@ -9,11 +9,11 @@ import { useNumberGenerators } from '../../hooks';
 import NumberGeneratorButton from '../NumberGeneratorButton';
 
 const NumberGeneratorModalButton = ({
+  callback,
   // This is the numberGenerator code, and is optional.
   // Omitting will result in all sequences appearing in select
   generator,
-  id,
-  onGenerate
+  id
 }) => {
   const modalButtonRef = useRef();
 
@@ -29,15 +29,15 @@ const NumberGeneratorModalButton = ({
    *
    * Make the select a controlled form component, so we can set the selectedNG on change
    */
-  const [selectedNG, setSelectedNG] = useState({});
+  const [selectedNG, setSelectedNG] = useState();
   const [selectedSequence, setSelectedSequence] = useState('');
 
   useEffect(() => {
-    if (!isLoading && data.length === 1) {
+    if (!isLoading && data.length > 0 && !selectedNG) {
       setSelectedNG(data[0]);
       setSelectedSequence(data[0].sequences[0].id);
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, selectedNG]);
 
   const modalComponent = (modalProps) => (
     <Modal
@@ -54,11 +54,12 @@ const NumberGeneratorModalButton = ({
       />
       <NumberGeneratorButton
         callback={(generated) => {
-          onGenerate(generated);
+          callback(generated);
           modalButtonRef?.current?.close();
         }}
-        generator={selectedNG?.code}
-        sequence={selectedNG?.sequences?.find(seq => seq.id === selectedSequence)?.code}
+        generator={selectedNG?.code ?? ''}
+        id={id}
+        sequence={selectedNG?.sequences?.find(seq => seq.id === selectedSequence)?.code ?? ''}
       />
     </Modal>
   );
@@ -67,6 +68,7 @@ const NumberGeneratorModalButton = ({
     <ModalButton
       ref={modalButtonRef}
       id={`number-generator-${id}`}
+      label={<FormattedMessage id="ui-service-interaction.numberGenerator.selectGenerator" />}
       renderModal={modalComponent}
       renderTrigger={(buttonProps) => (
         <Button
@@ -80,9 +82,9 @@ const NumberGeneratorModalButton = ({
 };
 
 NumberGeneratorModalButton.propTypes = {
+  callback: PropTypes.func.isRequired,
   generator: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  onGenerate: PropTypes.func.isRequired
+  id: PropTypes.string.isRequired
 };
 
 export default NumberGeneratorModalButton;

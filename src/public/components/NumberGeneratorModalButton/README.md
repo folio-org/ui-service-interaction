@@ -26,5 +26,5 @@ The above will render a button with the text "Select generator". This button wil
 Name | Type | Description | default | required
 --- | --- | --- | --- | ---
 callback | function | A callback which accepts a generated string. | | ✓ |
-id | String | A string to uniquely identify the button. Will result in an id `clickable-trigger-number-generator-${id}` on the button. | | ✓ |
+id | String | A string to uniquely identify the button. Will result in an id `clickable-trigger-modal-number-generator-${id}` on the modal button and `clickable-trigger-number-generator-${id}` on the generate button inside the modal. | | ✓ |
 generator | String | The `code` for a given NumberGenerator set up in `ui-service-interaction`'s Settings panel. When not provided the Select will comprise of all sequences for all NumberGenerators fetched. | | ✕ |
