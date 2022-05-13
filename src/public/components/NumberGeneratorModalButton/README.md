@@ -1,4 +1,4 @@
-## NumberGeneratorButton
+## NumberGeneratorModalButton
 
 This is a smart component aimed at allowing an implementor to hook into mod-service-interaction's "NumberGenerator" features, including selecting a given sequence.
 
