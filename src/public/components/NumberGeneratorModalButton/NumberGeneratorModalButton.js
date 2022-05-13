@@ -57,8 +57,8 @@ const NumberGeneratorModalButton = ({
           onGenerate(generated);
           modalButtonRef?.current?.close();
         }}
-        gen={selectedNG?.code}
-        seq={selectedNG?.sequences?.find(seq => seq.id === selectedSequence)?.code}
+        generator={selectedNG?.code}
+        sequence={selectedNG?.sequences?.find(seq => seq.id === selectedSequence)?.code}
       />
     </Modal>
   );
