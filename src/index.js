@@ -1,9 +1,11 @@
-const App = ({ actAs }) => {
+import ServintSettings from './settings';
+
+const App = (appProps) => {
+  const { actAs } = appProps;
+
   if (actAs === 'settings') {
     return (
-      <div>
-        Settings go here eventually
-      </div>
+      <ServintSettings {...appProps} />
     );
   }
 
