@@ -3,6 +3,7 @@
   "settings.numberGenerators": "Number generators",
   "settings.numberGeneratorSequences": "Number generator sequences",
   "settings.numberGeneratorSequences.edit": "Number generator sequence edit",
-  "settings.numberGenerator.edit": "Number generator edit"
-
+  "settings.numberGenerator.edit": "Number generator edit",
+  "numberGenerator.generate": "Generate",
+  "numberGenerator.selectGenerator": "Select generator"
 }

@@ -1,3 +1,4 @@
+export { default as NumberGeneratorModalButton } from './NumberGeneratorModalButton';
 export { default as NumberGeneratorButton } from './NumberGeneratorButton';
 
 // Utility functions/components
@@ -7,5 +8,6 @@ export { ModalButton } from './utilities';
 export {
   useNumberGenerators,
   useMutateNumberGenerator,
-  useMutateNumberGeneratorSequence
+  useMutateNumberGeneratorSequence,
+  useGenerateNumber
 } from './hooks';

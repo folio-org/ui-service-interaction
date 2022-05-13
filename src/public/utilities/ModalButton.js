@@ -1,13 +1,13 @@
-import { useRef, useState } from 'react';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import contains from 'dom-helpers/query/contains';
 
-const ModalButton = ({
+const ModalButton = forwardRef(({
   id,
   renderModal,
   renderTrigger,
   ...props
-}) => {
+}, ref) => {
   const triggerId = `clickable-${id}-trigger`;
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,21 +16,25 @@ const ModalButton = ({
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => {
-    setModalOpen(false, () => {
-      if (
-        modalRef.current &&
-        modalTrigger.current &&
-        contains(modalRef.current, document.activeElement)
-      ) {
-        // Move focus back to trigger if it was inside the modal
-        modalTrigger.current.focus();
-      }
+    setModalOpen(false);
+    if (
+      modalRef.current &&
+      modalTrigger.current &&
+      contains(modalRef.current, document.activeElement)
+    ) {
+      // Move focus back to trigger if it was inside the modal
+      modalTrigger.current.focus();
+    }
 
-      if (props.onClose) {
-        props.onClose();
-      }
-    });
+    if (props.onClose) {
+      props.onClose();
+    }
   };
+
+  useImperativeHandle(ref, () => ({
+    close: closeModal,
+    open: openModal
+  }));
 
   return (
     <>
@@ -52,6 +56,13 @@ const ModalButton = ({
       }
     </>
   );
+});
+
+ModalButton.propTypes = {
+  id: PropTypes.string.isRequired,
+  onClose: PropTypes.func,
+  renderModal: PropTypes.func.isRequired,
+  renderTrigger: PropTypes.func.isRequired
 };
 
 export default ModalButton;

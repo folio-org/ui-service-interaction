@@ -1,45 +1,33 @@
-import { Button, Modal, Select } from '@folio/stripes/components';
-import { ModalButton } from './utilities';
+import PropTypes from 'prop-types';
+
+import { FormattedMessage } from 'react-intl';
+
+import { Button } from '@folio/stripes/components';
+import { useGenerateNumber } from './hooks';
+
 
 const NumberGeneratorButton = ({
-  id
+  callback,
+  generator, // This is the numberGenerator code
+  sequence, // This is the sequence code
 }) => {
-  const modalComponent = (modalProps) => (
-    <Modal
-      {...modalProps}
-    >
-      <Select
-        dataOptions={[
-          {
-            id: '12345',
-            value: 'staff'
-          },
-          {
-            id: '23456',
-            value: 'patron'
-          },
-          {
-            id: '34567',
-            value: 'noformat'
-          }
-        ]}
-      />
-    </Modal>
-  );
+  const { generate } = useGenerateNumber({
+    callback,
+    generator,
+    sequence
+  });
 
   return (
-    <ModalButton
-      id={`number-generator-${id}`}
-      renderModal={modalComponent}
-      renderTrigger={(buttonProps) => (
-        <Button
-          {...buttonProps}
-        >
-          FIXME Generate
-        </Button>
-      )}
-    />
+    <Button onClick={generate}>
+      <FormattedMessage id="ui-service-interaction.numberGenerator.generate" />
+    </Button>
   );
+};
+
+NumberGeneratorButton.propTypes = {
+  callback: PropTypes.func.isRequired,
+  generator: PropTypes.string.isRequired,
+  sequence: PropTypes.string.isRequired
 };
 
 export default NumberGeneratorButton;
