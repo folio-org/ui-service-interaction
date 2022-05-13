@@ -37,7 +37,7 @@ const NumberGeneratorModalButton = ({
       setSelectedNG(data[0]);
       setSelectedSequence(data[0].sequences[0].id);
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, selectedNG]);
 
   const modalComponent = (modalProps) => (
     <Modal
@@ -57,8 +57,8 @@ const NumberGeneratorModalButton = ({
           callback(generated);
           modalButtonRef?.current?.close();
         }}
-        id={id}
         generator={selectedNG?.code ?? ''}
+        id={id}
         sequence={selectedNG?.sequences?.find(seq => seq.id === selectedSequence)?.code ?? ''}
       />
     </Modal>
