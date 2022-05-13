@@ -1,8 +1,16 @@
-export { default as NumberGeneratorModalButton } from './NumberGeneratorModalButton';
-export { default as NumberGeneratorButton } from './NumberGeneratorButton';
+
+// Public components
+export {
+  NumberGeneratorModalButton,
+  NumberGeneratorButton
+} from './components';
 
 // Utility functions/components
-export { ModalButton } from './utilities';
+export {
+  ModalButton,
+  NUMBER_GENERATORS_ENDPOINT,
+  NUMBER_GENERATOR_ENDPOINT
+} from './utilities';
 
 // Hooks
 export {

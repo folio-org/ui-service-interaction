@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Button, Modal, Select } from '@folio/stripes/components';
-import { ModalButton } from './utilities';
-import { useNumberGenerators } from './hooks';
-import NumberGeneratorButton from './NumberGeneratorButton';
+import { ModalButton } from '../../utilities';
+import { useNumberGenerators } from '../../hooks';
+import NumberGeneratorButton from '../NumberGeneratorButton';
 
 const NumberGeneratorModalButton = ({
   // This is the numberGenerator code, and is optional.
