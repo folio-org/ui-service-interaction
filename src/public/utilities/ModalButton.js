@@ -8,7 +8,7 @@ const ModalButton = forwardRef(({
   renderTrigger,
   ...props
 }, ref) => {
-  const triggerId = `clickable-trigger-${id}`;
+  const triggerId = `clickable-trigger-modal-${id}`;
 
   const [modalOpen, setModalOpen] = useState(false);
   const modalRef = useRef();

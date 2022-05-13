@@ -29,11 +29,11 @@ const NumberGeneratorModalButton = ({
    *
    * Make the select a controlled form component, so we can set the selectedNG on change
    */
-  const [selectedNG, setSelectedNG] = useState({});
+  const [selectedNG, setSelectedNG] = useState();
   const [selectedSequence, setSelectedSequence] = useState('');
 
   useEffect(() => {
-    if (!isLoading && data.length === 1) {
+    if (!isLoading && data.length > 0 && !selectedNG) {
       setSelectedNG(data[0]);
       setSelectedSequence(data[0].sequences[0].id);
     }
@@ -57,8 +57,9 @@ const NumberGeneratorModalButton = ({
           callback(generated);
           modalButtonRef?.current?.close();
         }}
-        generator={selectedNG?.code}
-        sequence={selectedNG?.sequences?.find(seq => seq.id === selectedSequence)?.code}
+        id={id}
+        generator={selectedNG?.code ?? ''}
+        sequence={selectedNG?.sequences?.find(seq => seq.id === selectedSequence)?.code ?? ''}
       />
     </Modal>
   );
@@ -67,6 +68,7 @@ const NumberGeneratorModalButton = ({
     <ModalButton
       ref={modalButtonRef}
       id={`number-generator-${id}`}
+      label={<FormattedMessage id="ui-service-interaction.numberGenerator.selectGenerator" />}
       renderModal={modalComponent}
       renderTrigger={(buttonProps) => (
         <Button
