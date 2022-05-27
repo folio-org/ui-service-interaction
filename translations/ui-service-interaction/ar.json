@@ -1,0 +1,9 @@
+{
+    "meta.title": "تفاعل الخدمة",
+    "settings.numberGenerators": "مولدات الأرقام",
+    "settings.numberGeneratorSequences": "تسلسل مولد الأرقام",
+    "settings.numberGeneratorSequences.edit": "تحرير تسلسل مولد الأرقام",
+    "settings.numberGenerator.edit": "تحرير مولد الأرقام",
+    "numberGenerator.generate": "توليد",
+    "numberGenerator.selectGenerator": "حدد موّلد"
+}

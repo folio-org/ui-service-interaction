@@ -1,0 +1,9 @@
+{
+    "meta.title": "Servisní interakce",
+    "settings.numberGenerators": "Generátory čísel",
+    "settings.numberGeneratorSequences": "Posloupnosti generátoru čísel",
+    "settings.numberGeneratorSequences.edit": "Úprava sekvence generátoru čísel",
+    "settings.numberGenerator.edit": "Úprava generátoru čísel",
+    "numberGenerator.generate": "Generovat",
+    "numberGenerator.selectGenerator": "Vyberte generátor"
+}
