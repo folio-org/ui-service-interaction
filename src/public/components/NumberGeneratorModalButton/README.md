@@ -14,6 +14,7 @@ const MyComponent = () => {
     <NumberGeneratorModalButton
       callback={(generatedString) => alert("Number generated: " + generatedString)}
       generator='UserBarcode'
+      id="my-generator-modal-button"
     />
   );
 }
@@ -28,3 +29,7 @@ Name | Type | Description | default | required
 callback | function | A callback which accepts a generated string. | | ✓ |
 id | String | A string to uniquely identify the button. Will result in an id `clickable-trigger-modal-number-generator-${id}` on the modal button and `clickable-trigger-number-generator-${id}` on the generate button inside the modal. | | ✓ |
 generator | String | The `code` for a given NumberGenerator set up in `ui-service-interaction`'s Settings panel. When not provided the Select will comprise of all sequences for all NumberGenerators fetched. | | ✕ |
+generatorButtonProps | object | An object containing button props to be passed onto the "generate" button within the generator modal. | | ✕ |
+modalProps | object | An object containing any override props to be passed on to the NumberGeneratorModal | | ✕ |
+...buttonProps | destructured object | Any other props passed to NumberGeneratorButton will be assumed to be button props for the trigger button and passed directly on. | | ✕ |
+
