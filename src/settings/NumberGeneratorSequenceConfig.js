@@ -21,10 +21,10 @@ const NumberGeneratorSequenceConfig = ({
 
   // Once data has loaded, default selected number generator to top of list
   useEffect(() => {
-    if (!isLoading && data?.length) {
+    if (!numberGenerator?.id && !isLoading && data?.length) {
       setNumberGenerator(data[0]);
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, numberGenerator]);
 
   const {
     put: editSeq,
