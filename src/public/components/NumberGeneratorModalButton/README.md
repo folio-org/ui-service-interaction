@@ -32,3 +32,4 @@ generator | String | The `code` for a given NumberGenerator set up in `ui-servic
 generatorButtonProps | object | An object containing button props to be passed onto the "generate" button within the generator modal. | | ✕ |
 modalProps | object | An object containing any override props to be passed on to the NumberGeneratorModal | | ✕ |
 ...buttonProps | destructured object | Any other props passed to NumberGeneratorButton will be assumed to be button props for the trigger button and passed directly on. | | ✕ |
+
