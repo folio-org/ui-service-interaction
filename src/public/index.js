@@ -2,7 +2,8 @@
 // Public components
 export {
   NumberGeneratorModalButton,
-  NumberGeneratorButton
+  NumberGeneratorButton,
+  NumberGeneratorModal
 } from './components';
 
 // Utility functions/components

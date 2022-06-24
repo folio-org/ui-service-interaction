@@ -10,15 +10,16 @@ const NumberGeneratorButton = ({
   id,
   generator, // This is the numberGenerator code
   sequence, // This is the sequence code
+  ...buttonProps
 }) => {
   const { generate } = useGenerateNumber({
     callback,
     generator,
-    sequence
+    sequence,
   });
 
   return (
-    <Button id={`clickable-trigger-number-generator-${id}`} onClick={generate}>
+    <Button id={`clickable-trigger-number-generator-${id}`} onClick={generate} {...buttonProps}>
       <FormattedMessage id="ui-service-interaction.numberGenerator.generate" />
     </Button>
   );
