@@ -5,5 +5,9 @@
   "settings.numberGeneratorSequences.edit": "Number generator sequence edit",
   "settings.numberGenerator.edit": "Number generator edit",
   "numberGenerator.generate": "Generate",
-  "numberGenerator.selectGenerator": "Select generator"
+  "numberGenerator.selectGenerator": "Select generator",
+  "settings.numberGeneratorSequences.code": "Code",
+  "settings.numberGeneratorSequences.checkDigitAlgo": "Checksum",
+  "settings.numberGeneratorSequences.outputTemplate": "Output template",
+  "settings.numberGeneratorSequences.nextValue": "Next value"
 }

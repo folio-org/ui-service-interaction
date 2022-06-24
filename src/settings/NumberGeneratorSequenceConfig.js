@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import { Field } from 'react-final-form';
+
 import { Pane, Select } from '@folio/stripes/components';
-import { ActionList } from '@k-int/stripes-kint-components';
+import { ActionList, useRefdata } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators } from '../public';
 import { useMutateNumberGeneratorSequence } from '../public/hooks';
@@ -34,6 +36,11 @@ const NumberGeneratorSequenceConfig = ({
     id: numberGenerator?.id
   });
 
+  const { 0: { values: checkDigitAlgoOptions = [] } = {} } = useRefdata({
+    endpoint: 'servint/refdata',
+    desc: 'NumberGeneratorSequence.CheckDigitAlgo'
+  });
+
   const actionAssigner = () => ([
     {
       name: 'edit',
@@ -47,6 +54,23 @@ const NumberGeneratorSequenceConfig = ({
       icon: 'trash'
     }
   ]);
+
+  const fieldComponents = {
+    'checkDigitAlgo.id': ({ ...fieldProps }) => {
+      // FIXME this isn't working as expected, select fields may be complicated in ActionList
+      // Might be able to get away without the 'id' once it's expanded
+      return (
+        <Field
+          {...fieldProps}
+          component={Select}
+          dataOptions={checkDigitAlgoOptions?.map(cdao => ({ value: cdao.id, label: cdao.label }))}
+          fullWidth
+          marginBottom0
+          parse={v => v}
+        />
+      );
+    }
+  };
 
   return (
     <>
@@ -64,6 +88,12 @@ const NumberGeneratorSequenceConfig = ({
         />
         <ActionList
           actionAssigner={actionAssigner}
+          columnMapping={{
+            code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
+            'checkDigitAlgo.id': <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />,
+            outputTemplate: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />,
+            nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
+          }}
           contentData={numberGenerator?.sequences?.sort((a, b) => {
             if (a.code > b.code) {
               return 1;
@@ -80,12 +110,17 @@ const NumberGeneratorSequenceConfig = ({
             code: () => false,
             nextValue: () => false
           }}
+          fieldComponents={fieldComponents}
           formatter={{
             nextValue: (rowData) => (
               rowData.nextValue ?? 0
+            ),
+            'checkDigitAlgo.id': (rowData) => (
+              // FIXME when expanded can use label directly
+              checkDigitAlgoOptions?.find(cdao => cdao.id === rowData?.checkDigitAlgo?.id)?.label
             )
           }}
-          visibleFields={['code', 'prefix', 'postfix', 'nextValue']}
+          visibleFields={['code', 'checkDigitAlgo.id', 'outputTemplate', 'nextValue']}
         />
       </Pane>
     </>
@@ -95,9 +130,6 @@ const NumberGeneratorSequenceConfig = ({
 NumberGeneratorSequenceConfig.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
-  }),
-  location: PropTypes.shape({
-    pathName: PropTypes.string.isRequired
   }),
   match: PropTypes.shape({
     url: PropTypes.string.isRequired
