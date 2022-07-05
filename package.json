@@ -50,7 +50,9 @@
   "dependencies": {
     "prop-types": "^15.6.0",
     "dom-helpers": "^3.4.0",
-    "@k-int/stripes-kint-components": "^2.4.1"
+    "@k-int/stripes-kint-components": "^2.7.0",
+    "react-final-form": "^6.3.0",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
@@ -61,8 +63,8 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^6.1.0",
-    "@folio/stripes": "^7.1.0",
-    "@folio/stripes-erm-components": "^6.1.0",
+    "@folio/stripes": "^7.2.0",
+    "@folio/stripes-erm-components": "^6.2.0",
     "@folio/stripes-cli": "^2.5.0",
     "@folio/stripes-testing": "^4.2.0",
     "@formatjs/cli": "^4.2.31",
@@ -100,7 +102,7 @@
     "sinon": "^7.5.0"
   },
   "peerDependencies": {
-    "@folio/stripes": "^7.1.0",
+    "@folio/stripes": "^7.2.0",
     "moment": "^2.22.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

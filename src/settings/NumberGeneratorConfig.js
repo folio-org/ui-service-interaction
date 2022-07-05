@@ -18,20 +18,25 @@ const NumberGeneratorConfig = ({
     delete: removeNumberGenerator
   } = useMutateNumberGenerator();
 
-  const actionAssigner = () => {
-    return [
+  const actionAssigner = (rowData) => {
+    const actionArray = [
       {
         name: 'edit',
         label: <FormattedMessage id="ui-service-interaction.settings.numberGenerator.edit" />,
         icon: 'edit',
         callback: (newData) => editNumberGenerator(newData)
-      },
-      {
-        name: 'delete',
-        callback: (rowdata) => removeNumberGenerator(rowdata?.id),
-        icon: 'trash'
       }
     ];
+
+    if (!rowData?.sequences?.length) {
+      actionArray.push({
+        name: 'delete',
+        callback: (rd) => removeNumberGenerator(rd?.id),
+        icon: 'trash'
+      });
+    }
+
+    return actionArray;
   };
 
   return (

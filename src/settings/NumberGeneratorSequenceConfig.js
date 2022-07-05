@@ -1,9 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import isEqual from 'lodash/isEqual';
+import orderBy from 'lodash/orderBy';
+
+import { Field } from 'react-final-form';
+
 import { Pane, Select } from '@folio/stripes/components';
-import { ActionList } from '@k-int/stripes-kint-components';
+import { ActionList, required as requiredValidator, useRefdata } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators } from '../public';
 import { useMutateNumberGeneratorSequence } from '../public/hooks';
@@ -15,16 +20,24 @@ const NumberGeneratorSequenceConfig = ({
   const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators();
   const [numberGenerator, setNumberGenerator] = useState({});
 
-  const findNumberGenerator = (ngId) => {
+  const findNumberGenerator = useCallback((ngId) => {
     return data?.find(ng => ng?.id === ngId);
-  };
+  }, [data]);
 
   // Once data has loaded, default selected number generator to top of list
   useEffect(() => {
-    if (!isLoading && data?.length) {
+    if (!numberGenerator?.id && !isLoading && data?.length) {
       setNumberGenerator(data[0]);
+      // All this handling is so we don't need to make a secondary call for the selected generator,
+      // when we already have all the information from the initial fetch to populate the select.
+    } else if (numberGenerator?.id) {
+      const currentNumberGenerator = findNumberGenerator(numberGenerator.id);
+
+      if (!isEqual(numberGenerator, currentNumberGenerator)) {
+        setNumberGenerator(currentNumberGenerator);
+      }
     }
-  }, [data, isLoading]);
+  }, [data, findNumberGenerator, isLoading, numberGenerator]);
 
   const {
     put: editSeq,
@@ -32,6 +45,11 @@ const NumberGeneratorSequenceConfig = ({
     delete: removeSeq
   } = useMutateNumberGeneratorSequence({
     id: numberGenerator?.id
+  });
+
+  const { 0: { values: checkDigitAlgoOptions = [] } = {} } = useRefdata({
+    endpoint: 'servint/refdata',
+    desc: 'NumberGeneratorSequence.CheckDigitAlgo'
   });
 
   const actionAssigner = () => ([
@@ -47,6 +65,36 @@ const NumberGeneratorSequenceConfig = ({
       icon: 'trash'
     }
   ]);
+
+  // Longer term we will support more of the values than these two
+  const currentlySupportedChecksums = [
+    'none',
+    'ean13'
+  ];
+
+  const fieldComponents = {
+    // eslint-disable-next-line react/prop-types
+    'checkDigitAlgo': ({ name, ...fieldProps }) => {
+      return (
+        <Field
+          {...fieldProps}
+          component={Select}
+          dataOptions={[
+            { value: '', label: '', disabled: true },
+            ...checkDigitAlgoOptions?.filter(cdao => currentlySupportedChecksums.includes(cdao.value))?.map(cdao => ({ value: cdao.id, label: cdao.label }))
+          ]}
+          fullWidth
+          marginBottom0
+          name={`${name}.id`} // checkDigitAlgo should deal with the id
+          parse={v => v}
+          required
+          validate={requiredValidator}
+        />
+      );
+    }
+  };
+
+  const sortedNumberGenSequences = useMemo(() => orderBy(numberGenerator?.sequences, ['code']) ?? [], [numberGenerator]);
 
   return (
     <>
@@ -64,28 +112,34 @@ const NumberGeneratorSequenceConfig = ({
         />
         <ActionList
           actionAssigner={actionAssigner}
-          contentData={numberGenerator?.sequences?.sort((a, b) => {
-            if (a.code > b.code) {
-              return 1;
-            }
-
-            if (b.code > a.code) {
-              return -1;
-            }
-
-            return 0;
-          })}
+          columnMapping={{
+            code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
+            checkDigitAlgo: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />,
+            outputTemplate: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />,
+            nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
+          }}
+          contentData={sortedNumberGenSequences}
+          creatableFields={{
+            nextValue: () => false
+          }}
           createCallback={(ngSeq) => addSeq(ngSeq)}
           editableFields={{
             code: () => false,
             nextValue: () => false
           }}
+          fieldComponents={fieldComponents}
           formatter={{
             nextValue: (rowData) => (
               rowData.nextValue ?? 0
+            ),
+            checkDigitAlgo: (rowData) => (
+              rowData.checkDigitAlgo?.label ?? rowData.checkDigitAlgo?.value
             )
           }}
-          visibleFields={['code', 'prefix', 'postfix', 'nextValue']}
+          validateFields={{
+            code: () => requiredValidator
+          }}
+          visibleFields={['code', 'checkDigitAlgo', 'outputTemplate', 'nextValue']}
         />
       </Pane>
     </>
@@ -95,9 +149,6 @@ const NumberGeneratorSequenceConfig = ({
 NumberGeneratorSequenceConfig.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
-  }),
-  location: PropTypes.shape({
-    pathName: PropTypes.string.isRequired
   }),
   match: PropTypes.shape({
     url: PropTypes.string.isRequired
