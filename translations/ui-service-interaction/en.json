@@ -8,6 +8,7 @@
   "numberGenerator.selectGenerator": "Select generator",
   "settings.numberGeneratorSequences.code": "Code",
   "settings.numberGeneratorSequences.checkDigitAlgo": "Checksum",
+  "settings.numberGeneratorSequences.format": "Format",
   "settings.numberGeneratorSequences.outputTemplate": "Output template",
   "settings.numberGeneratorSequences.nextValue": "Next value"
 }
