@@ -115,6 +115,7 @@ const NumberGeneratorSequenceConfig = ({
           columnMapping={{
             code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
             checkDigitAlgo: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />,
+            format: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />,
             outputTemplate: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />,
             nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
           }}
@@ -139,7 +140,7 @@ const NumberGeneratorSequenceConfig = ({
           validateFields={{
             code: () => requiredValidator
           }}
-          visibleFields={['code', 'checkDigitAlgo', 'outputTemplate', 'nextValue']}
+          visibleFields={['code', 'checkDigitAlgo', 'format', 'outputTemplate', 'nextValue']}
         />
       </Pane>
     </>
