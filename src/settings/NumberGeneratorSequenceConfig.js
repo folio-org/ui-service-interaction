@@ -7,11 +7,16 @@ import orderBy from 'lodash/orderBy';
 
 import { Field } from 'react-final-form';
 
-import { Pane, Select } from '@folio/stripes/components';
-import { ActionList, required as requiredValidator, useRefdata } from '@k-int/stripes-kint-components';
+import { Button, Pane, Select } from '@folio/stripes/components';
+import { ActionList, FormModal, required as requiredValidator, useRefdata } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators } from '../public';
 import { useMutateNumberGeneratorSequence } from '../public/hooks';
+import NumberGenerator from './NumberGeneratorSequence';
+import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
+
+const EDITING = 'editing';
+const CREATING = 'creating';
 
 const NumberGeneratorSequenceConfig = ({
   history,
@@ -19,6 +24,10 @@ const NumberGeneratorSequenceConfig = ({
 }) => {
   const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators();
   const [numberGenerator, setNumberGenerator] = useState({});
+
+  const [selectedSequence, setSelectedSequence] = useState();
+
+  const [formMode, setFormMode] = useState();
 
   const findNumberGenerator = useCallback((ngId) => {
     return data?.find(ng => ng?.id === ngId);
@@ -54,15 +63,10 @@ const NumberGeneratorSequenceConfig = ({
 
   const actionAssigner = () => ([
     {
-      name: 'edit',
-      label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.edit" />,
-      icon: 'edit',
-      callback: (newData) => editSeq(newData)
-    },
-    {
-      name: 'delete',
-      callback: (rowData) => removeSeq(rowData?.id),
-      icon: 'trash'
+      name: 'view',
+      label: <FormattedMessage id="ui-service-interaction.view" />,
+      icon: 'ellipsis',
+      callback: (rowData) => setSelectedSequence(rowData)
     }
   ]);
 
@@ -102,6 +106,14 @@ const NumberGeneratorSequenceConfig = ({
         defaultWidth="fill"
         dismissible
         id="settings-numberGeneratorSequences-list"
+        lastMenu={
+          <Button
+            marginBottom0
+            onClick={() => setFormMode(CREATING)}
+          >
+            <FormattedMessage id="ui-service-interaction.new" />
+          </Button>
+        }
         onClose={() => history.push(match.url)}
         paneTitle={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences" />}
       >
@@ -114,16 +126,9 @@ const NumberGeneratorSequenceConfig = ({
           actionAssigner={actionAssigner}
           columnMapping={{
             code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
-            checkDigitAlgo: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />,
-            format: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />,
-            outputTemplate: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />,
             nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
           }}
           contentData={sortedNumberGenSequences}
-          creatableFields={{
-            nextValue: () => false
-          }}
-          createCallback={(ngSeq) => addSeq(ngSeq)}
           editableFields={{
             code: () => false,
             nextValue: () => false
@@ -133,16 +138,46 @@ const NumberGeneratorSequenceConfig = ({
             nextValue: (rowData) => (
               rowData.nextValue ?? 0
             ),
-            checkDigitAlgo: (rowData) => (
-              rowData.checkDigitAlgo?.label ?? rowData.checkDigitAlgo?.value
-            )
           }}
+          hideCreateButton
           validateFields={{
             code: () => requiredValidator
           }}
-          visibleFields={['code', 'checkDigitAlgo', 'format', 'outputTemplate', 'nextValue']}
+          visibleFields={['code', 'nextValue']}
         />
       </Pane>
+      {
+        selectedSequence &&
+          <NumberGenerator
+            onClose={() => setSelectedSequence()}
+            removeSeq={removeSeq}
+            sequence={selectedSequence}
+            setEditing={() => setFormMode(EDITING)}
+          />
+      }
+      {formMode &&
+        <FormModal
+          initialValues={formMode === CREATING ?
+            {
+              nextValue: 0,
+            } :
+            {
+              ...selectedSequence,
+            }
+          }
+          modalProps={{
+            dismissible: true,
+            label: formMode === CREATING ?
+              <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.newModal" /> :
+              <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.editModal" />,
+            onClose: () => setFormMode(),
+            open: (formMode === CREATING || formMode === EDITING)
+          }}
+          onSubmit={formMode === CREATING ? addSeq : editSeq}
+        >
+          <NumberGeneratorSequenceForm />
+        </FormModal>
+      }
     </>
   );
 };

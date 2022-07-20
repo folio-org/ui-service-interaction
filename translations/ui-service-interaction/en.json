@@ -1,5 +1,8 @@
 {
   "meta.title": "Service interaction",
+  "new": "New",
+  "edit": "Edit",
+  "delete": "Delete",
   "settings.numberGenerators": "Number generators",
   "settings.numberGeneratorSequences": "Number generator sequences",
   "settings.numberGeneratorSequences.edit": "Number generator sequence edit",
@@ -10,5 +13,9 @@
   "settings.numberGeneratorSequences.checkDigitAlgo": "Checksum",
   "settings.numberGeneratorSequences.format": "Format",
   "settings.numberGeneratorSequences.outputTemplate": "Output template",
-  "settings.numberGeneratorSequences.nextValue": "Next value"
+  "settings.numberGeneratorSequences.nextValue": "Next value",
+  "settings.numberGeneratorSequences.prefix": "Prefix",
+  "settings.numberGeneratorSequences.postfix": "Postfix",
+  "settings.numberGeneratorSequences.newModal": "New sequence",
+  "settings.numberGeneratorSequences.editModal": "Edit sequence"
 }
