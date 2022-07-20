@@ -5,10 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import isEqual from 'lodash/isEqual';
 import orderBy from 'lodash/orderBy';
 
-import { Field } from 'react-final-form';
-
 import { Button, Pane, Select } from '@folio/stripes/components';
-import { ActionList, FormModal, required as requiredValidator, useRefdata } from '@k-int/stripes-kint-components';
+import { ActionList, FormModal } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators } from '../public';
 import { useMutateNumberGeneratorSequence } from '../public/hooks';
@@ -56,11 +54,6 @@ const NumberGeneratorSequenceConfig = ({
     id: numberGenerator?.id
   });
 
-  const { 0: { values: checkDigitAlgoOptions = [] } = {} } = useRefdata({
-    endpoint: 'servint/refdata',
-    desc: 'NumberGeneratorSequence.CheckDigitAlgo'
-  });
-
   const actionAssigner = () => ([
     {
       name: 'view',
@@ -69,34 +62,6 @@ const NumberGeneratorSequenceConfig = ({
       callback: (rowData) => setSelectedSequence(rowData)
     }
   ]);
-
-  // Longer term we will support more of the values than these two
-  const currentlySupportedChecksums = [
-    'none',
-    'ean13'
-  ];
-
-  const fieldComponents = {
-    // eslint-disable-next-line react/prop-types
-    'checkDigitAlgo': ({ name, ...fieldProps }) => {
-      return (
-        <Field
-          {...fieldProps}
-          component={Select}
-          dataOptions={[
-            { value: '', label: '', disabled: true },
-            ...checkDigitAlgoOptions?.filter(cdao => currentlySupportedChecksums.includes(cdao.value))?.map(cdao => ({ value: cdao.id, label: cdao.label }))
-          ]}
-          fullWidth
-          marginBottom0
-          name={`${name}.id`} // checkDigitAlgo should deal with the id
-          parse={v => v}
-          required
-          validate={requiredValidator}
-        />
-      );
-    }
-  };
 
   const sortedNumberGenSequences = useMemo(() => orderBy(numberGenerator?.sequences, ['code']) ?? [], [numberGenerator]);
 
@@ -108,6 +73,7 @@ const NumberGeneratorSequenceConfig = ({
         id="settings-numberGeneratorSequences-list"
         lastMenu={
           <Button
+            buttonStyle="primary"
             marginBottom0
             onClick={() => setFormMode(CREATING)}
           >
@@ -129,20 +95,12 @@ const NumberGeneratorSequenceConfig = ({
             nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
           }}
           contentData={sortedNumberGenSequences}
-          editableFields={{
-            code: () => false,
-            nextValue: () => false
-          }}
-          fieldComponents={fieldComponents}
           formatter={{
             nextValue: (rowData) => (
               rowData.nextValue ?? 0
             ),
           }}
           hideCreateButton
-          validateFields={{
-            code: () => requiredValidator
-          }}
           visibleFields={['code', 'nextValue']}
         />
       </Pane>

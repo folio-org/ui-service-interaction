@@ -9,8 +9,6 @@ const NumberGeneratorSequence = ({
   sequence,
   setEditing,
 }) => {
-  console.log("SEQ: %o", sequence);
-
   return (
     <>
       <Pane
@@ -51,6 +49,14 @@ const NumberGeneratorSequence = ({
               value={sequence.code}
             />
           </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />}
+              value={sequence.nextValue}
+            />
+          </Col>
+        </Row>
+        <Row>
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />}
@@ -102,6 +108,7 @@ NumberGeneratorSequence.propTypes = {
     }),
     format: PropTypes.string,
     id: PropTypes.string.isRequired,
+    nextValue: PropTypes.number,
     outputTemplate: PropTypes.string,
     postfix: PropTypes.string,
     prefix: PropTypes.string
