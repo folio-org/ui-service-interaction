@@ -51,6 +51,16 @@ const NumberGeneratorSequenceConfig = ({
     post: addSeq,
     delete: removeSeq
   } = useMutateNumberGeneratorSequence({
+    afterQueryCalls: {
+      put: (res, putValues) => {
+        setSelectedSequence(res.sequences.find(seq => seq.id === putValues.id));
+        setFormMode();
+      },
+      post: (res, postValues) => {
+        setSelectedSequence(res.sequences.find(seq => seq.code === postValues.code));
+        setFormMode();
+      },
+    },
     id: numberGenerator?.id
   });
 
