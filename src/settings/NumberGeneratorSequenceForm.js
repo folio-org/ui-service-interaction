@@ -26,9 +26,6 @@ const NumberGeneratorSequenceForm = () => {
   ];
 
   const validateChecksum = (val, allVal) => {
-    console.log("VAL: %o", val)
-    console.log("ALL VAL: %o", allVal)
-
     const checksumVal = checksums?.find(cs => cs.id === val);
     if (checksumVal?.value && checksumVal.value !== 'none' && allVal.nextValue && parseInt(allVal.nextValue, 10) < 1) {
       return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checksumError" />;

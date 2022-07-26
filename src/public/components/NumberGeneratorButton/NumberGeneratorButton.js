@@ -6,6 +6,7 @@ import { Button } from '@folio/stripes/components';
 import { useGenerateNumber, useNumberGenerators } from '../../hooks';
 
 const NumberGeneratorButton = ({
+  buttonLabel,
   callback,
   id,
   generator, // This is the numberGenerator code
@@ -28,12 +29,19 @@ const NumberGeneratorButton = ({
       onClick={generate}
       {...buttonProps}
     >
-      <FormattedMessage id="ui-service-interaction.numberGenerator.generate" />
+      {
+        buttonLabel ??
+        <FormattedMessage id="ui-service-interaction.numberGenerator.generate" />
+      }
     </Button>
   );
 };
 
 NumberGeneratorButton.propTypes = {
+  buttonLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   callback: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   generator: PropTypes.string.isRequired,

@@ -9,6 +9,7 @@ import NumberGeneratorButton from '../NumberGeneratorButton';
 
 const NumberGeneratorModal = ({
   callback,
+  generateButtonLabel,
   // This is the numberGenerator code, and is optional.
   // Omitting will result in all sequences appearing in select
   generator,
@@ -109,6 +110,7 @@ const NumberGeneratorModal = ({
         }
       </Select>
       <NumberGeneratorButton
+        buttonLabel={generateButtonLabel}
         callback={(generated) => {
           callback(generated);
         }}
@@ -123,9 +125,13 @@ const NumberGeneratorModal = ({
 
 NumberGeneratorModal.propTypes = {
   callback: PropTypes.func.isRequired,
+  generateButtonLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   generator: PropTypes.string,
+  generatorButtonProps: PropTypes.object,
   id: PropTypes.string.isRequired,
-  generatorButtonProps: PropTypes.object
 };
 
 export default NumberGeneratorModal;
