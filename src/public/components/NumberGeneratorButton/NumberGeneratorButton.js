@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
-import { useGenerateNumber } from '../../hooks';
+import { useGenerateNumber, useNumberGenerators } from '../../hooks';
 
 const NumberGeneratorButton = ({
   callback,
@@ -12,6 +12,9 @@ const NumberGeneratorButton = ({
   sequence, // This is the sequence code
   ...buttonProps
 }) => {
+  const { data: { results: { 0: { sequences = [] } = {} } = [] } = {} } = useNumberGenerators(generator);
+  const enabled = sequences.find(seq => seq.code === sequence)?.enabled ?? false;
+
   const { generate } = useGenerateNumber({
     callback,
     generator,
@@ -19,7 +22,12 @@ const NumberGeneratorButton = ({
   });
 
   return (
-    <Button id={`clickable-trigger-number-generator-${id}`} onClick={generate} {...buttonProps}>
+    <Button
+      disabled={!enabled}
+      id={`clickable-trigger-number-generator-${id}`}
+      onClick={generate}
+      {...buttonProps}
+    >
       <FormattedMessage id="ui-service-interaction.numberGenerator.generate" />
     </Button>
   );

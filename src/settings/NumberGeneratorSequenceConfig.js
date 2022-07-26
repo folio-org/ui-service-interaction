@@ -53,7 +53,11 @@ const NumberGeneratorSequenceConfig = ({
   } = useMutateNumberGeneratorSequence({
     afterQueryCalls: {
       put: (res, putValues) => {
-        setSelectedSequence(res.sequences.find(seq => seq.id === putValues.id));
+        // If we already have the sequence pane open, set it again so we have up to date data
+        // If the pane is _not_ open, we don't need to do this
+        if (selectedSequence) {
+          setSelectedSequence(res.sequences.find(seq => seq.code === putValues.code));
+        }
         setFormMode();
       },
       post: (res, postValues) => {
@@ -64,16 +68,25 @@ const NumberGeneratorSequenceConfig = ({
     id: numberGenerator?.id
   });
 
-  const actionAssigner = () => ([
+  // Row contains actionListActions, rowData does not -- possibly a bug?
+  const actionAssigner = (row) => ([
     {
       name: 'view',
       label: <FormattedMessage id="ui-service-interaction.view" />,
-      icon: 'ellipsis',
+      icon: 'report',
       callback: (rowData) => setSelectedSequence(rowData)
+    },
+    {
+      name: 'toggleEnabled',
+      label: row.enabled ?
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.markDisabled" /> :
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.markEnabled" />,
+      icon: row.enabled ? 'cancel' : 'check-circle',
+      callback: (rowData) => editSeq({ ...rowData, enabled: !rowData.enabled })
     }
   ]);
 
-  const sortedNumberGenSequences = useMemo(() => orderBy(numberGenerator?.sequences, ['code']) ?? [], [numberGenerator]);
+  const sortedNumberGenSequences = useMemo(() => orderBy(numberGenerator?.sequences, ['enabled', 'code'], ['desc', 'asc']) ?? [], [numberGenerator]);
 
   return (
     <>
@@ -102,16 +115,22 @@ const NumberGeneratorSequenceConfig = ({
           actionAssigner={actionAssigner}
           columnMapping={{
             code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
+            enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
             nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
           }}
           contentData={sortedNumberGenSequences}
           formatter={{
+            enabled: (rowData) => (
+              rowData?.enabled ?
+                <FormattedMessage id="ui-service-interaction.true" /> :
+                <FormattedMessage id="ui-service-interaction.false" />
+            ),
             nextValue: (rowData) => (
               rowData.nextValue ?? 0
             ),
           }}
           hideCreateButton
-          visibleFields={['code', 'nextValue']}
+          visibleFields={['code', 'nextValue', 'enabled']}
         />
       </Pane>
       {
@@ -127,7 +146,7 @@ const NumberGeneratorSequenceConfig = ({
         <FormModal
           initialValues={formMode === CREATING ?
             {
-              nextValue: 0,
+              nextValue: 1,
             } :
             {
               ...selectedSequence,

@@ -56,7 +56,7 @@ const useMutateNumberGeneratorSequence = ({
         }
       }
     ).json()
-      .then(res => afterQueryCalls?.post(res, data))
+      .then(res => afterQueryCalls?.put(res, data))
       .then(() => invalidateNumberGenerators()),
     queryParams?.put
   );

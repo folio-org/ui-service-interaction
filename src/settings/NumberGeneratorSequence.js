@@ -57,10 +57,24 @@ const NumberGeneratorSequence = ({
           </Col>
         </Row>
         <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
+              value={sequence.description}
+            />
+          </Col>
+        </Row>
+        <Row>
           <Col xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />}
               value={sequence.checkDigitAlgo?.label}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />}
+              value={sequence.enabled ? <FormattedMessage id="ui-service-interaction.true" /> : <FormattedMessage id="ui-service-interaction.false" />}
             />
           </Col>
         </Row>
@@ -78,20 +92,6 @@ const NumberGeneratorSequence = ({
             />
           </Col>
         </Row>
-        <Row>
-          <Col xs={6}>
-            <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.prefix" />}
-              value={sequence.prefix}
-            />
-          </Col>
-          <Col xs={6}>
-            <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.postfix" />}
-              value={sequence.postfix}
-            />
-          </Col>
-        </Row>
       </Pane>
     </>
   );
@@ -106,12 +106,12 @@ NumberGeneratorSequence.propTypes = {
       label: PropTypes.string,
       value: PropTypes.string
     }),
+    description: PropTypes.string,
+    enabled: PropTypes.bool,
     format: PropTypes.string,
     id: PropTypes.string.isRequired,
     nextValue: PropTypes.number,
     outputTemplate: PropTypes.string,
-    postfix: PropTypes.string,
-    prefix: PropTypes.string
   }).isRequired,
   setEditing: PropTypes.func.isRequired
 };

@@ -11,18 +11,20 @@ const useNumberGenerators = (code) => {
   const paramMap = {
     sort: [
       {
+        path: 'enabled'
+      },
+      {
         path: 'name'
       }
-    ]
+    ],
+    filters: []
   };
 
   if (code) {
-    paramMap.filters = [
-      {
-        path: 'code',
-        value: code
-      }
-    ];
+    paramMap.filters.push({
+      path: 'code',
+      value: code
+    });
   }
 
   const queryParams = generateKiwtQueryParams(paramMap, {});
