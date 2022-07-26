@@ -4,6 +4,7 @@ import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers'
 import { Button, Select } from '@folio/stripes-testing';
 
 import translationsProperties from '../../../../test/helpers';
+import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
 
 import NumberGeneratorModalButton from './NumberGeneratorModalButton';
 
@@ -15,46 +16,6 @@ const mockUseGenerateNumber = jest.fn(({ callback: callbackFunc }) => ({
     callbackFunc();
   }
 }));
-
-const numberGenerator1 = {
-  id: 'number-generator-1',
-  code: 'numberGen1',
-  name: 'Number generator 1',
-  sequences: [
-    {
-      id: 'ng1-seq1',
-      code: 'seq1.1',
-    },
-    {
-      id: 'ng1-seq2',
-      code: 'seq1.2',
-    },
-    {
-      id: 'ng1-seq3',
-      code: 'seq1.3',
-    }
-  ]
-};
-
-const numberGenerator2 = {
-  id: 'number-generator-2',
-  code: 'numberGen2',
-  name: 'Number generator 2',
-  sequences: [
-    {
-      id: 'ng2-seq1',
-      code: 'seq2.1',
-    },
-    {
-      id: 'ng2-seq2',
-      code: 'seq2.2',
-    },
-    {
-      id: 'ng2-seq3',
-      code: 'seq2.3',
-    }
-  ]
-};
 
 const mockUseNumberGenerators = jest.fn((code) => {
   let generators = [];
@@ -96,31 +57,25 @@ const NumberGeneratorModalButtonPropsNoGenerator = {
   id: 'test',
 };
 
-const testSelectOption = (numGen, seq) => {
-  if (numGen === 1) {
-    describe(`choosing ${numberGenerator1?.sequences?.[seq]?.code}`, () => {
+const testSelectOption = (numGen, seq, expected = true) => {
+  const selectedNumGen = numGen === 1 ? numberGenerator1 : numberGenerator2;
+
+  if (expected) {
+    describe(`choosing ${selectedNumGen?.sequences?.[seq]?.code}`, () => {
       beforeEach(async () => {
-        await Select().choose(numberGenerator1?.sequences?.[seq]?.code);
+        await Select().choose(selectedNumGen?.sequences?.[seq]?.code);
       });
 
       it('has the expected value', async () => {
-        await Select().has({ value: numberGenerator1?.sequences?.[seq]?.id });
+        await Select().has({ value: selectedNumGen?.sequences?.[seq]?.id });
       });
     });
   } else {
-    describe(`choosing ${numberGenerator2?.sequences?.[seq]?.code}`, () => {
-      beforeEach(async () => {
-        await Select().choose(numberGenerator2?.sequences?.[seq]?.code);
-      });
-
-      it('has the expected value', async () => {
-        await Select().has({ value: numberGenerator2?.sequences?.[seq]?.id });
-      });
-    });
+    // As far as I can see there's no way to test for SelectOption == absent
   }
 };
 
-describe('NumberGeneratorButton', () => {
+describe('NumberGeneratorModalButton', () => {
   describe('NumberGeneratorModalButton with generator prop', () => {
     beforeEach(() => {
       renderWithIntl(
@@ -213,7 +168,7 @@ describe('NumberGeneratorButton', () => {
         testSelectOption(1, 1);
         testSelectOption(1, 2);
         testSelectOption(2, 0);
-        testSelectOption(2, 1);
+        testSelectOption(2, 1, false);
         testSelectOption(2, 2);
       });
 

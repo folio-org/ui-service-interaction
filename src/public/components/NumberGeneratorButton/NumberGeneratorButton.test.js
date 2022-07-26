@@ -4,8 +4,10 @@ import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers'
 import { Button } from '@folio/stripes-testing';
 
 import translationsProperties from '../../../../test/helpers';
+import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
 
 import NumberGeneratorButton from './NumberGeneratorButton';
+
 
 const callback = jest.fn();
 const mockGenerateFunc = jest.fn();
@@ -16,6 +18,22 @@ const mockUseGenerateNumber = jest.fn(({ callback: callbackFunc }) => ({
   }
 }));
 
+const mockUseNumberGenerators = jest.fn((code) => {
+  let generators = [];
+  if (!code) {
+    generators = [numberGenerator1, numberGenerator2];
+  } else {
+    generators = [numberGenerator1];
+  }
+
+  return ({
+    data: {
+      results: generators
+    },
+    isLoading: false
+  });
+});
+
 jest.mock('../../hooks', () => ({
   useGenerateNumber: ({
     callback: callbackFunc,
@@ -25,14 +43,15 @@ jest.mock('../../hooks', () => ({
     callback: callbackFunc,
     generator,
     sequence
-  })
+  }),
+  useNumberGenerators: (code) => mockUseNumberGenerators(code)
 }));
 
 const NumberGeneratorButtonProps = {
   callback,
-  generator: 'gen',
+  generator: 'numberGen1',
   id: 'test',
-  sequence: 'seq',
+  sequence: 'seq1.1',
 };
 
 describe('NumberGeneratorButton', () => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -7,7 +7,7 @@ import { Modal, Select } from '@folio/stripes/components';
 import { useNumberGenerators } from '../../hooks';
 import NumberGeneratorButton from '../NumberGeneratorButton';
 
-const NumberGeneratorModal = ({
+const NumberGeneratorModal = forwardRef(({
   callback,
   generateButtonLabel,
   // This is the numberGenerator code, and is optional.
@@ -16,7 +16,7 @@ const NumberGeneratorModal = ({
   generatorButtonProps,
   id,
   ...modalProps
-}) => {
+}, ref) => {
   const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators(generator);
 
   const optionFromSequence = (seq) => (
@@ -70,6 +70,7 @@ const NumberGeneratorModal = ({
 
   return (
     <Modal
+      ref={ref}
       id={`number-generator-modal-${id}`}
       label={<FormattedMessage id="ui-service-interaction.numberGenerator.selectGenerator" />}
       {...modalProps}
@@ -95,6 +96,7 @@ const NumberGeneratorModal = ({
               return 0;
             }).map(([key, value]) => (
               <optgroup
+                key={key}
                 label={key}
               >
                 {value.map(v => (
@@ -121,7 +123,7 @@ const NumberGeneratorModal = ({
       />
     </Modal>
   );
-};
+});
 
 NumberGeneratorModal.propTypes = {
   callback: PropTypes.func.isRequired,
