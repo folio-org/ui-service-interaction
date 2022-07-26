@@ -27,6 +27,7 @@ The above will render a button with the text "Generate", and each time it is cli
 ## Props
 Name | Type | Description | default | required
 --- | --- | --- | --- | ---
+buttonLabel | String/Node | An override for the label of the button | "Generate" | ✕ |
 callback | function | A callback which accepts a generated string. | | ✓ |
 id | String | A string to uniquely identify the button. Will result in an id `clickable-trigger-number-generator-${id}` on the button. | | ✓ |
 generator | String | The `code` for a given NumberGenerator set up in `ui-service-interaction`'s Settings panel. | | ✓ |

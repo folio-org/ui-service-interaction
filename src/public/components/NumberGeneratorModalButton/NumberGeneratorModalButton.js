@@ -8,7 +8,9 @@ import { ModalButton } from '../../utilities';
 import NumberGeneratorModal from '../NumberGeneratorModal';
 
 const NumberGeneratorModalButton = ({
+  buttonLabel,
   callback,
+  generateButtonLabel,
   // This is the numberGenerator code, and is optional.
   // Omitting will result in all sequences appearing in select
   generator,
@@ -25,6 +27,7 @@ const NumberGeneratorModalButton = ({
         callback(generated);
         modalButtonRef?.current?.close();
       }}
+      generateButtonLabel={generateButtonLabel}
       generator={generator}
       generatorButtonProps={generatorButtonProps}
       id={id}
@@ -43,7 +46,9 @@ const NumberGeneratorModalButton = ({
           {...bprops}
           {...buttonProps}
         >
-          <FormattedMessage id="ui-service-interaction.numberGenerator.selectGenerator" />
+          {buttonLabel ??
+            <FormattedMessage id="ui-service-interaction.numberGenerator.selectGenerator" />
+          }
         </Button>
       )}
     />
@@ -51,7 +56,15 @@ const NumberGeneratorModalButton = ({
 };
 
 NumberGeneratorModalButton.propTypes = {
+  buttonLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   callback: PropTypes.func.isRequired,
+  generateButtonLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   generator: PropTypes.string,
   id: PropTypes.string.isRequired,
   generatorButtonProps: PropTypes.object,

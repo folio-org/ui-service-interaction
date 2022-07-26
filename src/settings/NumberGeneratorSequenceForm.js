@@ -1,15 +1,15 @@
 import { FormattedMessage } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
 
-import { required as requiredValidator, useRefdata } from '@k-int/stripes-kint-components';
+import { composeValidators, required as requiredValidator, useRefdata } from '@k-int/stripes-kint-components';
 
-import { Col, Row, Select, TextArea, TextField } from '@folio/stripes/components';
+import { Checkbox, Col, Row, Select, TextArea, TextField } from '@folio/stripes/components';
 
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
 
-  const { 0: { values: checkDigitAlgoOptions = [] } = {} } = useRefdata({
+  const { 0: { values: checksums = [] } = {} } = useRefdata({
     endpoint: 'servint/refdata',
     desc: 'NumberGeneratorSequence.CheckDigitAlgo'
   });
@@ -19,6 +19,20 @@ const NumberGeneratorSequenceForm = () => {
     'none',
     'ean13'
   ];
+
+  const checkDigitAlgoOptions = [
+    { value: '', label: '', disabled: true },
+    ...checksums?.filter(cdao => currentlySupportedChecksums.includes(cdao.value))?.map(cdao => ({ value: cdao.id, label: cdao.label }))
+  ];
+
+  const validateChecksum = (val, allVal) => {
+    const checksumVal = checksums?.find(cs => cs.id === val);
+    if (checksumVal?.value && checksumVal.value !== 'none' && allVal.nextValue && parseInt(allVal.nextValue, 10) < 1) {
+      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checksumError" />;
+    }
+
+    return null;
+  };
 
   return (
     <>
@@ -40,6 +54,28 @@ const NumberGeneratorSequenceForm = () => {
             label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />}
             name="nextValue"
             type="number"
+            validate={requiredValidator}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <Field
+            component={Checkbox}
+            defaultValue
+            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />}
+            name="enabled"
+            type="checkbox"
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <Field
+            component={TextArea}
+            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
+            name="description"
+            parse={v => v}
           />
         </Col>
       </Row>
@@ -47,16 +83,13 @@ const NumberGeneratorSequenceForm = () => {
         <Col xs={6}>
           <Field
             component={Select}
-            dataOptions={[
-              { value: '', label: '', disabled: true },
-              ...checkDigitAlgoOptions?.filter(cdao => currentlySupportedChecksums.includes(cdao.value))?.map(cdao => ({ value: cdao.id, label: cdao.label }))
-            ]}
+            dataOptions={checkDigitAlgoOptions}
             fullWidth
             label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />}
             name="checkDigitAlgo.id" // checkDigitAlgo should deal with the id
             parse={v => v}
             required
-            validate={requiredValidator}
+            validate={composeValidators(validateChecksum, requiredValidator)}
           />
         </Col>
         <Col xs={6}>
@@ -74,24 +107,6 @@ const NumberGeneratorSequenceForm = () => {
             component={TextArea}
             label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />}
             name="outputTemplate"
-            parse={v => v}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.prefix" />}
-            name="prefix"
-            parse={v => v}
-          />
-        </Col>
-        <Col xs={6}>
-          <Field
-            component={TextField}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.postfix" />}
-            name="postfix"
             parse={v => v}
           />
         </Col>
