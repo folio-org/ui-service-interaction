@@ -73,8 +73,9 @@ const NumberGeneratorSequenceConfig = ({
     {
       name: 'view',
       label: <FormattedMessage id="ui-service-interaction.view" />,
+      callback: (rowData) => setSelectedSequence(rowData),
       icon: 'report',
-      callback: (rowData) => setSelectedSequence(rowData)
+      tooltip: (rowData) => <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.tooltip.viewSequence" values={{ seq: rowData.code }} />,
     },
     {
       name: 'toggleEnabled',
@@ -82,7 +83,10 @@ const NumberGeneratorSequenceConfig = ({
         <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.markDisabled" /> :
         <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.markEnabled" />,
       icon: row.enabled ? 'cancel' : 'check-circle',
-      callback: (rowData) => editSeq({ ...rowData, enabled: !rowData.enabled })
+      callback: (rowData) => editSeq({ ...rowData, enabled: !rowData.enabled }),
+      tooltip: row.enabled ?
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.markDisabled" /> :
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.markEnabled" />,
     }
   ]);
 
@@ -130,6 +134,12 @@ const NumberGeneratorSequenceConfig = ({
             ),
           }}
           hideCreateButton
+          interactive // This can be removed when kint-components 2.9.0 is released
+          onRowClick={(_e, row) => {
+            // This safety can be removed when kint-components 2.9.0 is released
+            const { actionlistActions: _ala, ...restOfRow } = row;
+            setSelectedSequence(restOfRow);
+          }}
           visibleFields={['code', 'nextValue', 'enabled']}
         />
       </Pane>

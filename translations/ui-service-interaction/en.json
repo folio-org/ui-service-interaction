@@ -5,6 +5,7 @@
   "delete": "Delete",
   "true": "True",
   "false": "False",
+  "view": "View",
   "settings.numberGenerators": "Number generators",
   "settings.numberGeneratorSequences": "Number generator sequences",
   "settings.numberGeneratorSequences.edit": "Number generator sequence edit",
@@ -25,5 +26,6 @@
   "settings.numberGeneratorSequences.markEnabled": "Mark as enabled",
   "settings.numberGeneratorSequences.markDisabled": "Mark as disabled",
   "settings.numberGeneratorSequences.checksumError": "Using a checksum with a value < 1 is not supported.",
+  "settings.numberGeneratorSequences.tooltip.viewSequence": "View sequence {seq}",
   "numberGenerator.generateDisabledSequenceError": "This sequence is marked as disabled and cannot be generated from. Please contact a system administrator."
 }

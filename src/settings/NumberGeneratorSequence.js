@@ -85,7 +85,9 @@ const NumberGeneratorSequence = ({
               value={sequence.format}
             />
           </Col>
-          <Col xs={6}>
+        </Row>
+        <Row>
+          <Col xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />}
               value={sequence.outputTemplate}
