@@ -26,7 +26,7 @@
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
-      "servint": "1.0"
+      "servint": "2.0"
     },
     "permissionSets": [
       {
