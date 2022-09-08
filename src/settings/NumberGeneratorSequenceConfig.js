@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import isEqual from 'lodash/isEqual';
 import orderBy from 'lodash/orderBy';
 
-import { Button, Pane, Select } from '@folio/stripes/components';
+import { Button, KeyValue, MultiColumnList, Pane, Select } from '@folio/stripes/components';
 import { ActionList, FormModal } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators } from '../public';
@@ -90,7 +90,7 @@ const NumberGeneratorSequenceConfig = ({
     }
   ]);
 
-  const sortedNumberGenSequences = useMemo(() => orderBy(numberGenerator?.sequences, ['enabled', 'code'], ['desc', 'asc']) ?? [], [numberGenerator]);
+  const sortedNumberGenSequences = useMemo(() => orderBy(numberGenerator?.sequences, ['enabled', 'code'], ['desc', 'asc']) ?? [], [numberGenerator?.sequences]);
 
   return (
     <>
@@ -112,35 +112,36 @@ const NumberGeneratorSequenceConfig = ({
       >
         <Select
           dataOptions={[...data?.map(ng => ({ value: ng.id, label: ng.name }))]}
+          label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.generator" />}
           onChange={e => setNumberGenerator(findNumberGenerator(e.target.value))}
           value={numberGenerator.id}
         />
-        <ActionList
-          actionAssigner={actionAssigner}
-          columnMapping={{
-            code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
-            enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
-            nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
-          }}
-          contentData={sortedNumberGenSequences}
-          formatter={{
-            enabled: (rowData) => (
-              rowData?.enabled ?
-                <FormattedMessage id="ui-service-interaction.true" /> :
-                <FormattedMessage id="ui-service-interaction.false" />
-            ),
-            nextValue: (rowData) => (
-              rowData.nextValue ?? 0
-            ),
-          }}
-          hideCreateButton
-          interactive // This can be removed when kint-components 2.9.0 is released
-          onRowClick={(_e, row) => {
-            // This safety can be removed when kint-components 2.9.0 is released
-            const { actionlistActions: _ala, ...restOfRow } = row;
-            setSelectedSequence(restOfRow);
-          }}
-          visibleFields={['code', 'nextValue', 'enabled']}
+        <KeyValue
+          label={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />}
+          value={
+            <MultiColumnList
+              columnMapping={{
+                code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
+                enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
+                nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
+              }}
+              contentData={sortedNumberGenSequences}
+              formatter={{
+                enabled: (rowData) => (
+                  rowData?.enabled ?
+                    <FormattedMessage id="ui-service-interaction.true" /> :
+                    <FormattedMessage id="ui-service-interaction.false" />
+                ),
+                nextValue: (rowData) => (
+                  rowData.nextValue ?? 0
+                ),
+              }}
+              id="number-generator-sequences"
+              interactive
+              onRowClick={(_e, row) => { setSelectedSequence(row); }}
+              visibleColumns={['code', 'nextValue', 'enabled']}
+            />
+          }
         />
       </Pane>
       {

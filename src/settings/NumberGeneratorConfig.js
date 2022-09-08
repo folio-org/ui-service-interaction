@@ -50,6 +50,11 @@ const NumberGeneratorConfig = ({
       >
         <ActionList
           actionAssigner={actionAssigner}
+          columnMapping={{
+            name: <FormattedMessage id="ui-service-interaction.settings.numberGenerators.name" />,
+            code: <FormattedMessage id="ui-service-interaction.settings.numberGenerators.code" />,
+            sequences: <FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />
+          }}
           contentData={data}
           creatableFields={{
             sequences: () => false
@@ -64,6 +69,7 @@ const NumberGeneratorConfig = ({
               rowData?.sequences?.length
             )
           }}
+          label={<FormattedMessage id="ui-service-interaction.settings.numberGenerators" />}
           visibleFields={['name', 'code', 'sequences']}
         />
       </Pane>
