@@ -10,6 +10,11 @@
   "settings.numberGenerators.name": "Name",
   "settings.numberGenerators.code": "Code",
   "settings.numberGenerators.sequences": "Sequences",
+  "settings.numberGenerators.deleteGenerator": "Delete generator",
+  "settings.numberGenerators.deleteGenerator.message": "Number generator <strong>{name}</strong> will be permanently <strong>deleted</strong>.",
+  "settings.numberGenerators.callout.delete": "Number generator <strong>{name}</strong> was successfully <strong>deleted</strong>.",
+  "settings.numberGenerators.callout.edit": "Number generator <strong>{name}</strong> was successfully <strong>edited</strong>.",
+  "settings.numberGenerators.callout.create": "Number generator <strong>{name}</strong> was successfully <strong>created</strong>.",
   "settings.numberGeneratorSequences": "Number generator sequences",
   "settings.numberGeneratorSequences.edit": "Number generator sequence edit",
   "settings.numberGenerator.edit": "Number generator edit",
@@ -31,5 +36,11 @@
   "settings.numberGeneratorSequences.checksumError": "Using a checksum with a value < 1 is not supported.",
   "settings.numberGeneratorSequences.tooltip.viewSequence": "View sequence {seq}",
   "settings.numberGeneratorSequences.generator": "Generator",
+  "settings.numberGeneratorSequences.deleteSequence": "Delete sequence",
+  "settings.numberGeneratorSequences.deleteSequence.message": "Number generator sequence <strong>{name}</strong> will be permanently <strong>deleted</strong>.",
+  "settings.numberGeneratorSequences.deleteSequence.warningMessage": "The sequence may be in use in one or more apps. If in doubt, consider disabling the sequence instead.",
+  "settings.numberGeneratorSequences.callout.delete": "Number generator sequence <strong>{name}</strong> was successfully <strong>deleted</strong>.",
+  "settings.numberGeneratorSequences.callout.edit": "Number generator sequence <strong>{name}</strong> was successfully <strong>edited</strong>.",
+  "settings.numberGeneratorSequences.callout.create": "Number generator sequence <strong>{name}</strong> was successfully <strong>created</strong>.",
   "numberGenerator.generateDisabledSequenceError": "This sequence is marked as disabled and cannot be generated from. Please contact a system administrator."
 }

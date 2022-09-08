@@ -5,7 +5,7 @@ import { Button, Col, Icon, KeyValue, Pane, Row } from '@folio/stripes/component
 
 const NumberGeneratorSequence = ({
   onClose,
-  removeSeq,
+  onDelete,
   sequence,
   setEditing,
 }) => {
@@ -26,10 +26,7 @@ const NumberGeneratorSequence = ({
             <Button
               buttonStyle="dropdownItem"
               marginBottom0
-              onClick={() => {
-                removeSeq(sequence.id);
-                onClose();
-              }}
+              onClick={onDelete}
             >
               <Icon icon="trash">
                 <FormattedMessage id="ui-service-interaction.delete" />
@@ -101,7 +98,7 @@ const NumberGeneratorSequence = ({
 
 NumberGeneratorSequence.propTypes = {
   onClose: PropTypes.func.isRequired,
-  removeSeq: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   sequence: PropTypes.shape({
     code: PropTypes.string.isRequired,
     checkDigitAlgo: PropTypes.shape({
