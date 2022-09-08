@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useCallout } from '@folio/stripes/core';
-import { ConfirmationModal, Pane } from '@folio/stripes/components';
+import { ConfirmationModal, InfoPopover, Pane } from '@folio/stripes/components';
 import { ActionList } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators, useMutateNumberGenerator } from '../public';
@@ -85,9 +85,30 @@ const NumberGeneratorConfig = ({
         <ActionList
           actionAssigner={actionAssigner}
           columnMapping={{
-            name: <FormattedMessage id="ui-service-interaction.settings.numberGenerators.name" />,
-            code: <FormattedMessage id="ui-service-interaction.settings.numberGenerators.code" />,
-            sequences: <FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />
+            name:
+              // eslint-disable-next-line react/jsx-indent
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGenerators.name" />
+                <InfoPopover
+                  content={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.name.info" />}
+                />
+              </>,
+            code:
+              // eslint-disable-next-line react/jsx-indent
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGenerators.code" />,
+                <InfoPopover
+                  content={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.code.info" />}
+                />
+              </>,
+            sequences:
+              // eslint-disable-next-line react/jsx-indent
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />,
+                <InfoPopover
+                  content={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences.info" />}
+                />
+              </>,
           }}
           contentData={data}
           creatableFields={{
