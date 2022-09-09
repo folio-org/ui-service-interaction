@@ -76,6 +76,7 @@ const NumberGeneratorModal = forwardRef(({
       {...modalProps}
     >
       <Select
+        label={<FormattedMessage id="ui-service-interaction.numberGenerator.generator" />}
         onChange={(e) => {
           // Find the NG in the data which has the chosen sequence, and set it as the currently selected NG
           const chosenNumberGenerator = data?.find(ng => ng?.sequences?.some(s => s.id === e.target.value))?.code;

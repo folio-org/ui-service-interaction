@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl';
-import { Field, useFormState } from 'react-final-form';
+import { Field, Form, useFormState } from 'react-final-form';
 
 import { composeValidators, required as requiredValidator, useRefdata } from '@k-int/stripes-kint-components';
 
-import { Checkbox, Col, Row, Select, TextArea, TextField } from '@folio/stripes/components';
+import { Button, Checkbox, Col, InfoPopover, Layout, Row, Select, TextArea, TextField } from '@folio/stripes/components';
 
 
 const NumberGeneratorSequenceForm = () => {
@@ -41,7 +41,16 @@ const NumberGeneratorSequenceForm = () => {
           <Field
             component={TextField}
             disabled={!!values?.id}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />}
+            label={
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />
+                <InfoPopover
+                  content={
+                    <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code.info" />
+                  }
+                />
+              </>
+            }
             name="code"
             required
             validate={requiredValidator}
@@ -51,7 +60,16 @@ const NumberGeneratorSequenceForm = () => {
           <Field
             component={TextField}
             disabled={!!values?.id}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />}
+            label={
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
+                <InfoPopover
+                  content={
+                    <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue.info" />
+                  }
+                />
+              </>
+            }
             name="nextValue"
             type="number"
             validate={requiredValidator}
@@ -60,13 +78,22 @@ const NumberGeneratorSequenceForm = () => {
       </Row>
       <Row>
         <Col xs={12}>
-          <Field
-            component={Checkbox}
-            defaultValue
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />}
-            name="enabled"
-            type="checkbox"
-          />
+          <Layout className="flex">
+            <Layout className="margin-end-gutter">
+              <InfoPopover
+                content={
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled.info" />
+                }
+              />
+            </Layout>
+            <Field
+              component={Checkbox}
+              defaultValue
+              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />}
+              name="enabled"
+              type="checkbox"
+            />
+          </Layout>
         </Col>
       </Row>
       <Row>
@@ -85,7 +112,16 @@ const NumberGeneratorSequenceForm = () => {
             component={Select}
             dataOptions={checkDigitAlgoOptions}
             fullWidth
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />}
+            label={
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />
+                <InfoPopover
+                  content={
+                    <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo.info" />
+                  }
+                />
+              </>
+            }
             name="checkDigitAlgo.id" // checkDigitAlgo should deal with the id
             parse={v => v}
             required
@@ -105,7 +141,28 @@ const NumberGeneratorSequenceForm = () => {
         <Col xs={12}>
           <Field
             component={TextArea}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />}
+            label={
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />
+                <InfoPopover
+                  content={
+                    <>
+                      <Layout>
+                        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate.info" />
+                      </Layout>
+                      <Layout>
+                        <Button
+                          buttonStyle="primary"
+                          marginBottom0
+                        >
+                          <FormattedMessage id="ui-service-interaction.learnMore" />
+                        </Button>
+                      </Layout>
+                    </>
+                  }
+                />
+              </>
+            }
             name="outputTemplate"
             parse={v => v}
           />
