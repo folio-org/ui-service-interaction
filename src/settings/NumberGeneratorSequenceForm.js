@@ -1,10 +1,25 @@
 import { FormattedMessage } from 'react-intl';
-import { Field, Form, useFormState } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
 
 import { composeValidators, required as requiredValidator, useRefdata } from '@k-int/stripes-kint-components';
 
-import { Button, Checkbox, Col, InfoPopover, Layout, Row, Select, TextArea, TextField } from '@folio/stripes/components';
+import {
+  Checkbox,
+  Col,
+  Layout,
+  Row,
+  Select,
+  TextArea,
+  TextField
+} from '@folio/stripes/components';
 
+import {
+  ChecksumAlgoInfo,
+  CodeInfo,
+  EnabledInfo,
+  NextValueInfo,
+  OutputTemplateInfo
+} from './InfoPopovers';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
@@ -44,11 +59,7 @@ const NumberGeneratorSequenceForm = () => {
             label={
               <>
                 <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />
-                <InfoPopover
-                  content={
-                    <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code.info" />
-                  }
-                />
+                <CodeInfo />
               </>
             }
             name="code"
@@ -63,11 +74,7 @@ const NumberGeneratorSequenceForm = () => {
             label={
               <>
                 <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
-                <InfoPopover
-                  content={
-                    <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue.info" />
-                  }
-                />
+                <NextValueInfo />
               </>
             }
             name="nextValue"
@@ -80,11 +87,7 @@ const NumberGeneratorSequenceForm = () => {
         <Col xs={12}>
           <Layout className="flex">
             <Layout className="margin-end-gutter">
-              <InfoPopover
-                content={
-                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled.info" />
-                }
-              />
+              <EnabledInfo />
             </Layout>
             <Field
               component={Checkbox}
@@ -115,11 +118,7 @@ const NumberGeneratorSequenceForm = () => {
             label={
               <>
                 <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />
-                <InfoPopover
-                  content={
-                    <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo.info" />
-                  }
-                />
+                <ChecksumAlgoInfo />
               </>
             }
             name="checkDigitAlgo.id" // checkDigitAlgo should deal with the id
@@ -144,23 +143,7 @@ const NumberGeneratorSequenceForm = () => {
             label={
               <>
                 <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />
-                <InfoPopover
-                  content={
-                    <>
-                      <Layout>
-                        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate.info" />
-                      </Layout>
-                      <Layout>
-                        <Button
-                          buttonStyle="primary"
-                          marginBottom0
-                        >
-                          <FormattedMessage id="ui-service-interaction.learnMore" />
-                        </Button>
-                      </Layout>
-                    </>
-                  }
-                />
+                <OutputTemplateInfo />
               </>
             }
             name="outputTemplate"

@@ -1,7 +1,22 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Col, Icon, KeyValue, Pane, Row } from '@folio/stripes/components';
+import {
+  Button,
+  Col,
+  Icon,
+  KeyValue,
+  Pane,
+  Row
+} from '@folio/stripes/components';
+
+import {
+  ChecksumAlgoInfo,
+  CodeInfo,
+  EnabledInfo,
+  NextValueInfo,
+  OutputTemplateInfo
+} from './InfoPopovers';
 
 const NumberGeneratorSequence = ({
   onClose,
@@ -42,13 +57,23 @@ const NumberGeneratorSequence = ({
         <Row>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />}
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />
+                  <CodeInfo />
+                </>
+              }
               value={sequence.code}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />}
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
+                  <NextValueInfo />
+                </>
+              }
               value={sequence.nextValue}
             />
           </Col>
@@ -64,13 +89,23 @@ const NumberGeneratorSequence = ({
         <Row>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />}
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />
+                  <ChecksumAlgoInfo />
+                </>
+              }
               value={sequence.checkDigitAlgo?.label}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />}
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />
+                  <EnabledInfo />
+                </>
+              }
               value={sequence.enabled ? <FormattedMessage id="ui-service-interaction.true" /> : <FormattedMessage id="ui-service-interaction.false" />}
             />
           </Col>
@@ -86,7 +121,12 @@ const NumberGeneratorSequence = ({
         <Row>
           <Col xs={12}>
             <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />}
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />
+                  <OutputTemplateInfo />
+                </>
+              }
               value={sequence.outputTemplate}
             />
           </Col>
