@@ -55,10 +55,19 @@ const OutputTemplateInfo = () => (
   />
 );
 
+const FormatInfo = () => (
+  <InfoPopover
+    content={
+      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format.info" />
+    }
+  />
+);
+
 export {
   ChecksumAlgoInfo,
   CodeInfo,
   EnabledInfo,
+  FormatInfo,
   NextValueInfo,
   OutputTemplateInfo
 };

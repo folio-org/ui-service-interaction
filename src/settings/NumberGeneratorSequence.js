@@ -14,6 +14,7 @@ import {
   ChecksumAlgoInfo,
   CodeInfo,
   EnabledInfo,
+  FormatInfo,
   NextValueInfo,
   OutputTemplateInfo
 } from './InfoPopovers';
@@ -113,7 +114,12 @@ const NumberGeneratorSequence = ({
         <Row>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />}
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />
+                  <FormatInfo />
+                </>
+              }
               value={sequence.format}
             />
           </Col>

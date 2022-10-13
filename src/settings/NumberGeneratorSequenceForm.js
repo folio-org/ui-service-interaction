@@ -17,6 +17,7 @@ import {
   ChecksumAlgoInfo,
   CodeInfo,
   EnabledInfo,
+  FormatInfo,
   NextValueInfo,
   OutputTemplateInfo
 } from './InfoPopovers';
@@ -130,7 +131,12 @@ const NumberGeneratorSequenceForm = () => {
         <Col xs={6}>
           <Field
             component={TextField}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />}
+            label={
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />
+                <FormatInfo />
+              </>
+            }
             name="format"
             parse={v => v}
           />
