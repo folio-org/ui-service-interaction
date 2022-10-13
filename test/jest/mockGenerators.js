@@ -6,11 +6,13 @@ const numberGenerator1 = {
     {
       id: 'ng1-seq1',
       code: 'seq1.1',
+      name: 'sequence 1.1',
       enabled: true
     },
     {
       id: 'ng1-seq2',
       code: 'seq1.2',
+      name: 'sequence 1.2',
       enabled: true
     },
     {
@@ -29,16 +31,19 @@ const numberGenerator2 = {
     {
       id: 'ng2-seq1',
       code: 'seq2.1',
+      name: 'sequence 2.1',
       enabled: true
     },
     {
       id: 'ng2-seq2',
       code: 'seq2.2',
+      name: 'sequence 2.2',
       enabled: false
     },
     {
       id: 'ng2-seq3',
       code: 'seq2.3',
+      name: 'sequence 2.3',
       enabled: true
     }
   ]
