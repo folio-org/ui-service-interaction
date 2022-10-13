@@ -18,6 +18,7 @@ import {
   CodeInfo,
   EnabledInfo,
   FormatInfo,
+  NameInfo,
   NextValueInfo,
   OutputTemplateInfo
 } from './InfoPopovers';
@@ -56,6 +57,20 @@ const NumberGeneratorSequenceForm = () => {
         <Col xs={6}>
           <Field
             component={TextField}
+            label={
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name" />
+                <NameInfo />
+              </>
+            }
+            name="name"
+            required
+            validate={requiredValidator}
+          />
+        </Col>
+        <Col xs={6}>
+          <Field
+            component={TextField}
             disabled={!!values?.id}
             label={
               <>
@@ -67,6 +82,22 @@ const NumberGeneratorSequenceForm = () => {
             required
             validate={requiredValidator}
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={6}>
+          <Layout className="flex">
+            <Layout className="margin-end-gutter">
+              <EnabledInfo />
+            </Layout>
+            <Field
+              component={Checkbox}
+              defaultValue
+              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />}
+              name="enabled"
+              type="checkbox"
+            />
+          </Layout>
         </Col>
         <Col xs={6}>
           <Field
@@ -82,22 +113,6 @@ const NumberGeneratorSequenceForm = () => {
             type="number"
             validate={requiredValidator}
           />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <Layout className="flex">
-            <Layout className="margin-end-gutter">
-              <EnabledInfo />
-            </Layout>
-            <Field
-              component={Checkbox}
-              defaultValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />}
-              name="enabled"
-              type="checkbox"
-            />
-          </Layout>
         </Col>
       </Row>
       <Row>

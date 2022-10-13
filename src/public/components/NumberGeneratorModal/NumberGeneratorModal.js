@@ -24,7 +24,7 @@ const NumberGeneratorModal = forwardRef(({
       key={seq.id}
       value={seq.id}
     >
-      {seq.code ?? seq.id}
+      {seq.name ?? seq.code ?? seq.id}
     </option>
   );
 
@@ -43,7 +43,11 @@ const NumberGeneratorModal = forwardRef(({
     ];
 
     if (reduceSequences.length) {
-      returnObj[generatorCode] = reduceSequences;
+      returnObj[generatorCode] = {
+        name: curr.name,
+        code: curr.code,
+        sequences: reduceSequences
+      };
     }
 
     return returnObj;
@@ -64,7 +68,7 @@ const NumberGeneratorModal = forwardRef(({
 
     if (!isLoading && sequenceGroupEntries.length > 0 && !selectedNG) {
       setSelectedNG(sequenceGroupEntries[0]?.[0]);
-      setSelectedSequence(sequenceGroupEntries[0]?.[1]?.[0]);
+      setSelectedSequence(sequenceGroupEntries[0]?.[1]?.sequences?.[0]);
     }
   }, [isLoading, selectedNG, sequenceGroup]);
 
@@ -82,7 +86,7 @@ const NumberGeneratorModal = forwardRef(({
           const chosenNumberGenerator = data?.find(ng => ng?.sequences?.some(s => s.id === e.target.value))?.code;
           setSelectedNG(chosenNumberGenerator);
           // Within that NG, find the correct sequence by id, and set it as current sequence
-          const chosenSequence = sequenceGroup[chosenNumberGenerator]?.find(seq => seq.id === e.target.value);
+          const chosenSequence = sequenceGroup[chosenNumberGenerator]?.sequences?.find(seq => seq.id === e.target.value);
           setSelectedSequence(chosenSequence);
         }}
         placeholder={null} // placeholder default causes issues
@@ -98,15 +102,15 @@ const NumberGeneratorModal = forwardRef(({
             }).map(([key, value]) => (
               <optgroup
                 key={key}
-                label={key}
+                label={value?.name ?? value?.code}
               >
-                {value.map(v => (
+                {value?.sequences?.map(v => (
                   optionFromSequence(v)
                 ))}
               </optgroup>
             )) :
             Object.entries(sequenceGroup).map(([_k, value]) => (
-              value.map(v => (
+              value?.sequences?.map(v => (
                 optionFromSequence(v)
               ))
             ))
