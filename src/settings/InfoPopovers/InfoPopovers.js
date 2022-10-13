@@ -17,6 +17,14 @@ const CodeInfo = () => (
   />
 );
 
+const NameInfo = () => (
+  <InfoPopover
+    content={
+      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name.info" />
+    }
+  />
+);
+
 const EnabledInfo = () => (
   <InfoPopover
     content={
@@ -55,10 +63,20 @@ const OutputTemplateInfo = () => (
   />
 );
 
+const FormatInfo = () => (
+  <InfoPopover
+    content={
+      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format.info" />
+    }
+  />
+);
+
 export {
   ChecksumAlgoInfo,
   CodeInfo,
   EnabledInfo,
+  FormatInfo,
+  NameInfo,
   NextValueInfo,
   OutputTemplateInfo
 };

@@ -96,7 +96,7 @@ const NumberGeneratorConfig = ({
             code:
               // eslint-disable-next-line react/jsx-indent
               <>
-                <FormattedMessage id="ui-service-interaction.settings.numberGenerators.code" />,
+                <FormattedMessage id="ui-service-interaction.settings.numberGenerators.code" />
                 <InfoPopover
                   content={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.code.info" />}
                 />
@@ -104,7 +104,7 @@ const NumberGeneratorConfig = ({
             sequences:
               // eslint-disable-next-line react/jsx-indent
               <>
-                <FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />,
+                <FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />
                 <InfoPopover
                   content={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences.info" />}
                 />

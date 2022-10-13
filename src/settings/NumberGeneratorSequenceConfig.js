@@ -125,6 +125,7 @@ const NumberGeneratorSequenceConfig = ({
           value={
             <MultiColumnList
               columnMapping={{
+                name: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name" />,
                 code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
                 enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
                 nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
@@ -143,7 +144,7 @@ const NumberGeneratorSequenceConfig = ({
               id="number-generator-sequences"
               interactive
               onRowClick={(_e, row) => { setSelectedSequence(row); }}
-              visibleColumns={['code', 'nextValue', 'enabled']}
+              visibleColumns={['name', 'code', 'nextValue', 'enabled']}
             />
           }
         />

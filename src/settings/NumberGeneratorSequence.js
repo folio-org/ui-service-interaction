@@ -14,6 +14,8 @@ import {
   ChecksumAlgoInfo,
   CodeInfo,
   EnabledInfo,
+  FormatInfo,
+  NameInfo,
   NextValueInfo,
   OutputTemplateInfo
 } from './InfoPopovers';
@@ -52,9 +54,20 @@ const NumberGeneratorSequence = ({
         defaultWidth="fill"
         dismissible
         onClose={onClose}
-        paneTitle={sequence.code}
+        paneTitle={sequence.name ?? sequence.code}
       >
         <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name" />
+                  <NameInfo />
+                </>
+              }
+              value={sequence.name}
+            />
+          </Col>
           <Col xs={6}>
             <KeyValue
               label={
@@ -64,17 +77,6 @@ const NumberGeneratorSequence = ({
                 </>
               }
               value={sequence.code}
-            />
-          </Col>
-          <Col xs={6}>
-            <KeyValue
-              label={
-                <>
-                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
-                  <NextValueInfo />
-                </>
-              }
-              value={sequence.nextValue}
             />
           </Col>
         </Row>
@@ -113,7 +115,23 @@ const NumberGeneratorSequence = ({
         <Row>
           <Col xs={6}>
             <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />}
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
+                  <NextValueInfo />
+                </>
+              }
+              value={sequence.nextValue}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />
+                  <FormatInfo />
+                </>
+              }
               value={sequence.format}
             />
           </Col>
@@ -149,6 +167,7 @@ NumberGeneratorSequence.propTypes = {
     enabled: PropTypes.bool,
     format: PropTypes.string,
     id: PropTypes.string.isRequired,
+    name: PropTypes.string,
     nextValue: PropTypes.number,
     outputTemplate: PropTypes.string,
   }).isRequired,

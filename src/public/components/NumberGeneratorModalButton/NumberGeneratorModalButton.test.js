@@ -60,14 +60,16 @@ const NumberGeneratorModalButtonPropsNoGenerator = {
 const testSelectOption = (numGen, seq, expected = true) => {
   const selectedNumGen = numGen === 1 ? numberGenerator1 : numberGenerator2;
 
+  const selectedSeqOption = selectedNumGen?.sequences?.[seq];
+
   if (expected) {
-    describe(`choosing ${selectedNumGen?.sequences?.[seq]?.code}`, () => {
+    describe(`choosing ${selectedSeqOption?.name ?? selectedSeqOption?.code}`, () => {
       beforeEach(async () => {
-        await Select().choose(selectedNumGen?.sequences?.[seq]?.code);
+        await Select().choose(selectedSeqOption?.name ?? selectedSeqOption?.code);
       });
 
       it('has the expected value', async () => {
-        await Select().has({ value: selectedNumGen?.sequences?.[seq]?.id });
+        await Select().has({ value: selectedSeqOption?.id });
       });
     });
   } else {
