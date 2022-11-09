@@ -1,3 +1,5 @@
+import { translationsProperties as coreTranslations } from '@folio/stripes-erm-testing';
+
 import translations from '../../translations/ui-service-interaction/en';
 
 const translationsProperties = [
@@ -5,7 +7,8 @@ const translationsProperties = [
     prefix: 'ui-service-interaction',
     translations,
   },
-  {
+  ...coreTranslations,
+/*   {
     prefix: 'stripes-core',
     translations: {
       'label.missingRequiredField': 'Please fill this in to continue',
@@ -33,7 +36,7 @@ const translationsProperties = [
       'searchResultsCountHeader': '"{count, number} {count, plural, one {record found} other {records found}}"',
       'new': 'New'
     },
-  }
+  } */
 ];
 
 export default translationsProperties;

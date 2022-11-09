@@ -1,1 +1,1 @@
-module.exports = require('@folio/stripes-erm-components/jest.config');
+module.exports = require('@folio/stripes-erm-testing/jest.config');
