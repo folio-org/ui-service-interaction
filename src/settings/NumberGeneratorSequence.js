@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -26,33 +28,35 @@ const NumberGeneratorSequence = ({
   sequence,
   setEditing,
 }) => {
+  const actionMenu = useCallback(() => (
+    [
+      <Button
+        key="action-edit-sequence"
+        buttonStyle="dropdownItem"
+        marginBottom0
+        onClick={setEditing}
+      >
+        <Icon icon="edit">
+          <FormattedMessage id="ui-service-interaction.edit" />
+        </Icon>
+      </Button>,
+      <Button
+        key="action-delete-sequence"
+        buttonStyle="dropdownItem"
+        marginBottom0
+        onClick={onDelete}
+      >
+        <Icon icon="trash">
+          <FormattedMessage id="ui-service-interaction.delete" />
+        </Icon>
+      </Button>
+    ]
+  ), [onDelete, setEditing]);
+
   return (
     <>
       <Pane
-        actionMenu={() => (
-          [
-            <Button
-              key="action-edit-sequence"
-              buttonStyle="dropdownItem"
-              marginBottom0
-              onClick={() => setEditing()}
-            >
-              <Icon icon="edit">
-                <FormattedMessage id="ui-service-interaction.edit" />
-              </Icon>
-            </Button>,
-            <Button
-              key="action-delete-sequence"
-              buttonStyle="dropdownItem"
-              marginBottom0
-              onClick={onDelete}
-            >
-              <Icon icon="trash">
-                <FormattedMessage id="ui-service-interaction.delete" />
-              </Icon>
-            </Button>
-          ]
-        )}
+        actionMenu={actionMenu}
         defaultWidth="fill"
         dismissible
         onClose={onClose}

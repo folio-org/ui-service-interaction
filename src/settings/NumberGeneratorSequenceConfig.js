@@ -12,7 +12,7 @@ import { FormModal } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators } from '../public';
 import { useMutateNumberGeneratorSequence } from '../public/hooks';
-import NumberGenerator from './NumberGeneratorSequence';
+import NumberGeneratorSequence from './NumberGeneratorSequence';
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 
 const EDITING = 'editing';
@@ -151,7 +151,7 @@ const NumberGeneratorSequenceConfig = ({
       </Pane>
       {
         selectedSequence &&
-          <NumberGenerator
+          <NumberGeneratorSequence
             onClose={() => setSelectedSequence()}
             onDelete={() => setShowDeleteConfirmationModal(true)}
             sequence={selectedSequence}
