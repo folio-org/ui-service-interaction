@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 import { FormattedMessage } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
 
@@ -28,8 +26,6 @@ import useSIRefdata from '../hooks/useSIRefdata';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
-
-  const parse = useCallback(v => v, []);
 
   const { 0: { values: checksums = [] } = {} } = useSIRefdata({
     desc: 'NumberGeneratorSequence.CheckDigitAlgo',
@@ -125,7 +121,7 @@ const NumberGeneratorSequenceForm = () => {
             component={TextArea}
             label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
             name="description"
-            parse={parse}
+            parse={v => v}
           />
         </Col>
       </Row>
@@ -142,7 +138,7 @@ const NumberGeneratorSequenceForm = () => {
               </>
             }
             name="checkDigitAlgo.id" // checkDigitAlgo should deal with the id
-            parse={parse}
+            parse={v => v}
             required
             validate={composeValidators(validateChecksum, requiredValidator)}
           />
@@ -157,7 +153,7 @@ const NumberGeneratorSequenceForm = () => {
               </>
             }
             name="format"
-            parse={parse}
+            parse={v => v}
           />
         </Col>
       </Row>
@@ -172,7 +168,7 @@ const NumberGeneratorSequenceForm = () => {
               </>
             }
             name="outputTemplate"
-            parse={parse}
+            parse={v => v}
           />
         </Col>
       </Row>

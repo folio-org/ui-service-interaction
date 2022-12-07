@@ -195,7 +195,7 @@ const NumberGeneratorSequenceConfig = ({
             id="ui-service-interaction.settings.numberGeneratorSequences.deleteSequence.message"
             values={{ name: selectedSequence?.code }}
           />,
-          <Layout />,
+          <Layout key="layout" />,
           <FormattedMessage
             key="delete-sequence-warning-message"
             id="ui-service-interaction.settings.numberGeneratorSequences.deleteSequence.warningMessage"
