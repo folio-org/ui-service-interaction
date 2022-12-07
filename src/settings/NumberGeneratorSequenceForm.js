@@ -1,12 +1,15 @@
+import { useMemo } from 'react';
+
 import { FormattedMessage } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
 
-import { composeValidators, required as requiredValidator, useRefdata } from '@k-int/stripes-kint-components';
+import { composeValidators, required as requiredValidator } from '@k-int/stripes-kint-components';
 
 import {
   Checkbox,
   Col,
   Layout,
+  Loading,
   Row,
   Select,
   TextArea,
@@ -22,13 +25,13 @@ import {
   NextValueInfo,
   OutputTemplateInfo
 } from './InfoPopovers';
+import useSIRefdata from '../hooks/useSIRefdata';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
 
-  const { 0: { values: checksums = [] } = {} } = useRefdata({
-    endpoint: 'servint/refdata',
-    desc: 'NumberGeneratorSequence.CheckDigitAlgo'
+  const { 0: { values: checksums = [] } = {} } = useSIRefdata({
+    desc: 'NumberGeneratorSequence.CheckDigitAlgo',
   });
 
   // Longer term we will support more of the values than these two

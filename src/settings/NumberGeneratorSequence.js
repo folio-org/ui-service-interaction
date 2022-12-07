@@ -32,6 +32,7 @@ const NumberGeneratorSequence = ({
         actionMenu={() => (
           [
             <Button
+              key="action-edit-sequence"
               buttonStyle="dropdownItem"
               marginBottom0
               onClick={() => setEditing()}
@@ -41,6 +42,7 @@ const NumberGeneratorSequence = ({
               </Icon>
             </Button>,
             <Button
+              key="action-delete-sequence"
               buttonStyle="dropdownItem"
               marginBottom0
               onClick={onDelete}
