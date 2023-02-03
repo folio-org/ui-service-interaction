@@ -3,10 +3,12 @@ import {
   Modal
 } from '@folio/stripes/components';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { IconButtonInteractor, renderWithIntl, translationsProperties } from '@folio/stripes-erm-testing';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 
 import ModalButton from './ModalButton';
+
+const mockOnClose = jest.fn();
 
 describe('ModalButton', () => {
   describe('NumberGeneratorModalButton with generator prop', () => {
@@ -14,6 +16,7 @@ describe('ModalButton', () => {
       renderWithIntl(
         <ModalButton
           id="modal-button-id"
+          onClose={mockOnClose}
           renderModal={(mdProps) => (
             <Modal
               id="modal-id"
@@ -33,7 +36,8 @@ describe('ModalButton', () => {
               Trigger button
             </Button>
           )}
-        />
+        />,
+        translationsProperties
       );
     });
 
@@ -50,6 +54,20 @@ describe('ModalButton', () => {
 
       test('renders the modal contents', async () => {
         await ButtonInteractor('This is a button inside a modal').exists();
+      });
+
+      describe('Closing the modal', () => {
+        beforeEach(async () => {
+          await IconButtonInteractor('Dismiss modal').click();
+        });
+
+        test('onClose has been called', () => {
+          expect(mockOnClose).toHaveBeenCalled();
+        });
+
+        test('no longer renders modal contents', async () => {
+          await ButtonInteractor('This is a button inside a modal').absent();
+        });
       });
     });
   });
