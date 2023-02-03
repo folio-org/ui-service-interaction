@@ -3,10 +3,11 @@ import {
   Modal
 } from '@folio/stripes/components';
 
-import { IconButtonInteractor, renderWithIntl, translationsProperties } from '@folio/stripes-erm-testing';
+import { IconButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 
 import ModalButton from './ModalButton';
+import translationsProperties from '../../../test/helpers/translationsProperties';
 
 const mockOnClose = jest.fn();
 
