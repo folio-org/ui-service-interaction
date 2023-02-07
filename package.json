@@ -43,6 +43,13 @@
         ],
         "visible": true
       }
+    ],
+    "icons": [
+      {
+        "name": "app",
+        "alt": "FOLIO app for service-interaction",
+        "title": "Service interaction"
+      }
     ]
   },
   "dependencies": {
