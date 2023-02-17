@@ -7,11 +7,17 @@ import orderBy from 'lodash/orderBy';
 
 import { useCallout } from '@folio/stripes/core';
 
-import { Button, ConfirmationModal, KeyValue, Layout, MultiColumnList, Pane, Select } from '@folio/stripes/components';
+import {
+  Button,
+  ConfirmationModal,
+  KeyValue,
+  MultiColumnList,
+  Pane,
+  Select
+} from '@folio/stripes/components';
 import { FormModal } from '@k-int/stripes-kint-components';
 
-import { useNumberGenerators } from '../public';
-import { useMutateNumberGeneratorSequence } from '../public/hooks';
+import { useNumberGenerators, useMutateNumberGeneratorSequence } from '../public';
 import NumberGeneratorSequence from './NumberGeneratorSequence';
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 
@@ -195,7 +201,7 @@ const NumberGeneratorSequenceConfig = ({
             id="ui-service-interaction.settings.numberGeneratorSequences.deleteSequence.message"
             values={{ name: selectedSequence?.code }}
           />,
-          <Layout key="layout" />,
+          <br key="delete-sequence-line-break" />,
           <FormattedMessage
             key="delete-sequence-warning-message"
             id="ui-service-interaction.settings.numberGeneratorSequences.deleteSequence.warningMessage"

@@ -1,1 +1,1 @@
-export { default } from './translationsProperties';
+export { default as translationsProperties } from './translationsProperties';

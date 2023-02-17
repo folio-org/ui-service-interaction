@@ -15,26 +15,15 @@ const numberGenerator1 = {
   id: 'number-generator-1',
   code: 'numberGen1',
   name: 'Number generator 1',
-  nextValue: 1,
   sequences: [
     {
       id: 'ng1-seq1',
       checkDigitAlgo: getCheckDigitAlgoByValue('ean13'),
       code: 'seq1.1',
+      description: 'this is a description',
       name: 'sequence 1.1',
+      nextValue: 1,
       outputTemplate: 'sequence-1.1-${generated_number}-${checksum}',
-      owner: {
-        id: 'number-generator-1'
-      },
-      enabled: true
-    },
-    {
-      id: 'ng1-seq2',
-      checkDigitAlgo: getCheckDigitAlgoByValue('none'),
-      code: 'seq1.2',
-      name: 'sequence 1.2',
-      nextValue: 1092,
-      outputTemplate: 'sequence-1.2-${generated_number}-${checksum}',
       owner: {
         id: 'number-generator-1'
       },
@@ -50,7 +39,19 @@ const numberGenerator1 = {
         id: 'number-generator-1'
       },
       enabled: true
-    }
+    }, // Wrong order to try and force sorting logic to trigger in code coverage
+    {
+      id: 'ng1-seq2',
+      checkDigitAlgo: getCheckDigitAlgoByValue('none'),
+      code: 'seq1.2',
+      name: 'sequence 1.2',
+      nextValue: 1092,
+      outputTemplate: 'sequence-1.2-${generated_number}-${checksum}',
+      owner: {
+        id: 'number-generator-1'
+      },
+      enabled: true
+    },
   ]
 };
 

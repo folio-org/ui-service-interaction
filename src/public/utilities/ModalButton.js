@@ -4,6 +4,7 @@ import contains from 'dom-helpers/query/contains';
 
 const ModalButton = forwardRef(({
   id,
+  onClose,
   renderModal,
   renderTrigger,
   ...props
@@ -26,8 +27,8 @@ const ModalButton = forwardRef(({
       modalTrigger.current.focus();
     }
 
-    if (props.onClose) {
-      props.onClose();
+    if (onClose) {
+      onClose();
     }
   };
 

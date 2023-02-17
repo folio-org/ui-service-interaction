@@ -1,11 +1,11 @@
 import { forwardRef as mockForwardRef } from 'react';
 
-import { Button as MockStripesButton } from '@folio/stripes/components';
+import { Button as MockStripesButton, Modal as MockModal } from '@folio/stripes/components';
 
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes-testing';
 
-import translationsProperties from '../../../../test/helpers';
+import { translationsProperties } from '../../../../test/helpers';
 
 import NumberGeneratorModalButton from './NumberGeneratorModalButton';
 
@@ -18,20 +18,37 @@ import NumberGeneratorModalButton from './NumberGeneratorModalButton';
  * scoped references start with `mock`
  */
 
-jest.mock('../NumberGeneratorModal', () => mockForwardRef(() => (
-  <MockStripesButton
-    onClick={() => null}
-  >
-    Interior modal button
-  </MockStripesButton>
-)));
+jest.mock('../NumberGeneratorModal', () => mockForwardRef(({
+  callback,
+  generateButtonLabel: _generateButtonLabel, // We don't need these for our mock
+  generator: _generator,
+  generatorButtonProps: _generatorButtonProps,
+  id: _id,
+  ...modalProps // grab modal props the same way we do in the actual component
+}, ref) => {
+  return (
+    <MockModal
+      ref={ref}
+      label="Test modal"
+      {...modalProps}
+    >
+      <MockStripesButton
+        onClick={() => callback()}
+      >
+        Interior modal button
+      </MockStripesButton>
+    </MockModal>
+  );
+}));
+
+const mockCallback = jest.fn();
 
 describe('NumberGeneratorModalButton', () => {
   describe('NumberGeneratorModalButton with generator prop', () => {
     beforeEach(() => {
       renderWithIntl(
         <NumberGeneratorModalButton
-          callback={jest.fn()}
+          callback={mockCallback}
           generator="numberGen1"
           id="test"
         />,
@@ -43,6 +60,10 @@ describe('NumberGeneratorModalButton', () => {
       await Button('Select generator').exists();
     });
 
+    test('does not render the button', async () => {
+      await Button('Interior modal button').absent();
+    });
+
     describe('Opening the modal', () => {
       beforeEach(async () => {
         await Button('Select generator').click();
@@ -50,6 +71,20 @@ describe('NumberGeneratorModalButton', () => {
 
       test('renders the button', async () => {
         await Button('Interior modal button').exists();
+      });
+
+      describe('Clicking the interior button', () => {
+        beforeEach(async () => {
+          await Button('Interior modal button').click();
+        });
+
+        test('callback has been triggered', () => {
+          expect(mockCallback).toHaveBeenCalled();
+        });
+
+        test('modal has been closed', async () => {
+          await Button('Interior modal button').absent();
+        });
       });
     });
   });
