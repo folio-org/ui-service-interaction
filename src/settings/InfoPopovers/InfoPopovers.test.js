@@ -1,7 +1,7 @@
 import { Button } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 
-import translationsProperties from '../../../test/helpers/translationsProperties';
+import { translationsProperties } from '../../../test/helpers';
 import {
   ChecksumAlgoInfo,
   CodeInfo,

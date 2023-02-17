@@ -5,7 +5,7 @@ import { Button as MockStripesButton, Modal as MockModal } from '@folio/stripes/
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes-testing';
 
-import translationsProperties from '../../../../test/helpers';
+import { translationsProperties } from '../../../../test/helpers';
 
 import NumberGeneratorModalButton from './NumberGeneratorModalButton';
 

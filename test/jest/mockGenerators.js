@@ -15,13 +15,14 @@ const numberGenerator1 = {
   id: 'number-generator-1',
   code: 'numberGen1',
   name: 'Number generator 1',
-  nextValue: 1,
   sequences: [
     {
       id: 'ng1-seq1',
       checkDigitAlgo: getCheckDigitAlgoByValue('ean13'),
       code: 'seq1.1',
+      description: 'this is a description',
       name: 'sequence 1.1',
+      nextValue: 1,
       outputTemplate: 'sequence-1.1-${generated_number}-${checksum}',
       owner: {
         id: 'number-generator-1'

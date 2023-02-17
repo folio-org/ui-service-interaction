@@ -1,6 +1,6 @@
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 
-import translationsProperties from '../test/helpers/translationsProperties';
+import { translationsProperties } from '../test/helpers';
 
 import App from './index';
 

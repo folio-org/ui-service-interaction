@@ -1,13 +1,15 @@
-import { Button as MockButton } from '@folio/stripes/components';
-import { Button, Callout, MultiColumnList, MultiColumnListCell, MultiColumnListHeader, Select } from '@folio/stripes-testing';
+import { waitFor } from '@testing-library/dom';
+import { render } from '@testing-library/react';
+
+import { Field as MockField } from 'react-final-form';
+
+import { Button as MockButton, TextField as MockTextField } from '@folio/stripes/components';
+import { Button, Callout, MultiColumnList, MultiColumnListCell, MultiColumnListHeader, Select, TextField } from '@folio/stripes-testing';
 import { IconButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import NumberGeneratorSequenceConfig from './NumberGeneratorSequenceConfig';
-import translationsProperties from '../../test/helpers/translationsProperties';
+import { translationsProperties } from '../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../test/jest/mockGenerators';
-import { FormModal as MockFormModal } from '@k-int/stripes-kint-components';
-import { screen } from '@testing-library/dom';
-import { render } from '@testing-library/react';
 
 const push = jest.fn();
 const mockGenerators = [numberGenerator1, numberGenerator2];
@@ -57,7 +59,19 @@ jest.mock('./NumberGeneratorSequence', () => (props) => {
   });
 }); */
 
-jest.mock('./NumberGeneratorSequenceForm', () => () => <div>NumberGeneratorSequenceForm</div>);
+jest.mock('./NumberGeneratorSequenceForm', () => () => {
+  return (
+    <>
+      NumberGeneratorSequenceForm
+      {/* Setting up mock field so we can edit/save formModal (Since we're using the real component for that) */}
+      <MockField
+        component={MockTextField}
+        label="TEST FIELD"
+        name="name"
+      />
+    </>
+  );
+});
 
 const fakeCalloutInfo = { id: '123', label: 'numgenName', code: 'numgenCode' };
 
@@ -108,7 +122,7 @@ describe('NumberGeneratorSequenceConfig', () => {
     // First sequence
     await MultiColumnListCell({ row: 0, columnIndex: 0 }).has({ content: 'sequence 1.1' });
     await MultiColumnListCell({ row: 0, columnIndex: 1 }).has({ content: 'seq1.1' });
-    await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: '0' });
+    await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: '1' });
     await MultiColumnListCell({ row: 0, columnIndex: 3 }).has({ content: 'True' });
 
     // Second sequence
@@ -215,8 +229,46 @@ describe('NumberGeneratorSequenceConfig', () => {
         const { getByText } = renderComponent;
         expect(getByText('NumberGeneratorSequenceForm')).toBeInTheDocument();
       });
+
+      describe('saving the sequence', () => {
+        beforeEach(async () => {
+          await TextField('TEST FIELD').fillIn('new name');
+          await waitFor(async () => {
+            await Button('Save & close').click();
+          });
+        });
+
+        test('edit callout fires', async () => {
+          // EXAMPLE currently callout interactor doesn't notice variable insertion?
+          await Callout('Number generator sequence <strong>{name}</strong> was successfully <strong>edited</strong>.').exists();
+        });
+      });
     });
-    // FIXME, actually edit and test callout next
+  });
+
+  describe('creating a sequence', () => {
+    beforeEach(async () => {
+      await Button('New').click();
+    });
+
+    test('FormModal renders', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('NumberGeneratorSequenceForm')).toBeInTheDocument();
+    });
+
+    describe('saving the sequence', () => {
+      beforeEach(async () => {
+        await TextField('TEST FIELD').fillIn('new name');
+        await waitFor(async () => {
+          await Button('Save & close').click();
+        });
+      });
+
+      test('edit callout fires', async () => {
+        // EXAMPLE currently callout interactor doesn't notice variable insertion?
+        await Callout('Number generator sequence <strong>{name}</strong> was successfully <strong>created</strong>.').exists();
+      });
+    });
   });
 
   describe('closing pane', () => {
@@ -228,26 +280,4 @@ describe('NumberGeneratorSequenceConfig', () => {
       expect(push).toHaveBeenCalledWith('someUrl');
     });
   });
-/*
-  describe('edit', () => {
-    beforeEach(async () => {
-      await Button('EditButton').click();
-    });
-
-    test('edit callback is fired', async () => {
-      // EXAMPLE currently callout interactor doesn't notice variable insertion?
-      await Callout('Number generator <strong>{name}</strong> was successfully <strong>edited</strong>.').exists();
-    });
-  });
-
-  describe('create', () => {
-    beforeEach(async () => {
-      await Button('CreateButton').click();
-    });
-
-    test('create callback is fired', async () => {
-      // EXAMPLE currently callout interactor doesn't notice variable insertion?
-      await Callout('Number generator <strong>{name}</strong> was successfully <strong>created</strong>.').exists();
-    });
-  }); */
 });

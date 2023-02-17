@@ -8,7 +8,7 @@ import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import useGenerateNumber from './useGenerateNumber';
 
-import translationsProperties from '../../../../test/helpers';
+import { translationsProperties } from '../../../../test/helpers';
 
 jest.mock('../useNumberGenerators', () => {
   const { numberGenerator2 } = jest.requireActual('../../../../test/jest/mockGenerators');

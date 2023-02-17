@@ -3,7 +3,7 @@ import { Button, Callout } from '@folio/stripes-testing';
 import { IconButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import NumberGeneratorConfig from './NumberGeneratorConfig';
-import translationsProperties from '../../test/helpers/translationsProperties';
+import { translationsProperties } from '../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../test/jest/mockGenerators';
 
 const push = jest.fn();
