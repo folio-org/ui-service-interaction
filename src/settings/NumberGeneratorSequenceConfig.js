@@ -67,7 +67,7 @@ const NumberGeneratorSequenceConfig = ({
         callout.sendCallout({
           message: <FormattedMessage
             id="ui-service-interaction.settings.numberGeneratorSequences.callout.delete"
-            values={{ name: selectedSequence.code }}
+            values={{ name: selectedSequence?.code }}
           />
         });
       },
@@ -81,7 +81,7 @@ const NumberGeneratorSequenceConfig = ({
         callout.sendCallout({
           message: <FormattedMessage
             id="ui-service-interaction.settings.numberGeneratorSequences.callout.edit"
-            values={{ name: selectedSequence.code }}
+            values={{ name: selectedSequence?.code }}
           />
         });
       },

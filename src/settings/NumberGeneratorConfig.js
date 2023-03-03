@@ -29,7 +29,7 @@ const NumberGeneratorConfig = ({
         callout.sendCallout({
           message: <FormattedMessage
             id="ui-service-interaction.settings.numberGenerators.callout.delete"
-            values={{ name: removeGenerator.label ?? removeGenerator.code }}
+            values={{ name: removeGenerator?.label ?? removeGenerator?.code }}
           />
         });
       },
