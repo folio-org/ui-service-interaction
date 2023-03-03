@@ -29,7 +29,7 @@ const NumberGeneratorConfig = ({
         callout.sendCallout({
           message: <FormattedMessage
             id="ui-service-interaction.settings.numberGenerators.callout.delete"
-            values={{ name: removeGenerator.label ?? removeGenerator.code }}
+            values={{ name: removeGenerator?.label ?? removeGenerator?.code }}
           />
         });
       },
@@ -141,7 +141,7 @@ const NumberGeneratorConfig = ({
         }
         onCancel={() => setRemoveGenerator()}
         onConfirm={() => {
-          removeNumberGenerator(removeGenerator.id);
+          removeNumberGenerator(removeGenerator?.id);
           setRemoveGenerator();
         }}
         open={!!removeGenerator?.id}
@@ -155,7 +155,7 @@ NumberGeneratorConfig.propTypes = {
     push: PropTypes.func.isRequired
   }),
   location: PropTypes.shape({
-    pathName: PropTypes.string.isRequired
+    pathName: PropTypes.string
   }),
   match: PropTypes.shape({
     url: PropTypes.string.isRequired
