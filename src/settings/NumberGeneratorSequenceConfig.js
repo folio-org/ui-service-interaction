@@ -102,6 +102,17 @@ const NumberGeneratorSequenceConfig = ({
 
   const sortedNumberGenSequences = useMemo(() => orderBy(numberGenerator?.sequences, ['enabled', 'code'], ['desc', 'asc']) ?? [], [numberGenerator?.sequences]);
 
+  // SonarLint "Do not define components during render" nonsense to remove all code "smells" before submitting for TCA
+  const renderEnabled = useCallback((rowData) => (
+    rowData?.enabled ?
+      <FormattedMessage id="ui-service-interaction.true" /> :
+      <FormattedMessage id="ui-service-interaction.false" />
+  ), []);
+
+  const renderNextValue = useCallback((rowData) => (
+    rowData.nextValue ?? 0
+  ), []);
+
   return (
     <>
       <Pane
@@ -138,14 +149,8 @@ const NumberGeneratorSequenceConfig = ({
               }}
               contentData={sortedNumberGenSequences}
               formatter={{
-                enabled: (rowData) => (
-                  rowData?.enabled ?
-                    <FormattedMessage id="ui-service-interaction.true" /> :
-                    <FormattedMessage id="ui-service-interaction.false" />
-                ),
-                nextValue: (rowData) => (
-                  rowData.nextValue ?? 0
-                ),
+                enabled: renderEnabled,
+                nextValue: renderNextValue,
               }}
               id="number-generator-sequences"
               interactive
