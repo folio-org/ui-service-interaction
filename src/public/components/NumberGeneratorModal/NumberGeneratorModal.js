@@ -1,7 +1,8 @@
 import { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
 import { FormattedMessage } from 'react-intl';
+
+import orderBy from 'lodash/orderBy';
 
 import { Modal, Select } from '@folio/stripes/components';
 import { useNumberGenerators } from '../../hooks';
@@ -72,6 +73,32 @@ const NumberGeneratorModal = forwardRef(({
     }
   }, [isLoading, selectedNG, sequenceGroup]);
 
+  const renderSelectOptions = () => {
+    // If we have multiple generators, separate with optgroups, else display all in one
+    if ((Object.keys(sequenceGroup)?.length ?? 0) > 1) {
+      return (
+        orderBy(Object.entries(sequenceGroup), '0.code')?.map(([key, value]) => (
+          <optgroup
+            key={key}
+            label={value?.name ?? value?.code}
+          >
+            {value?.sequences?.map(v => (
+              optionFromSequence(v)
+            ))}
+          </optgroup>
+        ))
+      );
+    }
+
+    return (
+      Object.entries(sequenceGroup).map(([_k, value]) => (
+        value?.sequences?.map(v => (
+          optionFromSequence(v)
+        ))
+      ))
+    );
+  };
+
   return (
     <Modal
       ref={ref}
@@ -92,29 +119,7 @@ const NumberGeneratorModal = forwardRef(({
         placeholder={null} // placeholder default causes issues
         value={selectedSequence?.id}
       >
-        {
-          // If we have multiple generators, separate with optgroups, else display all in one
-          (Object.keys(sequenceGroup)?.length ?? 0) > 1 ?
-            Object.entries(sequenceGroup)?.sort((a, b) => {
-              if (a[0].toLowerCase() < b[0].toLowerCase()) return -1;
-              if (a[0].toLowerCase() > b[0].toLowerCase()) return 1;
-              return 0;
-            }).map(([key, value]) => (
-              <optgroup
-                key={key}
-                label={value?.name ?? value?.code}
-              >
-                {value?.sequences?.map(v => (
-                  optionFromSequence(v)
-                ))}
-              </optgroup>
-            )) :
-            Object.entries(sequenceGroup).map(([_k, value]) => (
-              value?.sequences?.map(v => (
-                optionFromSequence(v)
-              ))
-            ))
-        }
+        {renderSelectOptions()}
       </Select>
       <NumberGeneratorButton
         buttonLabel={generateButtonLabel}
