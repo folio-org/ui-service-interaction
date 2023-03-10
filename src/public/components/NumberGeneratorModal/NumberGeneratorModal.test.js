@@ -78,6 +78,7 @@ const testSelectOption = (numGen, seq, expected = true) => {
 };
 
 describe('NumberGeneratorModal', () => {
+  let renderedComponent;
   describe('NumberGeneratorModal with generator prop', () => {
     beforeEach(() => {
       renderWithIntl(
@@ -212,6 +213,29 @@ describe('NumberGeneratorModal', () => {
       test('passed callback gets called', () => {
         expect(callback.mock.calls.length).toBe(2);
       });
+    });
+  });
+
+  describe('NumberGeneratorModal with renderBottom/renderTop properties', () => {
+    beforeEach(() => {
+      renderedComponent = renderWithIntl(
+        <NumberGeneratorModal
+          renderBottom={() => <div>BOTTOM</div>}
+          renderTop={() => <div>TOP</div>}
+          {...NumberGeneratorModalPropsNoGenerator}
+        />,
+        translationsProperties
+      );
+    });
+
+    test('renders top', () => {
+      const { getByText } = renderedComponent;
+      expect(getByText('TOP')).toBeInTheDocument();
+    });
+
+    test('renders bottom', () => {
+      const { getByText } = renderedComponent;
+      expect(getByText('BOTTOM')).toBeInTheDocument();
     });
   });
 });
