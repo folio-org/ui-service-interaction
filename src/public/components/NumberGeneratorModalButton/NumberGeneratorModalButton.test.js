@@ -24,6 +24,8 @@ jest.mock('../NumberGeneratorModal', () => mockForwardRef(({
   generator: _generator,
   generatorButtonProps: _generatorButtonProps,
   id: _id,
+  renderBottom: _renderBottom,
+  renderTop: _renderTop,
   ...modalProps // grab modal props the same way we do in the actual component
 }, ref) => {
   return (

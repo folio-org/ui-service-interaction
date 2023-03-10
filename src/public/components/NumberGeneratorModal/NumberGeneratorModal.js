@@ -16,6 +16,8 @@ const NumberGeneratorModal = forwardRef(({
   generator,
   generatorButtonProps,
   id,
+  renderTop,
+  renderBottom,
   ...modalProps
 }, ref) => {
   const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators(generator);
@@ -106,6 +108,7 @@ const NumberGeneratorModal = forwardRef(({
       label={<FormattedMessage id="ui-service-interaction.numberGenerator.selectGenerator" />}
       {...modalProps}
     >
+      {renderTop ? renderTop() : null}
       <Select
         label={<FormattedMessage id="ui-service-interaction.numberGenerator.generator" />}
         onChange={(e) => {
@@ -131,6 +134,7 @@ const NumberGeneratorModal = forwardRef(({
         sequence={selectedSequence?.code ?? ''}
         {...generatorButtonProps}
       />
+      {renderBottom ? renderBottom() : null}
     </Modal>
   );
 });
@@ -144,6 +148,8 @@ NumberGeneratorModal.propTypes = {
   generator: PropTypes.string,
   generatorButtonProps: PropTypes.object,
   id: PropTypes.string.isRequired,
+  renderBottom: PropTypes.func,
+  renderTop: PropTypes.func,
 };
 
 export default NumberGeneratorModal;

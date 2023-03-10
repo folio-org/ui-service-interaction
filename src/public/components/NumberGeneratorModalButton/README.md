@@ -33,5 +33,7 @@ generateButtonLabel | String/Node | An override for the label of the button rend
 generator | String | The `code` for a given NumberGenerator set up in `ui-service-interaction`'s Settings panel. When not provided the Select will comprise of all sequences for all NumberGenerators fetched. | | ✕ |
 generatorButtonProps | object | An object containing button props to be passed onto the "generate" button within the generator modal. | | ✕ |
 modalProps | object | An object containing any override props to be passed on to the NumberGeneratorModal | | ✕ |
+renderBottom | function | A function which renders at the bottom of the modal, below the select(s) and generate button. | | ✕ |
+renderTop | function | A function which renders at the top of the modal, above the select(s). | | ✕ |
 ...buttonProps | destructured object | Any other props passed to NumberGeneratorButton will be assumed to be button props for the trigger button and passed directly on. | | ✕ |
 

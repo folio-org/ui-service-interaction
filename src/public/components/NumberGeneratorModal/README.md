@@ -43,4 +43,6 @@ id | String | A string to uniquely identify the Modal. Will result in an id `num
 generateButtonLabel | String/Node | An override for the label of the button rendered within the modal | "Generate" | ✕ |
 generator | String | The `code` for a given NumberGenerator set up in `ui-service-interaction`'s Settings panel. When not provided the Select will comprise of all sequences for all NumberGenerators fetched. | | ✕ |
 generatorButtonProps | object | An object containing button props to be passed onto the "generate" button within the modal. | | ✕ |
+renderBottom | function | A function which renders at the bottom of the modal, below the select(s) and generate button. | | ✕ |
+renderTop | function | A function which renders at the top of the modal, above the select(s). | | ✕ |
 ...modalProps | destructured object | Any other props passed to NumberGeneratorModal will be assumed to be modal props and passed directly on. Within these it is vital to provide an `open` and an `onClose` prop, as per the stripes-components Modal. | | ✕ |

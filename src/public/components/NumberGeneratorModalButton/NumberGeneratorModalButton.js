@@ -17,6 +17,8 @@ const NumberGeneratorModalButton = ({
   id,
   generatorButtonProps,
   modalProps,
+  renderBottom,
+  renderTop,
   ...buttonProps
 }) => {
   const modalButtonRef = useRef();
@@ -31,6 +33,8 @@ const NumberGeneratorModalButton = ({
       generator={generator}
       generatorButtonProps={generatorButtonProps}
       id={id}
+      renderBottom={renderBottom}
+      renderTop={renderTop}
       {...modalProps}
       {...mdProps}
     />
@@ -68,7 +72,9 @@ NumberGeneratorModalButton.propTypes = {
   generator: PropTypes.string,
   id: PropTypes.string.isRequired,
   generatorButtonProps: PropTypes.object,
-  modalProps: PropTypes.object
+  modalProps: PropTypes.object,
+  renderBottom: PropTypes.func,
+  renderTop: PropTypes.func,
 };
 
 export default NumberGeneratorModalButton;
