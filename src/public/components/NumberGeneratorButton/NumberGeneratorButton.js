@@ -24,6 +24,7 @@ const NumberGeneratorButton = ({
 
   return (
     <Button
+      buttonStyle="primary"
       disabled={!enabled}
       id={`clickable-trigger-number-generator-${id}`}
       onClick={generate}

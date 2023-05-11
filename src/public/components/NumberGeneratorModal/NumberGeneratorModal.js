@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import orderBy from 'lodash/orderBy';
 
-import { Modal, Select } from '@folio/stripes/components';
+import { Button, Modal, ModalFooter, Select } from '@folio/stripes/components';
 import { useNumberGenerators } from '../../hooks';
 import NumberGeneratorButton from '../NumberGeneratorButton';
 
@@ -104,6 +104,27 @@ const NumberGeneratorModal = forwardRef(({
   return (
     <Modal
       ref={ref}
+      footer={
+        <ModalFooter>
+          <NumberGeneratorButton
+            buttonLabel={generateButtonLabel}
+            callback={(generated) => {
+              callback(generated);
+            }}
+            generator={selectedNG ?? ''}
+            id={id}
+            marginBottom0
+            sequence={selectedSequence?.code ?? ''}
+            {...generatorButtonProps}
+          />
+          <Button
+            marginBottom0
+            onClick={modalProps.onClose}
+          >
+            <FormattedMessage id="ui-service-interaction.cancel" />
+          </Button>
+        </ModalFooter>
+      }
       id={`number-generator-modal-${id}`}
       label={<FormattedMessage id="ui-service-interaction.numberGenerator.selectGenerator" />}
       {...modalProps}
@@ -124,16 +145,6 @@ const NumberGeneratorModal = forwardRef(({
       >
         {renderSelectOptions()}
       </Select>
-      <NumberGeneratorButton
-        buttonLabel={generateButtonLabel}
-        callback={(generated) => {
-          callback(generated);
-        }}
-        generator={selectedNG ?? ''}
-        id={id}
-        sequence={selectedSequence?.code ?? ''}
-        {...generatorButtonProps}
-      />
       {renderBottom ? renderBottom() : null}
     </Modal>
   );
