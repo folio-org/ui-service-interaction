@@ -21,6 +21,9 @@ const NumberGeneratorModal = forwardRef(({
   ...modalProps
 }, ref) => {
   const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators(generator);
+  const sequenceCount = data.reduce((acc, curr) => {
+    return acc + curr?.sequences?.length;
+  }, 0);
 
   const optionFromSequence = (seq) => (
     <option
@@ -131,6 +134,7 @@ const NumberGeneratorModal = forwardRef(({
     >
       {renderTop ? renderTop() : null}
       <Select
+        disabled={sequenceCount <= 1}
         label={<FormattedMessage id="ui-service-interaction.numberGenerator.generator" />}
         onChange={(e) => {
           // Find the NG in the data which has the chosen sequence, and set it as the currently selected NG
