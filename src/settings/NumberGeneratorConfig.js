@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useCallout } from '@folio/stripes/core';
-import { Button, ConfirmationModal, InfoPopover, MessageBanner, Pane } from '@folio/stripes/components';
-import { ActionList } from '@k-int/stripes-kint-components';
+import { ConfirmationModal, InfoPopover, MessageBanner, Pane } from '@folio/stripes/components';
+import { ActionList, required } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators, useMutateNumberGenerator } from '../public';
 
@@ -14,6 +14,7 @@ const NumberGeneratorConfig = ({
   match
 }) => {
   const { data: { results: data = [] } = {} } = useNumberGenerators();
+  const intl = useIntl();
 
   const callout = useCallout();
 
@@ -55,6 +56,10 @@ const NumberGeneratorConfig = ({
   const actionAssigner = (rowData) => {
     const actionArray = [
       {
+        ariaLabel: intl.formatMessage(
+          { id: 'ui-service-interaction.settings.numberGenerators.editGeneratorAria' },
+          { name: rowData?.name }
+        ),
         name: 'edit',
         label: <FormattedMessage id="ui-service-interaction.settings.numberGenerator.edit" />,
         icon: 'edit',
@@ -64,6 +69,10 @@ const NumberGeneratorConfig = ({
 
     if (!rowData?.sequences?.length) {
       actionArray.push({
+        ariaLabel: intl.formatMessage(
+          { id: 'ui-service-interaction.settings.numberGenerators.deleteGeneratorAria' },
+          { name: rowData?.name }
+        ),
         name: 'delete',
         callback: (rd) => setRemoveGenerator(rd),
         icon: 'trash'
@@ -137,6 +146,10 @@ const NumberGeneratorConfig = ({
             )
           }}
           label={<FormattedMessage id="ui-service-interaction.settings.numberGenerators" />}
+          validateFields={{
+            name: () => required,
+            code: () => required
+          }}
           visibleFields={['name', 'code', 'sequences']}
         />
       </Pane>

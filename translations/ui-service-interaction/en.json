@@ -20,6 +20,8 @@
   "settings.numberGenerators.code.info": "A unique string representing the number generator for technical purposes. Must not contain whitespaces.",
   "settings.numberGenerators.sequences": "Sequences",
   "settings.numberGenerators.sequences.info": "The count of the number of sequences assigned to this generator.",
+  "settings.numberGenerators.editGeneratorAria": "Edit generator {name}",
+  "settings.numberGenerators.deleteGeneratorAria": "Delete generator {name}",
   "settings.numberGenerators.deleteGenerator": "Delete generator",
   "settings.numberGenerators.deleteGenerator.message": "Number generator <strong>{name}</strong> will be permanently <strong>deleted</strong>.",
   "settings.numberGenerators.callout.delete": "Number generator <strong>{name}</strong> was successfully <strong>deleted</strong>.",
