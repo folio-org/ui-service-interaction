@@ -12,6 +12,8 @@
   "saveAndClose": "Save & close",
   "save": "Save",
   "settings.numberGenerators": "Number generators",
+  "settings.numberGenerators.helpDocumentationLink": "help documentation",
+  "settings.numberGenerators.helpText": "New number generators need development work to integrate them with FOLIO apps. Please review the {helpDocumentationLink} before creating a new number generator.",
   "settings.numberGenerators.name": "Name",
   "settings.numberGenerators.name.info": "The display label of the number generator. Used to group number generator sequences, and select from them in certain circumstances.",
   "settings.numberGenerators.code": "Code",
