@@ -56,6 +56,7 @@ const NumberGeneratorSequenceForm = () => {
       <Row>
         <Col xs={6}>
           <Field
+            autoFocus
             component={TextField}
             label={
               <>
