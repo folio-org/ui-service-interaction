@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useCallout } from '@folio/stripes/core';
-import { ConfirmationModal, InfoPopover, Pane } from '@folio/stripes/components';
+import { Button, ConfirmationModal, InfoPopover, MessageBanner, Pane } from '@folio/stripes/components';
 import { ActionList } from '@k-int/stripes-kint-components';
 
 import { useNumberGenerators, useMutateNumberGenerator } from '../public';
@@ -82,6 +82,18 @@ const NumberGeneratorConfig = ({
         onClose={() => history.push(match.url)}
         paneTitle={<FormattedMessage id="ui-service-interaction.settings.numberGenerators" />}
       >
+        <MessageBanner>
+          <FormattedMessage
+            id="ui-service-interaction.settings.numberGenerators.helpText"
+            values={{
+              helpDocumentationLink: (
+                <a href="https://wiki.folio.org/display/FOLIOtips/Number+generator">
+                  <FormattedMessage id="ui-service-interaction.settings.numberGenerators.helpDocumentationLink" />
+                </a>
+              )
+            }}
+          />
+        </MessageBanner>
         <ActionList
           actionAssigner={actionAssigner}
           columnMapping={{
