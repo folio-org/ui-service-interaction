@@ -113,6 +113,18 @@ const NumberGeneratorSequenceConfig = ({
     rowData.nextValue ?? 0
   ), []);
 
+  const renderName = useCallback((rowData) => {
+    return (
+      <Button
+        buttonStyle="link"
+        marginBottom0
+        onClick={() => setSelectedSequence(rowData)}
+      >
+        {rowData.name}
+      </Button>
+    );
+  }, []);
+
   return (
     <>
       <Pane
@@ -149,12 +161,12 @@ const NumberGeneratorSequenceConfig = ({
               }}
               contentData={sortedNumberGenSequences}
               formatter={{
+                name: renderName,
                 enabled: renderEnabled,
                 nextValue: renderNextValue,
               }}
               id="number-generator-sequences"
-              interactive
-              onRowClick={(_e, row) => { setSelectedSequence(row); }}
+              interactive={false}
               visibleColumns={['name', 'code', 'nextValue', 'enabled']}
             />
           }

@@ -96,7 +96,11 @@ const NumberGeneratorConfig = ({
             id="ui-service-interaction.settings.numberGenerators.helpText"
             values={{
               helpDocumentationLink: (
-                <a href="https://wiki.folio.org/display/FOLIOtips/Number+generator">
+                <a
+                  href="https://wiki.folio.org/display/FOLIOtips/Number+generator"
+                  rel="noreferrer"
+                  target="_blank"
+                >
                   <FormattedMessage id="ui-service-interaction.settings.numberGenerators.helpDocumentationLink" />
                 </a>
               )
