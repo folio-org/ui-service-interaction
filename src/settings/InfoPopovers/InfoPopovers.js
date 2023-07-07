@@ -52,7 +52,7 @@ const OutputTemplateInfo = () => (
           <Button
             allowAnchorClick
             buttonStyle="primary"
-            href="https://wiki.folio.org/display/FOLIOtips/Output+templates"
+            href="https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction"
             marginBottom0
             rel="noreferrer"
             target="blank"

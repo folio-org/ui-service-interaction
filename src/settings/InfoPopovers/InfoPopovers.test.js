@@ -137,7 +137,7 @@ describe('InfoPopovers', () => {
 
     test('learn more button is rendered with correct href', async () => {
       await Button('Learn more').exists();
-      await Button('Learn more').has({ href: 'https://wiki.folio.org/display/FOLIOtips/Output+templates' });
+      await Button('Learn more').has({ href: 'https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction' });
     });
   });
 });
