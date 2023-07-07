@@ -166,7 +166,8 @@ describe('NumberGeneratorSequenceConfig', () => {
 
   describe('Clicking a sequence', () => {
     beforeEach(async () => {
-      await MultiColumnList().click({ row: 0, column: 0 });
+      // This is now a button with the name of the sequence the user is selecting
+      await Button('sequence 1.1').click();
     });
 
     test('NumberGeneratorSequence gets rendered', () => {

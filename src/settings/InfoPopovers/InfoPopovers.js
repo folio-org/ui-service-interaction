@@ -54,6 +54,8 @@ const OutputTemplateInfo = () => (
             buttonStyle="primary"
             href="https://wiki.folio.org/display/FOLIOtips/Output+templates"
             marginBottom0
+            rel="noreferrer"
+            target="blank"
           >
             <FormattedMessage id="ui-service-interaction.learnMore" />
           </Button>
