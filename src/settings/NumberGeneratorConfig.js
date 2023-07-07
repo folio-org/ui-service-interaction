@@ -97,7 +97,7 @@ const NumberGeneratorConfig = ({
             values={{
               helpDocumentationLink: (
                 <a
-                  href="https://wiki.folio.org/display/FOLIOtips/Number+generator"
+                  href="https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction/"
                   rel="noreferrer"
                   target="_blank"
                 >
