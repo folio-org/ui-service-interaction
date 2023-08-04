@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query';
-import { render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
-import { Button, Callout } from '@folio/stripes-testing';
+
 import { Button as MockButton } from '@folio/stripes/components';
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import useGenerateNumber from './useGenerateNumber';
 
@@ -60,20 +60,6 @@ const TestComponent = ({
   );
 };
 
-const TestComponentNoCallback = () => {
-  const { generate } = useGenerateNumber({
-    generator: 'numberGenerator2',
-    sequence: 'seq2.1'
-  });
-  return (
-    <MockButton
-      onClick={() => generate()}
-    >
-      GENERATE
-    </MockButton>
-  );
-};
-
 describe('useGenerateNumbers', () => {
   describe('render with enabled sequence', () => {
     beforeEach(() => {
@@ -99,7 +85,9 @@ describe('useGenerateNumbers', () => {
 
     describe('clicking \'GENERATE\'', () => {
       beforeEach(async () => {
-        await Button('GENERATE').click();
+        await waitFor(async () => {
+          await Button('GENERATE').click();
+        });
       });
 
       test('disabled warning sequence does not render', async () => {
@@ -148,7 +136,9 @@ describe('useGenerateNumbers', () => {
 
     describe('clicking \'GENERATE\'', () => {
       beforeEach(async () => {
-        await Button('GENERATE').click();
+        await waitFor(async () => {
+          await Button('GENERATE').click();
+        });
       });
 
       test('disabled warning sequence does not render', async () => {
@@ -197,7 +187,9 @@ describe('useGenerateNumbers', () => {
 
     describe('clicking \'GENERATE\'', () => {
       beforeEach(async () => {
-        await Button('GENERATE').click();
+        await waitFor(async () => {
+          await Button('GENERATE').click();
+        });
       });
 
       test('disabled warning sequence renders', async () => {

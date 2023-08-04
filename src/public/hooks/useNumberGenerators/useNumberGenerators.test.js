@@ -1,5 +1,5 @@
 import { useOkapiKy } from '@folio/stripes/core';
-import { render } from '@testing-library/react';
+import { render } from '@folio/jest-config-stripes/testing-library/react';
 import { useQuery } from 'react-query';
 
 import useNumberGenerators from './useNumberGenerators';

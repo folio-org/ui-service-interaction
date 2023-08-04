@@ -1,5 +1,12 @@
-import { Checkbox, TextArea, TextField } from '@folio/stripes-testing';
-import { renderWithIntl, SelectInteractor as Select, TestForm } from '@folio/stripes-erm-testing';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  Checkbox,
+  renderWithIntl,
+  Select,
+  TestForm,
+  TextArea,
+  TextField,
+} from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../test/helpers';
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
@@ -37,7 +44,9 @@ describe('NumberGeneratorSequenceForm', () => {
   test('renders expected description field', async () => {
     await TextArea('Description').exists();
     // Force "parse" function to get triggered for test coverage
-    await TextArea('Description').fillIn('this is a description');
+    await waitFor(async () => {
+      await TextArea('Description').fillIn('this is a description');
+    });
   });
 
   test('renders expected checkDigitAlgo field', async () => {
@@ -47,19 +56,25 @@ describe('NumberGeneratorSequenceForm', () => {
   test('renders expected format field', async () => {
     await TextField('Format').exists();
     // Force "parse" function to get triggered for test coverage
-    await TextField('Format').fillIn('this is a format');
+    await waitFor(async () => {
+      await TextField('Format').fillIn('this is a format');
+    });
   });
 
   test('renders expected output template field', async () => {
     await TextArea('Output template').exists();
     // Force "parse" function to get triggered for test coverage
-    await TextArea('Output template').fillIn('this is an output template');
+    await waitFor(async () => {
+      await TextArea('Output template').fillIn('this is an output template');
+    });
   });
 
   describe('validating next value', () => {
     beforeEach(async () => {
-      await TextField('Next value').fillIn('0');
-      await Select('Checksum*').chooseAndBlur('EAN13');
+      await waitFor(async () => {
+        await TextField('Next value').fillIn('0');
+        await Select('Checksum*').chooseAndBlur('EAN13');
+      });
     });
 
     test('renders validation error', async () => {

@@ -1,20 +1,25 @@
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import {
   Button,
   Modal
 } from '@folio/stripes/components';
 
-import { IconButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
+import {
+  Button as ButtonInteractor,
+  IconButton,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
 
 import ModalButton from './ModalButton';
 import { translationsProperties } from '../../../test/helpers';
 
 const mockOnClose = jest.fn();
-
+let renderComponent;
 describe('ModalButton', () => {
   describe('NumberGeneratorModalButton with generator prop', () => {
     beforeEach(() => {
-      renderWithIntl(
+      renderComponent = renderWithIntl(
         <ModalButton
           id="modal-button-id"
           onClose={mockOnClose}
@@ -24,10 +29,7 @@ describe('ModalButton', () => {
               label="modal label"
               {...mdProps}
             >
-              {/* Render a button inside to check modal is rendering properly */}
-              <Button>
-                This is a button inside a modal
-              </Button>
+              Internal modal contents
             </Modal>
           )}
           renderTrigger={(bprops) => (
@@ -50,24 +52,36 @@ describe('ModalButton', () => {
 
     describe('Opening the modal', () => {
       beforeEach(async () => {
-        await ButtonInteractor('Trigger button').click();
+        await waitFor(async () => {
+          await ButtonInteractor('Trigger button').click();
+        });
       });
 
       test('renders the modal contents', async () => {
-        await ButtonInteractor('This is a button inside a modal').exists();
+        const { getByText } = renderComponent;
+        await waitFor(() => {
+          expect(getByText('Internal modal contents')).toBeInTheDocument();
+        });
       });
 
       describe('Closing the modal', () => {
         beforeEach(async () => {
-          await IconButtonInteractor('Dismiss modal').click();
+          await waitFor(async () => {
+            await IconButton('Dismiss modal').click();
+          });
         });
 
-        test('onClose has been called', () => {
-          expect(mockOnClose).toHaveBeenCalled();
+        test('onClose has been called', async () => {
+          await waitFor(async () => {
+            await expect(mockOnClose).toHaveBeenCalled();
+          });
         });
 
         test('no longer renders modal contents', async () => {
-          await ButtonInteractor('This is a button inside a modal').absent();
+          const { queryByText } = renderComponent;
+          await waitFor(() => {
+            expect(queryByText('Internal modal contents')).not.toBeInTheDocument();
+          });
         });
       });
     });

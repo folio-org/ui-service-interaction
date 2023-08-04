@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render } from '@folio/jest-config-stripes/testing-library/react';
 
 import useSIRefdata from './useSIRefdata';
 import mockRefdata from '../../test/jest/refdata';
