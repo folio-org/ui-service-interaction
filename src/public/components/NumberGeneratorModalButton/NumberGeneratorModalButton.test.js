@@ -1,9 +1,8 @@
 import { forwardRef as mockForwardRef } from 'react';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button as MockStripesButton, Modal as MockModal } from '@folio/stripes/components';
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes-testing';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
 
@@ -34,6 +33,7 @@ jest.mock('../NumberGeneratorModal', () => mockForwardRef(({
       label="Test modal"
       {...modalProps}
     >
+      Interior modal content
       <MockStripesButton
         onClick={() => callback()}
       >
@@ -44,11 +44,11 @@ jest.mock('../NumberGeneratorModal', () => mockForwardRef(({
 }));
 
 const mockCallback = jest.fn();
-
+let renderComponent;
 describe('NumberGeneratorModalButton', () => {
   describe('NumberGeneratorModalButton with generator prop', () => {
     beforeEach(() => {
-      renderWithIntl(
+      renderComponent = renderWithIntl(
         <NumberGeneratorModalButton
           callback={mockCallback}
           generator="numberGen1"
@@ -62,22 +62,32 @@ describe('NumberGeneratorModalButton', () => {
       await Button('Select generator').exists();
     });
 
-    test('does not render the button', async () => {
-      await Button('Interior modal button').absent();
+    test('does not render the modal', async () => {
+      const { queryByText } = renderComponent;
+      await waitFor(() => {
+        expect(queryByText('Interior modal content')).not.toBeInTheDocument();
+      });
     });
 
     describe('Opening the modal', () => {
       beforeEach(async () => {
-        await Button('Select generator').click();
+        await waitFor(async () => {
+          await Button('Select generator').click();
+        });
       });
 
-      test('renders the button', async () => {
-        await Button('Interior modal button').exists();
+      test('renders the modal', async () => {
+        const { queryByText } = renderComponent;
+        await waitFor(() => {
+          expect(queryByText('Interior modal content')).toBeInTheDocument();
+        });
       });
 
       describe('Clicking the interior button', () => {
         beforeEach(async () => {
-          await Button('Interior modal button').click();
+          await waitFor(async () => {
+            await Button('Interior modal button').click();
+          });
         });
 
         test('callback has been triggered', () => {
@@ -85,7 +95,10 @@ describe('NumberGeneratorModalButton', () => {
         });
 
         test('modal has been closed', async () => {
-          await Button('Interior modal button').absent();
+          const { queryByText } = renderComponent;
+          await waitFor(() => {
+            expect(queryByText('Interior modal content')).not.toBeInTheDocument();
+          });
         });
       });
     });

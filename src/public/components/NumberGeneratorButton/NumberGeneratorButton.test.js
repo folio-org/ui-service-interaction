@@ -1,6 +1,4 @@
-import React from 'react';
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes-testing';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';

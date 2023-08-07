@@ -1,5 +1,5 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button, Select } from '@folio/stripes-testing';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button, Select, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
@@ -65,7 +65,9 @@ const testSelectOption = (numGen, seq, expected = true) => {
   if (expected) {
     describe(`choosing ${selectedSeqOption?.name ?? selectedSeqOption?.code}`, () => {
       beforeEach(async () => {
-        await Select().choose(selectedSeqOption?.name ?? selectedSeqOption?.code);
+        await waitFor(async () => {
+          await Select().choose(selectedSeqOption?.name ?? selectedSeqOption?.code);
+        });
       });
 
       it('has the expected value', async () => {
@@ -105,7 +107,9 @@ describe('NumberGeneratorModal', () => {
 
     describe('clicking generate button', () => {
       test('button gets clicked', async () => {
-        await Button('Generate').click();
+        await waitFor(async () => {
+          await Button('Generate').click();
+        });
         // Basically just check button click doesn't crash
         expect(1).toEqual(1);
       });
@@ -192,7 +196,9 @@ describe('NumberGeneratorModal', () => {
 
     describe('clicking generate button', () => {
       test('button gets clicked', async () => {
-        await Button('Generate').click();
+        await waitFor(async () => {
+          await Button('Generate').click();
+        });
         // Basically just check button click doesn't crash
         expect(1).toEqual(1);
       });

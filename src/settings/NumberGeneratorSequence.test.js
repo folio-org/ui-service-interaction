@@ -1,5 +1,4 @@
-import { KeyValue } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import NumberGeneratorSequence from './NumberGeneratorSequence';
 import { translationsProperties } from '../../test/helpers';

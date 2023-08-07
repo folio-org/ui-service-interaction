@@ -1,7 +1,9 @@
-import { Button } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../test/helpers';
+
 import {
   ChecksumAlgoInfo,
   CodeInfo,
@@ -31,7 +33,9 @@ describe('InfoPopovers', () => {
         translationsProperties
       );
 
-      await Button().click();
+      await waitFor(async () => {
+        await Button().click();
+      });
     });
 
     test('correct formatted message is rendered', () => {
@@ -47,7 +51,9 @@ describe('InfoPopovers', () => {
         translationsProperties
       );
 
-      await Button().click();
+      await waitFor(async () => {
+        await Button().click();
+      });
     });
 
     test('correct formatted message is rendered', () => {
@@ -63,7 +69,9 @@ describe('InfoPopovers', () => {
         translationsProperties
       );
 
-      await Button().click();
+      await waitFor(async () => {
+        await Button().click();
+      });
     });
 
     test('correct formatted message is rendered', () => {
@@ -79,7 +87,9 @@ describe('InfoPopovers', () => {
         translationsProperties
       );
 
-      await Button().click();
+      await waitFor(async () => {
+        await Button().click();
+      });
     });
 
     test('correct formatted message is rendered', () => {
@@ -95,7 +105,9 @@ describe('InfoPopovers', () => {
         translationsProperties
       );
 
-      await Button().click();
+      await waitFor(async () => {
+        await Button().click();
+      });
     });
 
     test('correct formatted message is rendered', () => {
@@ -111,7 +123,9 @@ describe('InfoPopovers', () => {
         translationsProperties
       );
 
-      await Button().click();
+      await waitFor(async () => {
+        await Button().click();
+      });
     });
 
     test('correct formatted message is rendered', () => {
@@ -127,7 +141,9 @@ describe('InfoPopovers', () => {
         translationsProperties
       );
 
-      await Button().click();
+      await waitFor(async () => {
+        await Button().click();
+      });
     });
 
     test('correct formatted message is rendered', () => {

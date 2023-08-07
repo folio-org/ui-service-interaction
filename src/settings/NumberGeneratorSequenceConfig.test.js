@@ -1,11 +1,18 @@
-import { waitFor } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { waitFor, render } from '@folio/jest-config-stripes/testing-library/react';
 
 import { Field as MockField } from 'react-final-form';
 
 import { Button as MockButton, TextField as MockTextField } from '@folio/stripes/components';
-import { Button, Callout, MultiColumnList, MultiColumnListCell, MultiColumnListHeader, Select, TextField } from '@folio/stripes-testing';
-import { IconButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import {
+  Button,
+  Callout,
+  IconButton,
+  MultiColumnListCell,
+  MultiColumnListHeader,
+  Select,
+  TextField,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
 
 import NumberGeneratorSequenceConfig from './NumberGeneratorSequenceConfig';
 import { translationsProperties } from '../../test/helpers';
@@ -140,7 +147,9 @@ describe('NumberGeneratorSequenceConfig', () => {
 
   describe('Choosing another sequence', () => {
     beforeEach(async () => {
-      await Select('Generator').choose('Number generator 2');
+      await waitFor(async () => {
+        await Select('Generator').choose('Number generator 2');
+      });
     });
 
     test('MultiColumnList contains expected values', async () => {
@@ -167,7 +176,9 @@ describe('NumberGeneratorSequenceConfig', () => {
   describe('Clicking a sequence', () => {
     beforeEach(async () => {
       // This is now a button with the name of the sequence the user is selecting
-      await Button('sequence 1.1').click();
+      await waitFor(async () => {
+        await Button('sequence 1.1').click();
+      });
     });
 
     test('NumberGeneratorSequence gets rendered', () => {
@@ -180,7 +191,9 @@ describe('NumberGeneratorSequenceConfig', () => {
       beforeEach(async () => {
         const { getByText } = renderComponent;
         numSequenceComponent = getByText('NumberGeneratorSequence');
-        await Button('CloseSequence').click();
+        await waitFor(async () => {
+          await Button('CloseSequence').click();
+        });
       });
 
       test('NumberGeneratorSequence no longer renders', () => {
@@ -190,18 +203,24 @@ describe('NumberGeneratorSequenceConfig', () => {
 
     describe('deleting the sequence', () => {
       beforeEach(async () => {
-        await Button('DeleteSequence').click();
+        await waitFor(async () => {
+          await Button('DeleteSequence').click();
+        });
       });
 
-      test('Confirmation modal renders', () => {
+      test('Confirmation modal renders', async () => {
         const { getByText } = renderComponent;
-        expect(getByText('Number generator sequence <strong>{name}</strong> will be permanently <strong>deleted</strong>.', { exact: false })).toBeInTheDocument();
-        expect(getByText('The sequence may be in use in one or more apps. If in doubt, consider disabling the sequence instead.', { exact: false })).toBeInTheDocument();
+        await waitFor(() => {
+          expect(getByText('Number generator sequence <strong>{name}</strong> will be permanently <strong>deleted</strong>.', { exact: false })).toBeInTheDocument();
+          expect(getByText('The sequence may be in use in one or more apps. If in doubt, consider disabling the sequence instead.', { exact: false })).toBeInTheDocument();
+        });
       });
 
       describe('clicking delete', () => {
         beforeEach(async () => {
-          await Button('Delete').click();
+          await waitFor(async () => {
+            await Button('Delete').click();
+          });
         });
 
         test('delete callout fires', async () => {
@@ -212,29 +231,39 @@ describe('NumberGeneratorSequenceConfig', () => {
 
       describe('cancelling delete', () => {
         beforeEach(async () => {
-          await Button('Cancel').click();
+          await waitFor(async () => {
+            await Button('Cancel').click();
+          });
         });
 
         test('confirmation modal no longer renders', async () => {
-          await Button('Cancel').absent();
+          const { queryByText } = renderComponent;
+          await waitFor(() => {
+            expect(queryByText('Number generator sequence <strong>{name}</strong> will be permanently <strong>deleted</strong>.', { exact: false })).not.toBeInTheDocument();
+            expect(queryByText('The sequence may be in use in one or more apps. If in doubt, consider disabling the sequence instead.', { exact: false })).not.toBeInTheDocument();
+          });
         });
       });
     });
 
     describe('editing the sequence', () => {
       beforeEach(async () => {
-        await Button('EditSequence').click();
+        await waitFor(async () => {
+          await Button('EditSequence').click();
+        });
       });
 
-      test('FormModal renders', () => {
+      test('FormModal renders', async () => {
         const { getByText } = renderComponent;
-        expect(getByText('NumberGeneratorSequenceForm')).toBeInTheDocument();
+        await waitFor(() => {
+          expect(getByText('NumberGeneratorSequenceForm')).toBeInTheDocument();
+        });
       });
 
       describe('saving the sequence', () => {
         beforeEach(async () => {
-          await TextField('TEST FIELD').fillIn('new name');
           await waitFor(async () => {
+            await TextField('TEST FIELD').fillIn('new name');
             await Button('Save & close').click();
           });
         });
@@ -249,18 +278,22 @@ describe('NumberGeneratorSequenceConfig', () => {
 
   describe('creating a sequence', () => {
     beforeEach(async () => {
-      await Button('New').click();
+      await waitFor(async () => {
+        await Button('New').click();
+      });
     });
 
-    test('FormModal renders', () => {
+    test('FormModal renders', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('NumberGeneratorSequenceForm')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(getByText('NumberGeneratorSequenceForm')).toBeInTheDocument();
+      });
     });
 
     describe('saving the sequence', () => {
       beforeEach(async () => {
-        await TextField('TEST FIELD').fillIn('new name');
         await waitFor(async () => {
+          await TextField('TEST FIELD').fillIn('new name');
           await Button('Save & close').click();
         });
       });
@@ -274,7 +307,9 @@ describe('NumberGeneratorSequenceConfig', () => {
 
   describe('closing pane', () => {
     beforeEach(async () => {
-      await IconButtonInteractor('Close ').click();
+      await waitFor(async () => {
+        await IconButton('Close ').click();
+      });
     });
 
     test('history push gets called', () => {

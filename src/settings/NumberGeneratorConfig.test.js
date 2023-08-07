@@ -1,6 +1,12 @@
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import { Button as MockButton } from '@folio/stripes/components';
-import { Button, Callout } from '@folio/stripes-testing';
-import { IconButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import {
+  Button,
+  Callout,
+  IconButton,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
 
 import NumberGeneratorConfig from './NumberGeneratorConfig';
 import { translationsProperties } from '../../test/helpers';
@@ -53,6 +59,13 @@ jest.mock('@k-int/stripes-kint-components', () => {
       return (
         <div>
           ActionList {/* Text to ensure it renders */}
+          {
+            /*
+             * We have callouts on edit/delete,
+             * mock buttons using callbacks to
+             * test those fire
+             */
+          }
           <MockButton
             onClick={() => editAction?.callback()}
           >
@@ -93,7 +106,9 @@ describe('NumberGeneratorConfig', () => {
 
   describe('edit', () => {
     beforeEach(async () => {
-      await Button('EditButton').click();
+      await waitFor(async () => {
+        await Button('EditButton').click();
+      });
     });
 
     test('edit callback is fired', async () => {
@@ -104,7 +119,9 @@ describe('NumberGeneratorConfig', () => {
 
   describe('create', () => {
     beforeEach(async () => {
-      await Button('CreateButton').click();
+      await waitFor(async () => {
+        await Button('CreateButton').click();
+      });
     });
 
     test('create callback is fired', async () => {
@@ -115,19 +132,23 @@ describe('NumberGeneratorConfig', () => {
 
   describe('delete', () => {
     beforeEach(async () => {
-      await Button('DeleteButton').click();
+      await waitFor(async () => {
+        await Button('DeleteButton').click();
+      });
     });
 
     test('confirmation modal renders', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('Number generator <strong>{name}</strong> will be permanently <strong>deleted</strong>.')).toBeInTheDocument();
-      await Button('Cancel').exists();
-      await Button('Delete').exists();
+      await waitFor(() => {
+        expect(getByText('Number generator <strong>{name}</strong> will be permanently <strong>deleted</strong>.')).toBeInTheDocument();
+      });
     });
 
     describe('confirming delete in modal', () => {
       beforeEach(async () => {
-        await Button('Delete').click();
+        await waitFor(async () => {
+          await Button('Delete').click();
+        });
       });
 
       test('delete callback is fired', async () => {
@@ -138,17 +159,24 @@ describe('NumberGeneratorConfig', () => {
 
     describe('cancelling delete in modal', () => {
       beforeEach(async () => {
-        await Button('Cancel').click();
+        await waitFor(async () => {
+          await Button('Cancel').click();
+        });
       });
 
       test('confirmation modal no longer renders', async () => {
-        await Button('Cancel').absent();
+        const { queryByText } = renderComponent;
+        await waitFor(() => {
+          expect(queryByText('Number generator <strong>{name}</strong> will be permanently <strong>deleted</strong>.')).not.toBeInTheDocument();
+        });
       });
     });
 
     describe('closing pane', () => {
       beforeEach(async () => {
-        await IconButtonInteractor('Close ').click();
+        await waitFor(async () => {
+          await IconButton('Close ').click();
+        });
       });
 
       test('history push gets called', () => {
