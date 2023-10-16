@@ -1,6 +1,6 @@
 {
   "name": "@folio/service-interaction",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "FOLIO app for service-interaction",
   "main": "src/index.js",
   "repository": "folio-org/ui-service-interaction",
