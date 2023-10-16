@@ -1,3 +1,5 @@
+## 2.1.0 In progress
+
 ## 2.0.0 2023-10-16
   * Added test coverage for components and hooks
   * Added features to NumberGenerator Modal
