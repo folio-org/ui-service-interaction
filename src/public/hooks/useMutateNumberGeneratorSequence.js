@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { NUMBER_GENERATORS_ENDPOINT, NUMBER_GENERATOR_ENDPOINT } from '../utilities/endpoints';
+import { NUMBER_GENERATORS_ENDPOINT, NUMBER_GENERATOR_ENDPOINT, NUMBER_GENERATOR_SEQUENCES_ENDPOINT, NUMBER_GENERATOR_SEQUENCE_ENDPOINT } from '../utilities/endpoints';
 
+// We _could_ do this directly with the newer endpoint, but this way works *shrug*
 const useMutateNumberGeneratorSequence = ({
   afterQueryCalls,
   id, // This is the ID of the parent NumberGenerator
@@ -19,6 +20,8 @@ const useMutateNumberGeneratorSequence = ({
   const ky = useOkapiKy();
 
   const invalidateNumberGenerators = () => queryClient.invalidateQueries(NUMBER_GENERATORS_ENDPOINT);
+  const invalidateNumberGeneratorSequences = () => queryClient.invalidateQueries(NUMBER_GENERATOR_SEQUENCES_ENDPOINT);
+  const invalidateNumberGeneratorSequence = (invalidateId) => queryClient.invalidateQueries(NUMBER_GENERATOR_SEQUENCE_ENDPOINT(invalidateId));
 
   // DELETE SEQ
   const deleteQueryObject = useMutation(
@@ -38,7 +41,10 @@ const useMutateNumberGeneratorSequence = ({
       }
     ).json()
       .then(afterQueryCalls?.delete)
-      .then(() => invalidateNumberGenerators()),
+      .then(() => {
+        invalidateNumberGenerators();
+        invalidateNumberGeneratorSequences();
+      }),
     queryParams?.delete
   );
 
@@ -57,7 +63,11 @@ const useMutateNumberGeneratorSequence = ({
       }
     ).json()
       .then(res => afterQueryCalls?.put(res, data))
-      .then(() => invalidateNumberGenerators()),
+      .then(() => {
+        invalidateNumberGenerators();
+        invalidateNumberGeneratorSequences();
+        invalidateNumberGeneratorSequence(data.id);
+      }),
     queryParams?.put
   );
 
@@ -77,7 +87,10 @@ const useMutateNumberGeneratorSequence = ({
       }
     ).json()
       .then(res => afterQueryCalls?.post(res, data))
-      .then(() => invalidateNumberGenerators()),
+      .then(() => {
+        invalidateNumberGenerators();
+        invalidateNumberGeneratorSequences();
+      }),
     queryParams?.post
   );
 

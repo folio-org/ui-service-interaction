@@ -39,6 +39,22 @@
           "settings.enabled"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-service-interaction.numberGenerator.view",
+        "displayName": "Number generator: Allow a user to view number generators and number generator sequences, as well as make use of them",
+        "subPermissions": [
+          "servint.numberGenerator.use"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-service-interaction.numberGenerator.manage",
+        "displayName": "Number generator: Allow a user to edit, delete, view and use number generators and number generator sequences",
+        "subPermissions": [
+          "servint.numberGenerator.manage"
+        ],
+        "visible": true
       }
     ],
     "icons": [

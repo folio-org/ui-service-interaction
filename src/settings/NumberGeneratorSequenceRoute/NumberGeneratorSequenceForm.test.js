@@ -8,12 +8,12 @@ import {
   TextField,
 } from '@folio/stripes-erm-testing';
 
-import { translationsProperties } from '../../test/helpers';
+import { translationsProperties } from '../../../test/helpers';
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 
 const onSubmit = jest.fn();
 
-jest.mock('../hooks/useSIRefdata');
+jest.mock('../../hooks/useSIRefdata');
 
 describe('NumberGeneratorSequenceForm', () => {
   beforeEach(async () => {
