@@ -39,7 +39,7 @@ const NumberGeneratorSequenceForm = () => {
 
   const checkDigitAlgoOptions = [
     { value: '', label: '', disabled: true },
-    ...checksums?.filter(cdao => currentlySupportedChecksums.includes(cdao.value))?.map(cdao => ({ value: cdao.id, label: cdao.label }))
+    ...checksums?.filter(cdao => currentlySupportedChecksums.includes(cdao.value))?.map(cdao => ({ value: cdao.id, label: cdao.label })) ?? []
   ];
 
   const validateChecksum = (val, allVal) => {

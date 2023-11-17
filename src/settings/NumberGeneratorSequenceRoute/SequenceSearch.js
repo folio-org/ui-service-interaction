@@ -122,60 +122,58 @@ const SequenceSearch = ({
           resetAll,
         }) => {
           return (
-            <>
-              <Pane
-                defaultWidth="fill"
-                id="settings-numberGeneratorSequences-list"
-                renderHeader={(renderProps) => (
-                  <PaneHeader
-                    {...renderProps}
-                    dismissible
-                    lastMenu={
-                      <Button
-                        buttonStyle="primary"
-                        marginBottom0
-                        onClick={() => setCreating(true)}
-                      >
-                        <FormattedMessage id="ui-service-interaction.new" />
-                      </Button>
-                    }
-                    onClose={() => history.push(baseUrl)}
-                    paneTitle={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences" />}
-                  />
-                )}
-              >
-                <Select
-                  dataOptions={numberGenerators?.map(ng => ({ value: ng.id, label: ng.name }))}
-                  label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.generator" />}
-                  onChange={e => {
-                    changeGenerator(e.target.value);
-                  }}
-                  value={numGenId}
-                />
-                <KeyValue
-                  label={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />}
-                  value={
-                    <MultiColumnList
-                      columnMapping={{
-                        name: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name" />,
-                        code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
-                        enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
-                        nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
-                      }}
-                      contentData={sequences}
-                      formatter={{
-                        name: renderName,
-                        enabled: renderEnabled,
-                        nextValue: renderNextValue,
-                      }}
-                      id="number-generator-sequences"
-                      interactive={false}
-                      visibleColumns={['name', 'code', 'nextValue', 'enabled']}
-                    />
+            <Pane
+              defaultWidth="fill"
+              id="settings-numberGeneratorSequences-list"
+              renderHeader={(renderProps) => (
+                <PaneHeader
+                  {...renderProps}
+                  dismissible
+                  lastMenu={
+                    <Button
+                      buttonStyle="primary"
+                      marginBottom0
+                      onClick={() => setCreating(true)}
+                    >
+                      <FormattedMessage id="ui-service-interaction.new" />
+                    </Button>
                   }
+                  onClose={() => history.push(baseUrl)}
+                  paneTitle={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences" />}
                 />
-              </Pane>
-            </>
+              )}
+            >
+              <Select
+                dataOptions={numberGenerators?.map(ng => ({ value: ng.id, label: ng.name }))}
+                label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.generator" />}
+                onChange={e => {
+                  changeGenerator(e.target.value);
+                }}
+                value={numGenId}
+              />
+              <KeyValue
+                label={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />}
+                value={
+                  <MultiColumnList
+                    columnMapping={{
+                      name: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name" />,
+                      code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
+                      enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
+                      nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
+                    }}
+                    contentData={sequences}
+                    formatter={{
+                      name: renderName,
+                      enabled: renderEnabled,
+                      nextValue: renderNextValue,
+                    }}
+                    id="number-generator-sequences"
+                    interactive={false}
+                    visibleColumns={['name', 'code', 'nextValue', 'enabled']}
+                  />
+                }
+              />
+            </Pane>
           );
         }}
       </SearchAndSortQuery>

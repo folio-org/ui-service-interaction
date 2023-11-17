@@ -24,7 +24,6 @@ const NumberGeneratorSequenceRoute = ({
     const urlIds = getIdsFromUrl(location.pathname);
     if (urlIds.length === 2) {
       // If a sequence is open, we want it to remain so
-      // FIXME probably need location.search
       history.push(`${match.path}/${id}/${urlIds[1]}`);
     } else {
       history.push(`${match.path}/${id}`);
