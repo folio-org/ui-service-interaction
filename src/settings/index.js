@@ -4,11 +4,17 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 
 import NumberGeneratorConfig from './NumberGeneratorConfig';
-import NumberGeneratorSequenceConfig from './NumberGeneratorSequenceConfig';
+import NumberGeneratorSequenceRoute from './NumberGeneratorSequenceRoute';
 
 const ServintSettings = (settingProps) => {
-  const renderNumberGeneratorConfig = useCallback(() => (<NumberGeneratorConfig {...settingProps} />), [settingProps]);
-  const renderNumberGeneratorSequenceConfig = useCallback(() => (<NumberGeneratorSequenceConfig {...settingProps} />), [settingProps]);
+  const renderNumberGeneratorConfig = useCallback((innerProps) => (<NumberGeneratorConfig {...innerProps} />), []);
+  
+  const renderNumberGeneratorSequenceRoute = useCallback((innerProps) => (
+    <NumberGeneratorSequenceRoute
+      baseUrl={settingProps.match?.url}
+      {...innerProps}
+    />
+  ), [settingProps]);
 
   const pages = [
     {
@@ -19,7 +25,7 @@ const ServintSettings = (settingProps) => {
     {
       route: 'numberGeneratorSequences',
       label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences" />,
-      component: renderNumberGeneratorSequenceConfig,
+      component: renderNumberGeneratorSequenceRoute,
     },
   ];
 

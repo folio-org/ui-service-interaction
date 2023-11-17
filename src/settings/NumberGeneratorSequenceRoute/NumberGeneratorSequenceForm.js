@@ -21,8 +21,8 @@ import {
   NameInfo,
   NextValueInfo,
   OutputTemplateInfo
-} from './InfoPopovers';
-import useSIRefdata from '../hooks/useSIRefdata';
+} from '../InfoPopovers';
+import useSIRefdata from '../../hooks/useSIRefdata';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();

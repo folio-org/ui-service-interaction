@@ -4,7 +4,7 @@ import Settings from './index';
 import { translationsProperties } from '../../test/helpers';
 
 jest.mock('./NumberGeneratorConfig', () => () => <div>NumberGeneratorConfigComponent</div>);
-jest.mock('./NumberGeneratorSequenceConfig', () => () => <div>NumberGeneratorSequenceConfigComponent</div>);
+jest.mock('./NumberGeneratorSequenceRoute', () => () => <div>NumberGeneratorSequenceRoute</div>);
 
 jest.mock('@folio/stripes/smart-components', () => ({
   Settings: ({ pages }) => {

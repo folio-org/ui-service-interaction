@@ -7,7 +7,7 @@ import { useCallout } from '@folio/stripes/core';
 import { ConfirmationModal, InfoPopover, MessageBanner, Pane } from '@folio/stripes/components';
 import { ActionList, required } from '@k-int/stripes-kint-components';
 
-import { useNumberGenerators, useMutateNumberGenerator } from '../public';
+import { useNumberGenerators, useMutateNumberGenerator } from '../../public';
 
 const NumberGeneratorConfig = ({
   history,

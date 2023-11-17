@@ -9,8 +9,8 @@ import {
 } from '@folio/stripes-erm-testing';
 
 import NumberGeneratorConfig from './NumberGeneratorConfig';
-import { translationsProperties } from '../../test/helpers';
-import { numberGenerator1, numberGenerator2 } from '../../test/jest/mockGenerators';
+import { translationsProperties } from '../../../test/helpers';
+import { numberGenerator1, numberGenerator2 } from '../../../test/jest/mockGenerators';
 
 const push = jest.fn();
 const mockUseNumberGenerators = jest.fn((code) => {
@@ -31,9 +31,9 @@ const mockUseNumberGenerators = jest.fn((code) => {
 
 const fakeCalloutInfo = { id: '123', label: 'numgenName', code: 'numgenCode' };
 
-jest.mock('../public', () => {
+jest.mock('../../public', () => {
   return ({
-    ...jest.requireActual('../public'),
+    ...jest.requireActual('../../public'),
     useNumberGenerators: (code) => mockUseNumberGenerators(code),
     useMutateNumberGenerator: ({ afterQueryCalls: { delete: deleteQueryCalls, post: postQueryCalls, put: putQueryCalls } }) => ({
       post: () => Promise.resolve(true).then(() => postQueryCalls(fakeCalloutInfo)),
