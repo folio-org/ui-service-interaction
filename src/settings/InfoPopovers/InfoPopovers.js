@@ -73,11 +73,29 @@ const FormatInfo = () => (
   />
 );
 
+const MaximumNumberInfo = () => (
+  <InfoPopover
+    content={
+      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber.info" />
+    }
+  />
+);
+
+const MaximumNumberThresholdInfo = () => (
+  <InfoPopover
+    content={
+      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumberThreshold.info" />
+    }
+  />
+);
+
 export {
   ChecksumAlgoInfo,
   CodeInfo,
   EnabledInfo,
   FormatInfo,
+  MaximumNumberInfo,
+  MaximumNumberThresholdInfo,
   NameInfo,
   NextValueInfo,
   OutputTemplateInfo
