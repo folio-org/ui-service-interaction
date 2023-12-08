@@ -15,10 +15,12 @@ import {
   PaneHeader,
   Select
 } from '@folio/stripes/components';
-import { useSASQQIndex } from '@folio/stripes-erm-components';
+import { InfoBox, useSASQQIndex } from '@folio/stripes-erm-components';
 
 import { useMutateNumberGeneratorSequence, useNumberGeneratorSequences } from '../../public';
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
+
+import css from './SequenceSearch.css';
 
 const SequenceSearch = ({
   baseUrl,
@@ -89,6 +91,10 @@ const SequenceSearch = ({
     rowData.nextValue ?? 0
   ), []);
 
+  const renderMaximumNumber = useCallback((rowData) => (
+    rowData.maximumNumber
+  ), []);
+
   const renderName = useCallback((rowData) => {
     return (
       <Button
@@ -100,6 +106,36 @@ const SequenceSearch = ({
       </Button>
     );
   }, [history, url]);
+
+  const renderHealthCheck = useCallback((rowData) => {
+    if (rowData.maximumCheck?.value === 'at_maximum') {
+      return (
+        <InfoBox
+          className={css.noMarginLeft}
+          type="error"
+        >
+          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.atMax" />
+        </InfoBox>
+      );
+    }
+
+    if (rowData.maximumCheck?.value === 'over_threshold') {
+      return (
+        <InfoBox
+          className={css.noMarginLeft}
+          type="warn"
+        >
+          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.overThreshold" />
+        </InfoBox>
+      );
+    }
+
+    if (rowData.maximumCheck?.value === 'below_threshold') {
+      return (
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.belowThreshold" />
+      );
+    }
+  }, []);
 
   return (
     <>
@@ -160,16 +196,20 @@ const SequenceSearch = ({
                       code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
                       enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
                       nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
+                      maximumNumber: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber" />,
+                      healthCheck: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck" />,
                     }}
                     contentData={sequences}
                     formatter={{
                       name: renderName,
                       enabled: renderEnabled,
                       nextValue: renderNextValue,
+                      maximumNumber: renderMaximumNumber,
+                      healthCheck: renderHealthCheck
                     }}
                     id="number-generator-sequences"
                     interactive={false}
-                    visibleColumns={['name', 'code', 'nextValue', 'enabled']}
+                    visibleColumns={['name', 'code', 'enabled', 'nextValue', 'maximumNumber', 'healthCheck']}
                   />
                 }
               />

@@ -22,6 +22,8 @@ import {
   CodeInfo,
   EnabledInfo,
   FormatInfo,
+  MaximumNumberInfo,
+  MaximumNumberThresholdInfo,
   NameInfo,
   NextValueInfo,
   OutputTemplateInfo
@@ -163,6 +165,30 @@ const NumberGeneratorSequence = ({
                 </>
               }
               value={sequence.enabled ? <FormattedMessage id="ui-service-interaction.true" /> : <FormattedMessage id="ui-service-interaction.false" />}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber" />
+                  <MaximumNumberInfo />
+                </>
+              }
+              value={sequence.maximumNumber}
+            />
+          </Col>
+          <Col xs={6}>
+            <KeyValue
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumberThreshold" />
+                  <MaximumNumberThresholdInfo />
+                </>
+              }
+              value={sequence.maximumNumberThreshold}
             />
           </Col>
         </Row>
