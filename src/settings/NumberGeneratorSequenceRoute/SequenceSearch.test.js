@@ -126,8 +126,10 @@ describe('SequenceSearch', () => {
     Promise.all([
       await MultiColumnListHeader({ index: 0 }).has({ content: 'Name' }),
       await MultiColumnListHeader({ index: 1 }).has({ content: 'Code' }),
-      await MultiColumnListHeader({ index: 2 }).has({ content: 'Next value' }),
-      await MultiColumnListHeader({ index: 3 }).has({ content: 'Enabled' }),
+      await MultiColumnListHeader({ index: 2 }).has({ content: 'Enabled' }),
+      await MultiColumnListHeader({ index: 3 }).has({ content: 'Next value' }),
+      await MultiColumnListHeader({ index: 4 }).has({ content: 'Maximum number' }),
+      await MultiColumnListHeader({ index: 5 }).has({ content: 'Health check' }),
     ]);
   });
 

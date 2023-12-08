@@ -58,8 +58,6 @@ const NumberGeneratorSequenceRoute = ({
     />
   ), [baseUrl, changeGenerator, data]);
 
-  console.log("Location: %o", location);
-
   const renderSequenceView = useCallback((innerProps) => {
     // Settings routing sucks, use Regex to grab first id
     const urlIds = getIdsFromUrl(location.pathname);

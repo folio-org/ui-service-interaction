@@ -66,9 +66,6 @@ const NumberGeneratorSequenceForm = () => {
       return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumberThreshold.thresholdNoMaximum" />;
     }
 
-    console.log("VAL: %o", val)
-    console.log("ALL VAL MAX NUM: %o", allVal.maximumNumber)
-
     if (!!allVal.maximumNumber && !!val && parseInt(val, 10) >= parseInt(allVal.maximumNumber, 10)) {
       return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumberThreshold.thresholdMustBeLowerThanMaximum" />;
     }
