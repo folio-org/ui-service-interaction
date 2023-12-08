@@ -18,6 +18,8 @@ import {
   CodeInfo,
   EnabledInfo,
   FormatInfo,
+  MaximumNumberInfo,
+  MaximumNumberThresholdInfo,
   NameInfo,
   NextValueInfo,
   OutputTemplateInfo
@@ -46,6 +48,26 @@ const NumberGeneratorSequenceForm = () => {
     const checksumVal = checksums?.find(cs => cs.id === val);
     if (checksumVal?.value && checksumVal.value !== 'none' && allVal.nextValue && parseInt(allVal.nextValue, 10) < 1) {
       return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checksumError" />;
+    }
+
+    return null;
+  };
+
+  const validateMaximumNumber = (val, allVal) => {
+    if (!!val && val > parseInt('9'.repeat(allVal.format?.length ?? 1), 10)) {
+      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber.maximumTooLow" />;
+    }
+
+    return null;
+  };
+
+  const validateMaximumNumberThreshold = (val, allVal) => {
+    if (!allVal.maximumNumber && !!val) {
+      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumberThreshold.thresholdNoMaximum" />;
+    }
+
+    if (!!allVal.maximumNumber && !!val && parseInt(val, 10) >= parseInt(allVal.maximumNumber, 10)) {
+      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumberThreshold.thresholdMustBeLowerThanMaximum" />;
     }
 
     return null;
@@ -117,10 +139,50 @@ const NumberGeneratorSequenceForm = () => {
         </Col>
       </Row>
       <Row>
+        <Col xs={6}>
+          <Layout className="flex">
+            <Field
+              component={TextField}
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber" />
+                  <MaximumNumberInfo />
+                </>
+              }
+              min={1}
+              name="maximumNumber"
+              parse={v => v}
+              type="number"
+              validate={validateMaximumNumber}
+            />
+          </Layout>
+        </Col>
+        <Col xs={6}>
+          <Layout className="flex">
+            <Field
+              component={TextField}
+              disabled={!values?.maximumNumber}
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumberThreshold" />
+                  <MaximumNumberThresholdInfo />
+                </>
+              }
+              min={1}
+              name="maximumNumberThreshold"
+              parse={v => v}
+              type="number"
+              validate={validateMaximumNumberThreshold}
+            />
+          </Layout>
+        </Col>
+      </Row>
+      <Row>
         <Col xs={12}>
           <Field
             component={TextArea}
             label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
+            maxLength="255"
             name="description"
             parse={v => v}
           />
