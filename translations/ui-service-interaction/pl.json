@@ -13,7 +13,7 @@
     "false": "False",
     "view": "View",
     "learnMore": "Learn more",
-    "actions": "Actions",
+    "actions": "Akcje",
     "cancel": "Cancel",
     "saveAndClose": "Save & close",
     "save": "Save",
@@ -63,5 +63,16 @@
     "settings.numberGeneratorSequences.callout.delete": "Number generator sequence <strong>{name}</strong> was successfully <strong>deleted</strong>.",
     "settings.numberGeneratorSequences.callout.edit": "Number generator sequence <strong>{name}</strong> was successfully <strong>edited</strong>.",
     "settings.numberGeneratorSequences.callout.create": "Number generator sequence <strong>{name}</strong> was successfully <strong>created</strong>.",
-    "numberGenerator.generateDisabledSequenceError": "This sequence is marked as disabled and cannot be generated from. Please contact a system admin"
+    "numberGenerator.generateDisabledSequenceError": "This sequence is marked as disabled and cannot be generated from. Please contact a system admin",
+    "settings.numberGeneratorSequences.maximumNumber": "Maximum number",
+    "settings.numberGeneratorSequences.maximumNumber.info": "This is the maximum possible value for the sequence. When the maximum is reached, the sequence will no longer be usable.",
+    "settings.numberGeneratorSequences.maximumNumber.maximumTooLow": "The maximum number must be smaller than the maximum imposed by the length of the \"format\" field.",
+    "settings.numberGeneratorSequences.maximumNumberThreshold": "Warning threshold number",
+    "settings.numberGeneratorSequences.maximumNumberThreshold.info": "When set, a warning will be displayed to users of the sequence when its value is reached. Must be lower than the Maximum number.",
+    "settings.numberGeneratorSequences.maximumNumberThreshold.thresholdNoMaximum": "A warning threshold number cannot be set when there is no maximum number specified.",
+    "settings.numberGeneratorSequences.maximumNumberThreshold.thresholdMustBeLowerThanMaximum": "Warning threshold number must be strictly lower than maximum number.",
+    "settings.numberGeneratorSequences.maximumCheck": "Health check",
+    "settings.numberGeneratorSequences.maximumCheck.atMax": "At maximum",
+    "settings.numberGeneratorSequences.maximumCheck.overThreshold": "Over threshold",
+    "settings.numberGeneratorSequences.maximumCheck.belowThreshold": "Below threshold"
 }
