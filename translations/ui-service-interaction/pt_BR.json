@@ -64,7 +64,7 @@
     "settings.numberGeneratorSequences.callout.edit": "A sequência do gerador de números <strong>{name}</strong> foi <strong>editada</strong> com sucesso.",
     "settings.numberGeneratorSequences.callout.create": "A sequência do gerador de números <strong>{name}</strong> foi <strong>criada</strong> com sucesso.",
     "numberGenerator.generateDisabledSequenceError": "Esta sequência está marcada como desativada e não pode ser gerada a partir dela. Entre em contato com um administrador do sistema",
-    "settings.numberGeneratorSequences.maximumNumber": "Numero maximo",
+    "settings.numberGeneratorSequences.maximumNumber": "Numero máximo",
     "settings.numberGeneratorSequences.maximumNumber.info": "Este é o valor máximo possível para a sequência. Quando o máximo for atingido, a sequência não poderá mais ser utilizada.",
     "settings.numberGeneratorSequences.maximumNumber.maximumTooLow": "O número máximo deve ser menor do que o máximo imposto pelo comprimento do campo \"formato\".",
     "settings.numberGeneratorSequences.maximumNumberThreshold": "Número limite de aviso",
