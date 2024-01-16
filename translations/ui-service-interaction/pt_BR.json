@@ -25,7 +25,7 @@
     "settings.numberGenerators.code.info": "Uma cadeia de caracteres exclusiva que representa o gerador de números para fins técnicos. Não deve conter espaços em branco.",
     "settings.numberGenerators.sequences": "Sequências",
     "settings.numberGenerators.sequences.info": "A contagem do número de sequências atribuídas a este gerador.",
-    "settings.numberGenerators.editGeneratorAria": "Editar gerador {nome}",
+    "settings.numberGenerators.editGeneratorAria": "Editar gerador {name}",
     "settings.numberGenerators.deleteGeneratorAria": "Excluir gerador {name}",
     "settings.numberGenerators.deleteGenerator": "Excluir gerador",
     "settings.numberGenerators.deleteGenerator.message": "O gerador de números <strong>{name}</strong> será <strong>excluído</strong> permanentemente.",
