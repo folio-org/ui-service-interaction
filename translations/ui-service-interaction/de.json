@@ -63,5 +63,16 @@
     "settings.numberGeneratorSequences.callout.delete": "Nummernkreis <strong>{name}</strong> wurde erfolgreich <strong>gelöscht</strong>.",
     "settings.numberGeneratorSequences.callout.edit": "Nummernkreis <strong>{name}</strong> wurde erfolgreich <strong>bearbeitet</strong>.",
     "settings.numberGeneratorSequences.callout.create": "Nummernkreis <strong>{name}</strong> wurde erfolgreich <strong>erstellt</strong>.",
-    "numberGenerator.generateDisabledSequenceError": "Dieser Nummernkreis ist als deaktiviert markiert und steht dadurch nicht zur Generierung zur Verfügung. Bitte an Systemadministrator wenden"
+    "numberGenerator.generateDisabledSequenceError": "Dieser Nummernkreis ist als deaktiviert markiert und steht dadurch nicht zur Generierung zur Verfügung. Bitte an Systemadministrator wenden",
+    "settings.numberGeneratorSequences.maximumNumber": "Maximale Nummer",
+    "settings.numberGeneratorSequences.maximumNumber.info": "Dies ist der maximal mögliche Wert für diesen Nummernkreis. Wenn das Maximum erreicht ist, ist der Nummernkreis nicht mehr verwendbar.",
+    "settings.numberGeneratorSequences.maximumNumber.maximumTooLow": "Die maximale Nummer muss kleiner sein als das Maximum, welches sich aus der Länge des Feldes \"Format\" ergibt.",
+    "settings.numberGeneratorSequences.maximumNumberThreshold": "Warnschwelle",
+    "settings.numberGeneratorSequences.maximumNumberThreshold.info": "Wenn diese Einstellung festgelegt wird, wird den Benutzenden des Nummernkreises eine Warnung angezeigt, wenn dieser Wert erreicht ist. Muss niedriger sein als die maximale Nummer.",
+    "settings.numberGeneratorSequences.maximumNumberThreshold.thresholdNoMaximum": "Eine Warnschwelle kann nicht festgelegt werden, wenn keine maximale Nummer angegeben ist.",
+    "settings.numberGeneratorSequences.maximumNumberThreshold.thresholdMustBeLowerThanMaximum": "Warnschwelle muss unbedingt niedriger als die maximale Nummer sein.",
+    "settings.numberGeneratorSequences.maximumCheck": "Überwachung",
+    "settings.numberGeneratorSequences.maximumCheck.atMax": "Am Maximum",
+    "settings.numberGeneratorSequences.maximumCheck.overThreshold": "Über Warnwert",
+    "settings.numberGeneratorSequences.maximumCheck.belowThreshold": "Unter Warnwert"
 }

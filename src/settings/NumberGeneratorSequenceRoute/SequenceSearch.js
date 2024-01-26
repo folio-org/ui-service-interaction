@@ -187,7 +187,6 @@ const SequenceSearch = ({
       <SearchAndSortQuery
         {...qIndexSASQProps}
         {...paginationSASQProps}
-        //initialFilterState={{ }}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
