@@ -14,3 +14,8 @@
   align-items: flex-end;
   justify-content: flex-end;
 }
+
+.enabled {
+  display: flex;
+  margin-bottom: var(--gutter-static-two-thirds);
+}

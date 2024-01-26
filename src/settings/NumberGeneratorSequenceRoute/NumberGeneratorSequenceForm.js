@@ -27,6 +27,8 @@ import {
 } from '../InfoPopovers';
 import useSIRefdata from '../../hooks/useSIRefdata';
 
+import css from './SequenceSearch.css';
+
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
 
@@ -138,8 +140,8 @@ const NumberGeneratorSequenceForm = () => {
       </Row>
       <Row>
         <Col xs={6}>
-          <Layout className="flex">
-            <Layout className="margin-end-gutter">
+          <Layout className={css.enabled}>
+            <Layout className="flex margin-end-gutter">
               <EnabledInfo />
             </Layout>
             <Field
@@ -150,28 +152,6 @@ const NumberGeneratorSequenceForm = () => {
               type="checkbox"
             />
           </Layout>
-        </Col>
-        <Col xs={6}>
-          <Field
-            name="nextValue"
-          >
-            {({ input, meta }) => {
-              return (
-                <TextField
-                  {...input}
-                  label={
-                    <>
-                      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
-                      <NextValueInfo />
-                    </>
-                  }
-                  type="number"
-                  validate={requiredValidator}
-                  warning={getNextValueWarning(input.value, meta.initial)}
-                />
-              );
-            }}
-          </Field>
         </Col>
       </Row>
       <Row>
@@ -214,13 +194,41 @@ const NumberGeneratorSequenceForm = () => {
         </Col>
       </Row>
       <Row>
-        <Col xs={12}>
+        <Col xs={6}>
           <Field
-            component={TextArea}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
-            maxLength="255"
-            name="description"
+            name="nextValue"
+          >
+            {({ input, meta }) => {
+              return (
+                <TextField
+                  {...input}
+                  label={
+                    <>
+                      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
+                      <NextValueInfo />
+                    </>
+                  }
+                  type="number"
+                  validate={requiredValidator}
+                  warning={getNextValueWarning(input.value, meta.initial)}
+                />
+              );
+            }}
+          </Field>
+        </Col>
+        <Col xs={6}>
+          <Field
+            component={TextField}
+            label={
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />
+                <FormatInfo />
+              </>
+            }
+            name="format"
             parse={v => v}
+            required={!!values.maximumNumber}
+            validate={validateFormatField}
           />
         </Col>
       </Row>
@@ -242,21 +250,6 @@ const NumberGeneratorSequenceForm = () => {
             validate={composeValidators(validateChecksum, requiredValidator)}
           />
         </Col>
-        <Col xs={6}>
-          <Field
-            component={TextField}
-            label={
-              <>
-                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />
-                <FormatInfo />
-              </>
-            }
-            name="format"
-            parse={v => v}
-            required={!!values.maximumNumber}
-            validate={validateFormatField}
-          />
-        </Col>
       </Row>
       <Row>
         <Col xs={12}>
@@ -269,6 +262,17 @@ const NumberGeneratorSequenceForm = () => {
               </>
             }
             name="outputTemplate"
+            parse={v => v}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <Field
+            component={TextArea}
+            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
+            maxLength="255"
+            name="description"
             parse={v => v}
           />
         </Col>

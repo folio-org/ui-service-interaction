@@ -47,7 +47,7 @@
     "settings.numberGeneratorSequences.nextValue.info": "This field shows the <strong>next value</strong> in the sequence based on the current value in the database. It can be set manually as the starting value for a new sequence. Once saved, \"Next value\" cannot be edited.",
     "settings.numberGeneratorSequences.prefix": "Prefix",
     "settings.numberGeneratorSequences.postfix": "Postfix",
-    "settings.numberGeneratorSequences.description": "Description",
+    "settings.numberGeneratorSequences.description": "Note",
     "settings.numberGeneratorSequences.enabled": "Enabled",
     "settings.numberGeneratorSequences.enabled.info": "An enabled number generator sequence will be displayed when selecting the sequence in the App UI. A sequence with the status false will not be displayed in the App UI until it is enabled again.",
     "settings.numberGeneratorSequences.newModal": "New sequence",
