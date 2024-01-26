@@ -137,25 +137,6 @@ const NumberGeneratorSequence = ({
           </Col>
         </Row>
         <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
-              value={sequence.description}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={6}>
-            <KeyValue
-              label={
-                <>
-                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />
-                  <ChecksumAlgoInfo />
-                </>
-              }
-              value={sequence.checkDigitAlgo?.label}
-            />
-          </Col>
           <Col xs={6}>
             <KeyValue
               label={
@@ -217,6 +198,19 @@ const NumberGeneratorSequence = ({
           </Col>
         </Row>
         <Row>
+          <Col xs={6}>
+            <KeyValue
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />
+                  <ChecksumAlgoInfo />
+                </>
+              }
+              value={sequence.checkDigitAlgo?.label}
+            />
+          </Col>
+        </Row>
+        <Row>
           <Col xs={12}>
             <KeyValue
               label={
@@ -226,6 +220,14 @@ const NumberGeneratorSequence = ({
                 </>
               }
               value={sequence.outputTemplate}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
+              value={sequence.description}
             />
           </Col>
         </Row>

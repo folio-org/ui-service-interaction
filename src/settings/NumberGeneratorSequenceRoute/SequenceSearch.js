@@ -3,29 +3,46 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 
-import { FormModal, generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import {
+  FormModal,
+  generateKiwtQueryParams,
+  useKiwtSASQuery
+} from '@k-int/stripes-kint-components';
 
 import { useCallout } from '@folio/stripes/core';
 import { SearchAndSortQuery } from '@folio/stripes/smart-components';
 import {
+  Accordion,
   Button,
-  KeyValue,
   MultiColumnList,
   Pane,
   PaneHeader,
   Select
 } from '@folio/stripes/components';
-import { InfoBox, useSASQQIndex } from '@folio/stripes-erm-components';
 
-import { useMutateNumberGeneratorSequence, useNumberGeneratorSequences } from '../../public';
+import {
+  InfoBox,
+  usePrevNextPagination,
+  useSASQQIndex
+} from '@folio/stripes-erm-components';
+
+import {
+  useMutateNumberGeneratorSequence,
+  useNumberGeneratorSequences
+} from '../../public';
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 
 import css from './SequenceSearch.css';
+import SequenceSearchBar from './SequenceSearchBar';
+import SequenceFilters from './SequenceFilters';
+
+const PER_PAGE = 25;
 
 const SequenceSearch = ({
   baseUrl,
   changeGenerator,
   history,
+  location,
   match: {
     params: {
       numGenId
@@ -36,29 +53,54 @@ const SequenceSearch = ({
 }) => {
   const callout = useCallout();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
-  const { searchKey } = useSASQQIndex({ defaultQIndex: 'name,code,outputTemplate' });
+  const { qIndexChanged, qIndexSASQProps, searchKey } = useSASQQIndex({ defaultQIndex: 'name,code' });
+
+  // Normally usePrevNextPagination is used split in two, so we have another call to it down the file
+  const { currentPage } = usePrevNextPagination();
 
   const queryParams = useMemo(
     () => generateKiwtQueryParams(
       {
         searchKey,
+        filterKeys: {
+          'enabled': 'enabled', // This seems remarkably stupid
+          'maximumCheck': 'maximumCheck.value'
+        },
         filters: [
           {
             path: 'owner.id',
             value: numGenId
           }
-        ]
+        ],
+        page: currentPage,
+        perPage: PER_PAGE,
       },
       query ?? {}
     ),
-    [numGenId, query, searchKey]
+    [currentPage, numGenId, query, searchKey]
   );
 
-  const { data: { results: sequences = [] } = {} } = useNumberGeneratorSequences({
+
+
+  const {
+    data: {
+      results: sequences = [],
+      totalRecords: totalCount = 0
+    } = {},
+    error,
+    isLoading,
+    isError
+  } = useNumberGeneratorSequences({
     queryParams,
     queryOptions: {
       enabled: !!numGenId
     },
+  });
+
+  // We need this twice, as it's normally called once in route and once in view, this component does both
+  const { paginationMCLProps, paginationSASQProps } = usePrevNextPagination({
+    count: totalCount,
+    pageSize: PER_PAGE,
   });
 
   const [creating, setCreating] = useState(false);
@@ -100,14 +142,14 @@ const SequenceSearch = ({
       <Button
         buttonStyle="link"
         marginBottom0
-        onClick={() => history.push(`${url}/${rowData.id}`)}
+        onClick={() => history.push(`${url}/${rowData.id}${location?.search ?? ''}`)}
       >
         {rowData.name}
       </Button>
     );
-  }, [history, url]);
+  }, [history, location?.search, url]);
 
-  const renderHealthCheck = useCallback((rowData) => {
+  const renderMaximumCheck = useCallback((rowData) => {
     if (rowData.maximumCheck?.value === 'at_maximum') {
       return (
         <InfoBox
@@ -135,12 +177,16 @@ const SequenceSearch = ({
         <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.belowThreshold" />
       );
     }
+
+    return null;
   }, []);
 
+  const sortOrder = query.sort ?? '';
   return (
     <>
       <SearchAndSortQuery
-        initialFilterState={{ }}
+        {...qIndexSASQProps}
+        {...paginationSASQProps}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
@@ -157,6 +203,7 @@ const SequenceSearch = ({
           searchChanged,
           resetAll,
         }) => {
+          const disableReset = () => !filterChanged && !searchChanged && !qIndexChanged;
           return (
             <Pane
               defaultWidth="fill"
@@ -187,32 +234,57 @@ const SequenceSearch = ({
                 }}
                 value={numGenId}
               />
-              <KeyValue
+              <Accordion
+                id="numgen-sequence-search-sequences"
                 label={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />}
-                value={
-                  <MultiColumnList
-                    columnMapping={{
-                      name: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name" />,
-                      code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
-                      enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
-                      nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
-                      maximumNumber: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber" />,
-                      healthCheck: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck" />,
-                    }}
-                    contentData={sequences}
-                    formatter={{
-                      name: renderName,
-                      enabled: renderEnabled,
-                      nextValue: renderNextValue,
-                      maximumNumber: renderMaximumNumber,
-                      healthCheck: renderHealthCheck
-                    }}
-                    id="number-generator-sequences"
-                    interactive={false}
-                    visibleColumns={['name', 'code', 'enabled', 'nextValue', 'maximumNumber', 'healthCheck']}
-                  />
-                }
-              />
+              >
+                <SequenceSearchBar
+                  disableReset={disableReset}
+                  getSearchHandlers={getSearchHandlers}
+                  onSubmitSearch={onSubmitSearch}
+                  resetAll={resetAll}
+                  searchValue={searchValue}
+                  source={{
+                    // Fake source from useQuery return values;
+                    totalCount: () => totalCount,
+                    loaded: () => !isLoading,
+                    pending: () => isLoading,
+                    failure: () => isError,
+                    failureMessage: () => error.message,
+                  }}
+                />
+                <SequenceFilters
+                  activeFilters={activeFilters.state}
+                  filterHandlers={getFilterHandlers()}
+                  totalCount={totalCount}
+                />
+                <MultiColumnList
+                  columnMapping={{
+                    name: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name" />,
+                    code: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />,
+                    enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
+                    nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
+                    maximumNumber: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber" />,
+                    maximumCheck: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck" />,
+                  }}
+                  contentData={sequences}
+                  formatter={{
+                    name: renderName,
+                    enabled: renderEnabled,
+                    nextValue: renderNextValue,
+                    maximumNumber: renderMaximumNumber,
+                    maximumCheck: renderMaximumCheck
+                  }}
+                  id="number-generator-sequences"
+                  interactive={false}
+                  nonInteractiveHeaders={['enabled', 'maximumCheck']}
+                  onHeaderClick={onSort}
+                  sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
+                  sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
+                  visibleColumns={['name', 'code', 'enabled', 'nextValue', 'maximumNumber', 'maximumCheck']}
+                  {...paginationMCLProps}
+                />
+              </Accordion>
             </Pane>
           );
         }}
@@ -242,6 +314,9 @@ SequenceSearch.propTypes = {
   changeGenerator: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
+  }),
+  location: PropTypes.shape({
+    search: PropTypes.string,
   }),
   match: PropTypes.shape({
     params: PropTypes.shape({

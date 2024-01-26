@@ -41,11 +41,11 @@ describe('NumberGeneratorSequenceForm', () => {
     await TextField('Next value').exists();
   });
 
-  test('renders expected description field', async () => {
-    await TextArea('Description').exists();
+  test('renders expected note field', async () => {
+    await TextArea('Note').exists();
     // Force "parse" function to get triggered for test coverage
     await waitFor(async () => {
-      await TextArea('Description').fillIn('this is a description');
+      await TextArea('Note').fillIn('this is a description');
     });
   });
 

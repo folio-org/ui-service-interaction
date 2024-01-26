@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
 
@@ -25,6 +26,8 @@ import {
   OutputTemplateInfo
 } from '../InfoPopovers';
 import useSIRefdata from '../../hooks/useSIRefdata';
+
+import css from './SequenceSearch.css';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
@@ -73,6 +76,34 @@ const NumberGeneratorSequenceForm = () => {
     return null;
   };
 
+  const validateFormatField = (val, allVal) => {
+    if (allVal.maximumNumber) {
+      return requiredValidator(val, allVal);
+    }
+
+    return null;
+  };
+
+  const getNextValueWarning = useCallback((val, init) => {
+    // Cast everything to string for compare
+    let compareVal = val;
+    let initVal = init;
+
+    if (val && typeof val !== 'string') {
+      compareVal = val.toString();
+    }
+
+    if (init && typeof init !== 'string') {
+      initVal = init.toString();
+    }
+    // Only show warning for edit
+    if (values.id && initVal !== compareVal) {
+      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue.changedWarning" />;
+    }
+
+    return null;
+  }, [values]);
+
   return (
     <>
       <Row>
@@ -109,8 +140,8 @@ const NumberGeneratorSequenceForm = () => {
       </Row>
       <Row>
         <Col xs={6}>
-          <Layout className="flex">
-            <Layout className="margin-end-gutter">
+          <Layout className={css.enabled}>
+            <Layout className="flex margin-end-gutter">
               <EnabledInfo />
             </Layout>
             <Field
@@ -121,21 +152,6 @@ const NumberGeneratorSequenceForm = () => {
               type="checkbox"
             />
           </Layout>
-        </Col>
-        <Col xs={6}>
-          <Field
-            component={TextField}
-            disabled={!!values?.id}
-            label={
-              <>
-                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
-                <NextValueInfo />
-              </>
-            }
-            name="nextValue"
-            type="number"
-            validate={requiredValidator}
-          />
         </Col>
       </Row>
       <Row>
@@ -178,13 +194,41 @@ const NumberGeneratorSequenceForm = () => {
         </Col>
       </Row>
       <Row>
-        <Col xs={12}>
+        <Col xs={6}>
           <Field
-            component={TextArea}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
-            maxLength="255"
-            name="description"
+            name="nextValue"
+            validate={requiredValidator}
+          >
+            {({ input, meta }) => {
+              return (
+                <TextField
+                  {...input}
+                  label={
+                    <>
+                      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
+                      <NextValueInfo />
+                    </>
+                  }
+                  type="number"
+                  warning={getNextValueWarning(input.value, meta.initial)}
+                />
+              );
+            }}
+          </Field>
+        </Col>
+        <Col xs={6}>
+          <Field
+            component={TextField}
+            label={
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />
+                <FormatInfo />
+              </>
+            }
+            name="format"
             parse={v => v}
+            required={!!values.maximumNumber}
+            validate={validateFormatField}
           />
         </Col>
       </Row>
@@ -206,19 +250,6 @@ const NumberGeneratorSequenceForm = () => {
             validate={composeValidators(validateChecksum, requiredValidator)}
           />
         </Col>
-        <Col xs={6}>
-          <Field
-            component={TextField}
-            label={
-              <>
-                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format" />
-                <FormatInfo />
-              </>
-            }
-            name="format"
-            parse={v => v}
-          />
-        </Col>
       </Row>
       <Row>
         <Col xs={12}>
@@ -231,6 +262,17 @@ const NumberGeneratorSequenceForm = () => {
               </>
             }
             name="outputTemplate"
+            parse={v => v}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <Field
+            component={TextArea}
+            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
+            maxLength="255"
+            name="description"
             parse={v => v}
           />
         </Col>

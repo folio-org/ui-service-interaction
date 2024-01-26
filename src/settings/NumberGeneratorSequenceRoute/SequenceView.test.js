@@ -1,7 +1,7 @@
 import { render, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Field as MockField } from 'react-final-form';
 
-import { Button as MockButton, TextField as MockTextField } from '@folio/stripes/components';
+import { TextField as MockTextField } from '@folio/stripes/components';
 
 import { Button, Callout, KeyValue, TextField, renderWithIntl } from '@folio/stripes-erm-testing';
 
@@ -77,8 +77,8 @@ describe('SequenceView', () => {
     await KeyValue('Code').has({ value: 'seq1.1' });
   });
 
-  test('renders expected sequence description', async () => {
-    await KeyValue('Description').has({ value: 'this is a description' });
+  test('renders expected sequence note', async () => {
+    await KeyValue('Note').has({ value: 'this is a description' });
   });
 
   test('renders expected sequence checkDigitAlgo', async () => {
@@ -103,7 +103,7 @@ describe('SequenceView', () => {
   });
 
   test('renders action button with expected options', async () => {
-    await Button('Actions');
+    await Button('Actions').exists();
   });
 
   describe('editing the sequence', () => {

@@ -8,7 +8,7 @@ import NumberGeneratorSequenceRoute from './NumberGeneratorSequenceRoute';
 
 const ServintSettings = (settingProps) => {
   const renderNumberGeneratorConfig = useCallback((innerProps) => (<NumberGeneratorConfig {...innerProps} />), []);
-  
+
   const renderNumberGeneratorSequenceRoute = useCallback((innerProps) => (
     <NumberGeneratorSequenceRoute
       baseUrl={settingProps.match?.url}

@@ -32,4 +32,7 @@ callback | function | A callback which accepts a generated string. | | ✓ |
 id | String | A string to uniquely identify the button. Will result in an id `clickable-trigger-number-generator-${id}` on the button. | | ✓ |
 generator | String | The `code` for a given NumberGenerator set up in `ui-service-interaction`'s Settings panel. | | ✓ |
 sequence | String | The `code` for a given sequence in the specified generator. Also set up in the Settings panel for `ui-service-interaction`. | | ✓ |
+suppressWarning | Boolean | When set to "false" a warning message will render underneath the NumberGeneratorButton when the selected sequence has maximumCheck "over_threshold" | true | ✕ |
+suppressError | Boolean | When set to "false" an error message will render underneath the NumberGeneratorButton when the selected sequence has maximumCheck "at_maximum" | false | ✕ |
+sequence | String | The `code` for a given sequence in the specified generator. Also set up in the Settings panel for `ui-service-interaction`. | | ✓ |
 ...buttonProps | destructured object | Any other props passed to NumberGeneratorButton will be assumed to be button props and passed directly on. | | ✕ |
