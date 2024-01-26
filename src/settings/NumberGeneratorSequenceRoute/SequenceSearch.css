@@ -1,3 +1,8 @@
 .noMarginLeft {
   margin-left: 0;
 }
+
+.resetButton {
+  margin-top: var(--gutter-static-two-thirds);
+  margin-bottom: var(--gutter-static-two-thirds);
+}

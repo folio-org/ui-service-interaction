@@ -36,6 +36,8 @@ import {
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 
 import css from './SequenceSearch.css';
+import SequenceSearchForm from './SequenceSearchForm';
+import SequenceFilters from './SequenceFilters';
 
 const SequenceSearch = ({
   baseUrl,
@@ -52,12 +54,16 @@ const SequenceSearch = ({
 }) => {
   const callout = useCallout();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
-  const { qIndexChanged, qIndexSASQProps, searchKey } = useSASQQIndex({ defaultQIndex: 'name,code,outputTemplate' });
+  const { qIndexChanged, qIndexSASQProps, searchKey } = useSASQQIndex({ defaultQIndex: 'name,code' });
 
   const queryParams = useMemo(
     () => generateKiwtQueryParams(
       {
         searchKey,
+        filterKeys: {
+          'enabled': 'enabled', // This seems remarkably stupid
+          'maximumCheck': 'maximumCheck.value'
+        },
         filters: [
           {
             path: 'owner.id',
@@ -84,16 +90,6 @@ const SequenceSearch = ({
       enabled: !!numGenId
     },
   });
-
-  const { handleSubmitSearch } = useHandleSubmitSearch({
-    // Fake source from useQuery return values;
-    totalCount: () => totalCount,
-    loaded: () => !isLoading,
-    pending: () => isLoading,
-    failure: () => isError,
-    failureMessage: () => error.message,
-  });
-
 
   const [creating, setCreating] = useState(false);
 
@@ -139,7 +135,7 @@ const SequenceSearch = ({
         {rowData.name}
       </Button>
     );
-  }, [history, url]);
+  }, [history, location.search, url]);
 
   const renderHealthCheck = useCallback((rowData) => {
     if (rowData.maximumCheck?.value === 'at_maximum') {
@@ -177,7 +173,7 @@ const SequenceSearch = ({
     <>
       <SearchAndSortQuery
         {...qIndexSASQProps}
-        initialFilterState={{ }}
+        //initialFilterState={{ }}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
@@ -195,7 +191,6 @@ const SequenceSearch = ({
           resetAll,
         }) => {
           const disableReset = () => !filterChanged && !searchChanged && !qIndexChanged;
-
           return (
             <Pane
               defaultWidth="fill"
@@ -230,60 +225,25 @@ const SequenceSearch = ({
                 id="numgen-sequence-search-sequences"
                 label={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />}
               >
-                <form
-                  onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}
-                >
-                  <SearchField
-                    data-test-sequence-search-input
-                    id="input-sequence-search"
-                    marginBottom0
-                    name="query"
-                    onChange={getSearchHandlers().query}
-                    onClear={getSearchHandlers().reset}
-                    value={searchValue.query}
-                  />
-                  {/* The options here reflect the constant defaultQIndex */}
-                  <SearchKeyControl
-                    options={[
-                      {
-                        label: (
-                          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name" />
-                        ),
-                        key: 'name',
-                      },
-                      {
-                        label: (
-                          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.code" />
-                        ),
-                        key: 'code',
-                      },
-                      {
-                        label: (
-                          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />
-                        ),
-                        key: 'description',
-                      },
-                      {
-                        label: (
-                          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate" />
-                        ),
-                        key: 'outputTemplate',
-                      },
-                    ]}
-                  />
-                  <Button
-                    buttonStyle="primary"
-                    disabled={
-                      !searchValue.query || searchValue.query === ''
-                    }
-                    fullWidth
-                    id="clickable-search-sequences"
-                    marginBottom0
-                    type="submit"
-                  >
-                    <FormattedMessage id="stripes-smart-components.search" />
-                  </Button>
-                </form>
+                <SequenceSearchForm
+                  disableReset={disableReset}
+                  getSearchHandlers={getSearchHandlers}
+                  onSubmitSearch={onSubmitSearch}
+                  resetAll={resetAll}
+                  searchValue={searchValue}
+                  source={{
+                    // Fake source from useQuery return values;
+                    totalCount: () => totalCount,
+                    loaded: () => !isLoading,
+                    pending: () => isLoading,
+                    failure: () => isError,
+                    failureMessage: () => error.message,
+                  }}
+                />
+                <SequenceFilters
+                  activeFilters={activeFilters.state}
+                  filterHandlers={getFilterHandlers()}
+                />
                 <MultiColumnList
                   columnMapping={{
                     name: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.name" />,
