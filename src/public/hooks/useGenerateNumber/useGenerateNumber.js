@@ -1,7 +1,8 @@
 import { useCallout, useOkapiKy } from '@folio/stripes/core';
 import { useIntl } from 'react-intl';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import useNumberGenerators from '../useNumberGenerators';
+import { NUMBER_GENERATORS_ENDPOINT } from '../../utilities';
 
 const useGenerateNumber = ({
   callback = () => null,
@@ -12,6 +13,9 @@ const useGenerateNumber = ({
   const callout = useCallout();
   const ky = useOkapiKy();
   const intl = useIntl();
+  const queryClient = useQueryClient();
+
+  const invalidateNumberGenerators = () => queryClient.invalidateQueries(NUMBER_GENERATORS_ENDPOINT);
 
   const { data: { results: { 0: { sequences = [] } = {} } = [] } = {} } = useNumberGenerators(generator);
   // Find full sequence object from DB
@@ -24,7 +28,9 @@ const useGenerateNumber = ({
   const path = `servint/numberGenerators/getNextNumber?generator=${generator}&sequence=${sequence}`;
   const queryObject = useQuery(
     [path, 'ui-service-interaction', 'useGenerateNumber'],
-    () => ky.get(path).json().then(res => callback(res?.nextValue)),
+    () => ky.get(path).json()
+      .then(res => callback(res?.nextValue))
+      .then(() => invalidateNumberGenerators()),
     {
       enabled: false,
       cacheTime: 0,

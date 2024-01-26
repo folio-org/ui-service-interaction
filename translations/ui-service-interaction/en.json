@@ -35,6 +35,8 @@
   "numberGenerator.generate": "Generate",
   "numberGenerator.selectGenerator": "Select generator",
   "numberGenerator.generator": "Generator",
+  "numberGenerator.sequenceOverThresholdWarning": "<strong>Warning:</strong> The maximum number for this sequence is approaching",
+  "numberGenerator.sequenceOverMaximumError": "<strong>Error:</strong> The maximum number has been reached for this sequence. Please select an alternative",
   "settings.numberGeneratorSequences.code": "Code",
   "settings.numberGeneratorSequences.code.info": "Unique code of the number generator sequence. This must be unique within the number generator and contain no whitespaces. Once set, this field can no longer be changed.",
   "settings.numberGeneratorSequences.name": "Name",

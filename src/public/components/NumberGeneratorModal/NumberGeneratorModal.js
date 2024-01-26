@@ -1,12 +1,15 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import orderBy from 'lodash/orderBy';
+import isEqual from 'lodash/isEqual';
 
 import { Button, Modal, ModalFooter, Select } from '@folio/stripes/components';
 import { useNumberGenerators } from '../../hooks';
 import NumberGeneratorButton from '../NumberGeneratorButton';
+
+import css from '../../Styles.css';
 
 const NumberGeneratorModal = forwardRef(({
   callback,
@@ -20,7 +23,7 @@ const NumberGeneratorModal = forwardRef(({
   renderBottom,
   ...modalProps
 }, ref) => {
-  const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators(generator);
+  const { data: { results: data = [] } = {}, isFetching } = useNumberGenerators(generator);
   const sequenceCount = data.reduce((acc, curr) => {
     return acc + curr?.sequences?.length;
   }, 0);
@@ -72,11 +75,29 @@ const NumberGeneratorModal = forwardRef(({
   useEffect(() => {
     const sequenceGroupEntries = Object.entries(sequenceGroup);
 
-    if (!isLoading && sequenceGroupEntries.length > 0 && !selectedNG) {
-      setSelectedNG(sequenceGroupEntries[0]?.[0]);
-      setSelectedSequence(sequenceGroupEntries[0]?.[1]?.sequences?.[0]);
+    if (!isFetching) {
+      if (sequenceGroupEntries.length > 0 && !selectedNG) {
+        setSelectedNG(sequenceGroupEntries[0]?.[0]);
+        setSelectedSequence(sequenceGroupEntries[0]?.[1]?.sequences?.[0]);
+      }
+
+      // Check if we have more up to date versions of NG and Seq, if so set them in state
+      const selectedNGInData = data?.filter(ng => ng.code === selectedNG)?.[0];
+      if (!!selectedNGInData && !isEqual(selectedNG, selectedNGInData)) {
+        // Refetched NG differs, setNG
+        setSelectedNG(selectedNGInData?.code);
+      }
+
+      const selectedSequenceInData = selectedNGInData?.sequences?.filter(sq => sq.id === selectedSequence?.id)?.[0];
+      if (!!selectedSequenceInData && !isEqual(selectedSequence, selectedSequenceInData)) {
+        // Refetched SS differs, setSS
+        setSelectedSequence(selectedSequenceInData);
+      }
     }
-  }, [isLoading, selectedNG, sequenceGroup]);
+  }, [data, isFetching, selectedNG, selectedSequence, sequenceGroup]);
+
+  const overThreshold = useMemo(() => selectedSequence?.maximumCheck?.value === 'over_threshold', [selectedSequence?.maximumCheck?.value]);
+  const atMaximum = useMemo(() => selectedSequence?.maximumCheck?.value === 'at_maximum', [selectedSequence?.maximumCheck?.value]);
 
   const renderSelectOptions = () => {
     // If we have multiple generators, separate with optgroups, else display all in one
@@ -104,6 +125,30 @@ const NumberGeneratorModal = forwardRef(({
     );
   };
 
+  const renderWarningText = () => {
+    if (overThreshold) {
+      return (
+        <div className={css.warningText}>
+          <FormattedMessage id="ui-service-interaction.numberGenerator.sequenceOverThresholdWarning" />
+        </div>
+      );
+    }
+
+    return undefined;
+  };
+
+  const renderErrorText = () => {
+    if (atMaximum) {
+      return (
+        <div className={css.errorText}>
+          <FormattedMessage id="ui-service-interaction.numberGenerator.sequenceOverMaximumError" />
+        </div>
+      );
+    }
+
+    return undefined;
+  };
+
   return (
     <Modal
       ref={ref}
@@ -118,6 +163,8 @@ const NumberGeneratorModal = forwardRef(({
             id={id}
             marginBottom0
             sequence={selectedSequence?.code ?? ''}
+            suppressError // We are dealing with error/warning manually in the modal
+            suppressWarning
             {...generatorButtonProps}
           />
           <Button
@@ -135,6 +182,7 @@ const NumberGeneratorModal = forwardRef(({
       {renderTop ? renderTop() : null}
       <Select
         disabled={sequenceCount <= 1}
+        error={renderErrorText()}
         label={<FormattedMessage id="ui-service-interaction.numberGenerator.generator" />}
         onChange={(e) => {
           // Find the NG in the data which has the chosen sequence, and set it as the currently selected NG
@@ -146,6 +194,7 @@ const NumberGeneratorModal = forwardRef(({
         }}
         placeholder={null} // placeholder default causes issues
         value={selectedSequence?.id}
+        warning={renderWarningText()}
       >
         {renderSelectOptions()}
       </Select>

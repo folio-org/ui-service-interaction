@@ -1,0 +1,7 @@
+.warningText {
+  color: var(--warn)
+}
+
+.errorText {
+  color: var(--error)
+}
