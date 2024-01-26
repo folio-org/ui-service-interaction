@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Col, Row, Select } from '@folio/stripes/components';
+import { Badge, Col, Row, Select } from '@folio/stripes/components';
 import useSIRefdata from '../../hooks/useSIRefdata';
+
+import css from './SequenceSearch.css';
 
 // Also renders the count... for reasons...
 const SequenceFilters = ({
   activeFilters,
   filterHandlers,
+  totalCount
 }) => {
   const { 0: { values: checkValues = [] } = {} } = useSIRefdata({
     desc: 'NumberGeneratorSequence.MaximumCheck',
@@ -78,6 +81,14 @@ const SequenceFilters = ({
       <Col xs={3}>
         {renderMaximumCheckFilter()}
       </Col>
+      <Col xs={4} />
+      <Col xs={2}>
+        <div className={css.totalCountWrapper}>
+          <Badge>
+            <FormattedMessage id="ui-service-interaction.nFound" values={{ total: totalCount }} />
+          </Badge>
+        </div>
+      </Col>
     </Row>
   );
 };
@@ -85,6 +96,7 @@ const SequenceFilters = ({
 SequenceFilters.propTypes = {
   activeFilters: PropTypes.object,
   filterHandlers: PropTypes.object,
+  totalCount: PropTypes.number.isRequired
 };
 
 export default SequenceFilters;

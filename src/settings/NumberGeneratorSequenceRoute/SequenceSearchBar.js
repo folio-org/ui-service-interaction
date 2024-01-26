@@ -7,7 +7,7 @@ import { SearchField } from '@k-int/stripes-kint-components';
 import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 import css from './SequenceSearch.css';
 
-const SequenceSearchForm = ({
+const SequenceSearchBar = ({
   disableReset,
   getSearchHandlers,
   onSubmitSearch,
@@ -84,6 +84,7 @@ const SequenceSearchForm = ({
             buttonClass={css.resetButton}
             buttonStyle="none"
             disabled={disableReset()}
+            fullWidth
             id="clickable-reset-all"
             onClick={resetAll}
           >
@@ -97,7 +98,7 @@ const SequenceSearchForm = ({
   );
 };
 
-SequenceSearchForm.propTypes = {
+SequenceSearchBar.propTypes = {
   disableReset: PropTypes.func.isRequired,
   getSearchHandlers: PropTypes.func.isRequired,
   onSubmitSearch: PropTypes.func.isRequired,
@@ -108,4 +109,4 @@ SequenceSearchForm.propTypes = {
   source: PropTypes.object.isRequired
 };
 
-export default SequenceSearchForm;
+export default SequenceSearchBar;

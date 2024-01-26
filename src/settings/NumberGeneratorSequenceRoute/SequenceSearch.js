@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   FormModal,
-  SearchField,
   generateKiwtQueryParams,
   useKiwtSASQuery
 } from '@k-int/stripes-kint-components';
@@ -15,7 +14,6 @@ import { SearchAndSortQuery } from '@folio/stripes/smart-components';
 import {
   Accordion,
   Button,
-  KeyValue,
   MultiColumnList,
   Pane,
   PaneHeader,
@@ -24,8 +22,7 @@ import {
 
 import {
   InfoBox,
-  SearchKeyControl,
-  useHandleSubmitSearch,
+  usePrevNextPagination,
   useSASQQIndex
 } from '@folio/stripes-erm-components';
 
@@ -36,8 +33,10 @@ import {
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 
 import css from './SequenceSearch.css';
-import SequenceSearchForm from './SequenceSearchForm';
+import SequenceSearchBar from './SequenceSearchBar';
 import SequenceFilters from './SequenceFilters';
+
+const PER_PAGE = 25;
 
 const SequenceSearch = ({
   baseUrl,
@@ -56,6 +55,9 @@ const SequenceSearch = ({
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
   const { qIndexChanged, qIndexSASQProps, searchKey } = useSASQQIndex({ defaultQIndex: 'name,code' });
 
+  // Normally usePrevNextPagination is used split in two, so we have another call to it down the file
+  const { currentPage } = usePrevNextPagination();
+
   const queryParams = useMemo(
     () => generateKiwtQueryParams(
       {
@@ -69,12 +71,16 @@ const SequenceSearch = ({
             path: 'owner.id',
             value: numGenId
           }
-        ]
+        ],
+        page: currentPage,
+        perPage: PER_PAGE,
       },
       query ?? {}
     ),
-    [numGenId, query, searchKey]
+    [currentPage, numGenId, query, searchKey]
   );
+
+
 
   const {
     data: {
@@ -89,6 +95,12 @@ const SequenceSearch = ({
     queryOptions: {
       enabled: !!numGenId
     },
+  });
+
+  // We need this twice, as it's normally called once in route and once in view, this component does both
+  const { paginationMCLProps, paginationSASQProps } = usePrevNextPagination({
+    count: totalCount,
+    pageSize: PER_PAGE,
   });
 
   const [creating, setCreating] = useState(false);
@@ -137,7 +149,7 @@ const SequenceSearch = ({
     );
   }, [history, location.search, url]);
 
-  const renderHealthCheck = useCallback((rowData) => {
+  const renderMaximumCheck = useCallback((rowData) => {
     if (rowData.maximumCheck?.value === 'at_maximum') {
       return (
         <InfoBox
@@ -169,10 +181,12 @@ const SequenceSearch = ({
     return null;
   }, []);
 
+  const sortOrder = query.sort ?? '';
   return (
     <>
       <SearchAndSortQuery
         {...qIndexSASQProps}
+        {...paginationSASQProps}
         //initialFilterState={{ }}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
@@ -225,7 +239,7 @@ const SequenceSearch = ({
                 id="numgen-sequence-search-sequences"
                 label={<FormattedMessage id="ui-service-interaction.settings.numberGenerators.sequences" />}
               >
-                <SequenceSearchForm
+                <SequenceSearchBar
                   disableReset={disableReset}
                   getSearchHandlers={getSearchHandlers}
                   onSubmitSearch={onSubmitSearch}
@@ -243,6 +257,7 @@ const SequenceSearch = ({
                 <SequenceFilters
                   activeFilters={activeFilters.state}
                   filterHandlers={getFilterHandlers()}
+                  totalCount={totalCount}
                 />
                 <MultiColumnList
                   columnMapping={{
@@ -251,7 +266,7 @@ const SequenceSearch = ({
                     enabled: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.enabled" />,
                     nextValue: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />,
                     maximumNumber: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber" />,
-                    healthCheck: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck" />,
+                    maximumCheck: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck" />,
                   }}
                   contentData={sequences}
                   formatter={{
@@ -259,11 +274,16 @@ const SequenceSearch = ({
                     enabled: renderEnabled,
                     nextValue: renderNextValue,
                     maximumNumber: renderMaximumNumber,
-                    healthCheck: renderHealthCheck
+                    maximumCheck: renderMaximumCheck
                   }}
                   id="number-generator-sequences"
                   interactive={false}
-                  visibleColumns={['name', 'code', 'enabled', 'nextValue', 'maximumNumber', 'healthCheck']}
+                  nonInteractiveHeaders={['enabled', 'maximumCheck']}
+                  onHeaderClick={onSort}
+                  sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
+                  sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
+                  visibleColumns={['name', 'code', 'enabled', 'nextValue', 'maximumNumber', 'maximumCheck']}
+                  {...paginationMCLProps}
                 />
               </Accordion>
             </Pane>

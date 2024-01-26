@@ -12,6 +12,7 @@
   "cancel": "Cancel",
   "saveAndClose": "Save & close",
   "save": "Save",
+  "nFound": "{total} found",
   "settings.numberGenerators": "Number generators",
   "settings.numberGenerators.helpDocumentationLink": "help documentation",
   "settings.numberGenerators.helpText": "New number generators need development work to integrate them with FOLIO apps. Please review the {helpDocumentationLink} before creating a new number generator.",
