@@ -25,6 +25,7 @@ import {
   OutputTemplateInfo
 } from '../InfoPopovers';
 import useSIRefdata from '../../hooks/useSIRefdata';
+import { useCallback } from 'react';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
@@ -72,6 +73,26 @@ const NumberGeneratorSequenceForm = () => {
 
     return null;
   };
+
+  const getNextValueWarning = useCallback((val, init) => {
+    // Cast everything to string for compare
+    let compareVal = val;
+    let initVal = init;
+
+    if (typeof val !== 'string') {
+      compareVal = val.toString();
+    }
+
+    if (typeof init !== 'string') {
+      initVal = init.toString();
+    }
+    // Only show warning for edit
+    if (values.id && initVal !== compareVal) {
+      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue.changedWarning" />;
+    }
+
+    return undefined;
+  }, [values]);
 
   return (
     <>
@@ -123,9 +144,8 @@ const NumberGeneratorSequenceForm = () => {
           </Layout>
         </Col>
         <Col xs={6}>
-          <Field
+          {/* <Field
             component={TextField}
-            disabled={!!values?.id}
             label={
               <>
                 <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
@@ -135,7 +155,27 @@ const NumberGeneratorSequenceForm = () => {
             name="nextValue"
             type="number"
             validate={requiredValidator}
-          />
+          /> */}
+          <Field
+            name="nextValue"
+          >
+            {({ input, meta }) => {
+              return (
+                <TextField
+                  {...input}
+                  label={
+                    <>
+                      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
+                      <NextValueInfo />
+                    </>
+                  }
+                  type="number"
+                  validate={requiredValidator}
+                  warning={getNextValueWarning(input.value, meta.initial)}
+                />
+              );
+            }}
+          </Field>
         </Col>
       </Row>
       <Row>
