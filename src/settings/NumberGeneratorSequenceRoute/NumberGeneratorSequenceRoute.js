@@ -63,11 +63,11 @@ const NumberGeneratorSequenceRoute = ({
     const urlIds = getIdsFromUrl(location.pathname);
     return (
       <SequenceView
-        onClose={() => history.push(`${match.url}/${urlIds[0]}`)}
+        onClose={() => history.push(`${match.url}/${urlIds[0]}${location.search}`)}
         {...innerProps}
       />
     );
-  }, [history, location.pathname, match.url]);
+  }, [history, location.pathname, location.search, match.url]);
 
   return (
     <>
@@ -83,7 +83,8 @@ NumberGeneratorSequenceRoute.propTypes = {
     push: PropTypes.func.isRequired
   }),
   location: PropTypes.shape({
-    pathname: PropTypes.string
+    pathname: PropTypes.string,
+    search: PropTypes.string,
   }),
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
