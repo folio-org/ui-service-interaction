@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
 
@@ -25,7 +26,6 @@ import {
   OutputTemplateInfo
 } from '../InfoPopovers';
 import useSIRefdata from '../../hooks/useSIRefdata';
-import { useCallback } from 'react';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
@@ -72,6 +72,14 @@ const NumberGeneratorSequenceForm = () => {
     }
 
     return null;
+  };
+
+  const validateFormatField = (val, allVal) => {
+    if (allVal.maximumNumber) {
+      return requiredValidator(val, allVal);
+    }
+
+    return undefined;
   };
 
   const getNextValueWarning = useCallback((val, init) => {
@@ -144,18 +152,6 @@ const NumberGeneratorSequenceForm = () => {
           </Layout>
         </Col>
         <Col xs={6}>
-          {/* <Field
-            component={TextField}
-            label={
-              <>
-                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />
-                <NextValueInfo />
-              </>
-            }
-            name="nextValue"
-            type="number"
-            validate={requiredValidator}
-          /> */}
           <Field
             name="nextValue"
           >
@@ -257,6 +253,8 @@ const NumberGeneratorSequenceForm = () => {
             }
             name="format"
             parse={v => v}
+            required={!!values.maximumNumber}
+            validate={validateFormatField}
           />
         </Col>
       </Row>
