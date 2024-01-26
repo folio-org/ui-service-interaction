@@ -142,12 +142,12 @@ const SequenceSearch = ({
       <Button
         buttonStyle="link"
         marginBottom0
-        onClick={() => history.push(`${url}/${rowData.id}${location.search}`)}
+        onClick={() => history.push(`${url}/${rowData.id}${location?.search ?? ''}`)}
       >
         {rowData.name}
       </Button>
     );
-  }, [history, location.search, url]);
+  }, [history, location?.search, url]);
 
   const renderMaximumCheck = useCallback((rowData) => {
     if (rowData.maximumCheck?.value === 'at_maximum') {

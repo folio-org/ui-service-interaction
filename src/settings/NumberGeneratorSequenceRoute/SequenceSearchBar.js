@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
-import { Button, Col, Icon, Row } from '@folio/stripes/components';
+import { Button, Col, Icon, Row, SearchField } from '@folio/stripes/components';
 
-import { SearchField } from '@k-int/stripes-kint-components';
 import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 import css from './SequenceSearch.css';
 

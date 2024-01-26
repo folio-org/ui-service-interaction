@@ -81,7 +81,7 @@ const NumberGeneratorSequenceForm = () => {
       return requiredValidator(val, allVal);
     }
 
-    return undefined;
+    return null;
   };
 
   const getNextValueWarning = useCallback((val, init) => {
@@ -89,11 +89,11 @@ const NumberGeneratorSequenceForm = () => {
     let compareVal = val;
     let initVal = init;
 
-    if (typeof val !== 'string') {
+    if (val && typeof val !== 'string') {
       compareVal = val.toString();
     }
 
-    if (typeof init !== 'string') {
+    if (init && typeof init !== 'string') {
       initVal = init.toString();
     }
     // Only show warning for edit
@@ -101,7 +101,7 @@ const NumberGeneratorSequenceForm = () => {
       return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue.changedWarning" />;
     }
 
-    return undefined;
+    return null;
   }, [values]);
 
   return (
@@ -197,6 +197,7 @@ const NumberGeneratorSequenceForm = () => {
         <Col xs={6}>
           <Field
             name="nextValue"
+            validate={requiredValidator}
           >
             {({ input, meta }) => {
               return (
@@ -209,7 +210,6 @@ const NumberGeneratorSequenceForm = () => {
                     </>
                   }
                   type="number"
-                  validate={requiredValidator}
                   warning={getNextValueWarning(input.value, meta.initial)}
                 />
               );

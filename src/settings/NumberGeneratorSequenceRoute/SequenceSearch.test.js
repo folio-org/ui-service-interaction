@@ -1,4 +1,4 @@
-import { waitFor, render, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor, render } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { Field as MockField } from 'react-final-form';
@@ -8,7 +8,6 @@ import {
   Button,
   Callout,
   IconButton,
-  MultiColumnListCell,
   MultiColumnListHeader,
   Select,
   TextField,
@@ -20,7 +19,7 @@ import { translationsProperties } from '../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../test/jest/mockGenerators';
 
 const push = jest.fn();
-const changeGenerator = jest.fn();
+// const changeGenerator = jest.fn();
 const mockGenerators = [numberGenerator1, numberGenerator2];
 
 const mockUseNumberGenerators = jest.fn(() => {
@@ -105,6 +104,7 @@ describe('SequenceSearch', () => {
           baseUrl="baseUrl"
           changeGenerator={jest.fn()}
           history={{ push }}
+          location={{}}
           match={{ params: { numGenId: numberGenerator1.id }, url: 'someUrl' }}
           numberGenerators={mockGenerators}
         />
@@ -129,7 +129,7 @@ describe('SequenceSearch', () => {
       await MultiColumnListHeader({ index: 2 }).has({ content: 'Enabled' }),
       await MultiColumnListHeader({ index: 3 }).has({ content: 'Next value' }),
       await MultiColumnListHeader({ index: 4 }).has({ content: 'Maximum number' }),
-      await MultiColumnListHeader({ index: 5 }).has({ content: 'Health check' }),
+      await MultiColumnListHeader({ index: 5 }).has({ content: 'Usage status' }),
     ]);
   });
 
