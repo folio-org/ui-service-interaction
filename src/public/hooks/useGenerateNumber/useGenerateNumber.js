@@ -28,23 +28,20 @@ const useGenerateNumber = ({
 
   const invalidateNumberGenerators = () => queryClient.invalidateQueries(NUMBER_GENERATORS_ENDPOINT);
 
-  const queryParams = useMemo(
-    () => generateKiwtQueryParams(
-      {
-        filters: [
-          {
-            path: 'owner.code',
-            value: generator
-          },
-          {
-            path: 'code',
-            value: sequence
-          }
-        ],
-      },
-      {}
-    ),
-    [generator, sequence]
+  const queryParams = generateKiwtQueryParams(
+    {
+      filters: [
+        {
+          path: 'owner.code',
+          value: generator
+        },
+        {
+          path: 'code',
+          value: sequence
+        }
+      ],
+    },
+    {}
   );
 
   const {
