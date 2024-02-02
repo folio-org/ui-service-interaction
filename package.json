@@ -42,7 +42,7 @@
       },
       {
         "permissionName": "ui-service-interaction.numberGenerator.view",
-        "displayName": "Number generator: Allow a user to view number generators and number generator sequences, as well as make use of them",
+        "displayName": "Settings (Service-interaction): View number generator settings and use number generators within apps",
         "subPermissions": [
           "servint.numberGenerator.use"
         ],
@@ -50,7 +50,7 @@
       },
       {
         "permissionName": "ui-service-interaction.numberGenerator.manage",
-        "displayName": "Number generator: Allow a user to edit, delete, view and use number generators and number generator sequences",
+        "displayName": "Settings (Service-interaction): Manage number generator settings and use number generators within apps",
         "subPermissions": [
           "servint.numberGenerator.manage"
         ],

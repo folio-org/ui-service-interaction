@@ -3,7 +3,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useCallout } from '@folio/stripes/core';
+import { useCallout, useStripes } from '@folio/stripes/core';
 import { ConfirmationModal, InfoPopover, MessageBanner, Pane } from '@folio/stripes/components';
 import { ActionList, required } from '@k-int/stripes-kint-components';
 
@@ -15,7 +15,8 @@ const NumberGeneratorConfig = ({
 }) => {
   const { data: { results: data = [] } = {} } = useNumberGenerators();
   const intl = useIntl();
-
+  const stripes = useStripes();
+  const hasManagePerm = stripes.hasPerm('ui-service-interaction.numberGenerator.manage');
   const callout = useCallout();
 
   const [removeGenerator, setRemoveGenerator] = useState();
@@ -149,6 +150,8 @@ const NumberGeneratorConfig = ({
               rowData?.sequences?.length
             )
           }}
+          hideActionsColumn={!hasManagePerm}
+          hideCreateButton={!hasManagePerm}
           label={<FormattedMessage id="ui-service-interaction.settings.numberGenerators" />}
           validateFields={{
             name: () => required,

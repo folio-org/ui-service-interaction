@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { FormModal } from '@k-int/stripes-kint-components';
 
-import { useCallout } from '@folio/stripes/core';
+import { useCallout, useStripes } from '@folio/stripes/core';
 
 import {
   Button,
@@ -37,6 +37,8 @@ const NumberGeneratorSequence = ({
   onClose,
 }) => {
   const callout = useCallout();
+  const stripes = useStripes();
+
   const { data: sequence = {} } = useNumberGeneratorSequence({
     id: seqId,
     queryOptions: {
@@ -105,7 +107,7 @@ const NumberGeneratorSequence = ({
         renderHeader={(renderProps) => (
           <PaneHeader
             {...renderProps}
-            actionMenu={actionMenu}
+            actionMenu={stripes.hasPerm('ui-service-interaction.numberGenerator.manage') ? actionMenu : null}
             dismissible
             onClose={onClose}
             paneTitle={sequence.name ?? sequence.code}

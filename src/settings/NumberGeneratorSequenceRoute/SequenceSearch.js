@@ -9,7 +9,7 @@ import {
   useKiwtSASQuery
 } from '@k-int/stripes-kint-components';
 
-import { useCallout } from '@folio/stripes/core';
+import { useCallout, useStripes } from '@folio/stripes/core';
 import { SearchAndSortQuery } from '@folio/stripes/smart-components';
 import {
   Accordion,
@@ -52,6 +52,7 @@ const SequenceSearch = ({
   numberGenerators
 }) => {
   const callout = useCallout();
+  const stripes = useStripes();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
   const { qIndexChanged, qIndexSASQProps, searchKey } = useSASQQIndex({ defaultQIndex: 'name,code' });
 
@@ -206,13 +207,14 @@ const SequenceSearch = ({
           const disableReset = () => !filterChanged && !searchChanged && !qIndexChanged;
           return (
             <Pane
-              defaultWidth="fill"
+              defaultWidth="20%"
               id="settings-numberGeneratorSequences-list"
               renderHeader={(renderProps) => (
                 <PaneHeader
                   {...renderProps}
                   dismissible
                   lastMenu={
+                    stripes.hasPerm('ui-service-interaction.numberGenerator.manage') &&
                     <Button
                       buttonStyle="primary"
                       marginBottom0
