@@ -27,9 +27,13 @@ import {
 } from '@folio/stripes-erm-components';
 
 import {
+  AT_MAXIMUM,
+  BELOW_THRESHOLD,
+  OVER_THRESHOLD,
   useMutateNumberGeneratorSequence,
-  useNumberGeneratorSequences
+  useNumberGeneratorSequences,
 } from '../../public';
+
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 
 import css from './SequenceSearch.css';
@@ -151,7 +155,7 @@ const SequenceSearch = ({
   }, [history, location?.search, url]);
 
   const renderMaximumCheck = useCallback((rowData) => {
-    if (rowData.maximumCheck?.value === 'at_maximum') {
+    if (rowData.maximumCheck?.value === AT_MAXIMUM) {
       return (
         <InfoBox
           className={css.noMarginLeft}
@@ -162,7 +166,7 @@ const SequenceSearch = ({
       );
     }
 
-    if (rowData.maximumCheck?.value === 'over_threshold') {
+    if (rowData.maximumCheck?.value === OVER_THRESHOLD) {
       return (
         <InfoBox
           className={css.noMarginLeft}
@@ -173,7 +177,7 @@ const SequenceSearch = ({
       );
     }
 
-    if (rowData.maximumCheck?.value === 'below_threshold') {
+    if (rowData.maximumCheck?.value === BELOW_THRESHOLD) {
       return (
         <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.belowThreshold" />
       );

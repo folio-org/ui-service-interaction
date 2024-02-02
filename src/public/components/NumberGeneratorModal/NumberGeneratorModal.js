@@ -6,6 +6,8 @@ import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
 
 import { Button, Modal, ModalFooter, Select } from '@folio/stripes/components';
+
+import { AT_MAXIMUM, OVER_THRESHOLD } from '../../constants';
 import { useNumberGenerators } from '../../hooks';
 import NumberGeneratorButton from '../NumberGeneratorButton';
 
@@ -13,6 +15,8 @@ import css from '../../Styles.css';
 
 const NumberGeneratorModal = forwardRef(({
   callback,
+  displayError = true,
+  displayWarning = true,
   generateButtonLabel,
   // This is the numberGenerator code, and is optional.
   // Omitting will result in all sequences appearing in select
@@ -96,8 +100,8 @@ const NumberGeneratorModal = forwardRef(({
     }
   }, [data, isFetching, selectedNG, selectedSequence, sequenceGroup]);
 
-  const overThreshold = useMemo(() => selectedSequence?.maximumCheck?.value === 'over_threshold', [selectedSequence?.maximumCheck?.value]);
-  const atMaximum = useMemo(() => selectedSequence?.maximumCheck?.value === 'at_maximum', [selectedSequence?.maximumCheck?.value]);
+  const overThreshold = useMemo(() => selectedSequence?.maximumCheck?.value === OVER_THRESHOLD, [selectedSequence?.maximumCheck?.value]);
+  const atMaximum = useMemo(() => selectedSequence?.maximumCheck?.value === AT_MAXIMUM, [selectedSequence?.maximumCheck?.value]);
 
   const renderSelectOptions = () => {
     // If we have multiple generators, separate with optgroups, else display all in one
@@ -126,10 +130,10 @@ const NumberGeneratorModal = forwardRef(({
   };
 
   const renderWarningText = () => {
-    if (overThreshold) {
+    if (displayWarning && overThreshold) {
       return (
         <div className={css.warningText}>
-          <FormattedMessage id="ui-service-interaction.numberGenerator.sequenceOverThresholdWarning" />
+          <FormattedMessage id="ui-service-interaction.numberGenerator.warning.sequenceOverThresholdWarning" values={{ name: selectedSequence.name, maxVal: selectedSequence.maximumNumber }} />
         </div>
       );
     }
@@ -138,10 +142,10 @@ const NumberGeneratorModal = forwardRef(({
   };
 
   const renderErrorText = () => {
-    if (atMaximum) {
+    if (displayError && atMaximum) {
       return (
         <div className={css.errorText}>
-          <FormattedMessage id="ui-service-interaction.numberGenerator.sequenceOverMaximumError" />
+          <FormattedMessage id="ui-service-interaction.numberGenerator.error.sequenceOverMaximumError" values={{ name: selectedSequence.name, maxVal: selectedSequence.maximumNumber }} />
         </div>
       );
     }
@@ -159,12 +163,12 @@ const NumberGeneratorModal = forwardRef(({
             callback={(generated) => {
               callback(generated);
             }}
+            displayError={false} // We are dealing with error/warning manually in the modal
+            displayWarning={false}
             generator={selectedNG ?? ''}
             id={id}
             marginBottom0
             sequence={selectedSequence?.code ?? ''}
-            suppressError // We are dealing with error/warning manually in the modal
-            suppressWarning
             {...generatorButtonProps}
           />
           <Button
@@ -205,6 +209,8 @@ const NumberGeneratorModal = forwardRef(({
 
 NumberGeneratorModal.propTypes = {
   callback: PropTypes.func.isRequired,
+  displayError: PropTypes.bool,
+  displayWarning: PropTypes.bool,
   generateButtonLabel: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node
