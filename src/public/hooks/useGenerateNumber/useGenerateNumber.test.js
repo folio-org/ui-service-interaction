@@ -7,10 +7,15 @@ import { Button as MockButton } from '@folio/stripes/components';
 import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import useGenerateNumber from './useGenerateNumber';
+import useNumberGeneratorSequences from '../useNumberGeneratorSequences';
 
 import { translationsProperties } from '../../../../test/helpers';
+import { numberGenerator2 } from '../../../../test/jest/mockGenerators';
 
-jest.mock('../useNumberGenerators', () => {
+jest.mock('../useNumberGeneratorSequences', () => jest.fn());
+
+/*
+jest.mock('../useNumberGeneratorSequences', () => {
   const { numberGenerator2 } = jest.requireActual('../../../../test/jest/mockGenerators');
   return (
     () => ({
@@ -21,7 +26,7 @@ jest.mock('../useNumberGenerators', () => {
       }
     })
   );
-});
+}); */
 
 const mockUseQuery = jest.fn();
 const mockGet = jest.fn();
@@ -64,7 +69,13 @@ describe('useGenerateNumbers', () => {
   describe('render with enabled sequence', () => {
     beforeEach(() => {
       resetMocks();
-
+      useNumberGeneratorSequences.mockImplementation(() => ({
+        data: {
+          results: [
+            numberGenerator2.sequences?.find(s => s.code === 'seq2.1')
+          ]
+        }
+      }));
       renderWithIntl(
         <TestComponent
           generator="numberGen2"
@@ -94,14 +105,15 @@ describe('useGenerateNumbers', () => {
         await Callout('This sequence is marked as disabled and cannot be generated from. Please contact a system admin').absent();
       });
 
-      test('useNumberGenerators has right param map', async () => {
-        // Test namespace part of query call
-        const mockNamespaceCall = mockUseQuery.mock.calls[0][0];
+      test('useGenerateNumber has right param map', async () => {
+        // Test namespace part of query call ( First call is to get sequences)
+        const generateNumberCall = mockUseQuery.mock.calls[0];
+        const mockNamespaceCall = generateNumberCall[0];
         // All namespace arguments are present
         expect(mockNamespaceCall.length).toBe(3);
 
         // Test function part of query call
-        const mockFunctionCall = mockUseQuery.mock.calls[0][1];
+        const mockFunctionCall = generateNumberCall[1];
         expect(mockFunctionCall).toStrictEqual(expect.any(Function));
         mockFunctionCall();
         expect(mockGet).toHaveBeenCalledWith('servint/numberGenerators/getNextNumber?generator=numberGen2&sequence=seq2.1');
@@ -115,6 +127,11 @@ describe('useGenerateNumbers', () => {
   describe('render with non existant sequence', () => {
     beforeEach(() => {
       resetMocks();
+      useNumberGeneratorSequences.mockImplementation(() => ({
+        data: {
+          results: []
+        }
+      }));
 
       renderWithIntl(
         <TestComponent
@@ -145,14 +162,15 @@ describe('useGenerateNumbers', () => {
         await Callout('This sequence is marked as disabled and cannot be generated from. Please contact a system admin').absent();
       });
 
-      test('useNumberGenerators has right param map', async () => {
-        // Test namespace part of query call
-        const mockNamespaceCall = mockUseQuery.mock.calls[0][0];
+      test('useGenerateNumber has right param map', async () => {
+        // Test namespace part of query call ( First call is to get sequences)
+        const generateNumberCall = mockUseQuery.mock.calls[0];
+        const mockNamespaceCall = generateNumberCall[0];
         // All namespace arguments are present
         expect(mockNamespaceCall.length).toBe(3);
 
         // Test function part of query call
-        const mockFunctionCall = mockUseQuery.mock.calls[0][1];
+        const mockFunctionCall = generateNumberCall[1];
         expect(mockFunctionCall).toStrictEqual(expect.any(Function));
         mockFunctionCall();
         expect(mockGet).toHaveBeenCalledWith('servint/numberGenerators/getNextNumber?generator=numberGen2&sequence=fakesequence');
@@ -166,6 +184,13 @@ describe('useGenerateNumbers', () => {
   describe('render with disabled sequence', () => {
     beforeEach(() => {
       resetMocks();
+      useNumberGeneratorSequences.mockImplementation(() => ({
+        data: {
+          results: [
+            numberGenerator2.sequences?.find(s => s.code === 'seq2.2')
+          ]
+        }
+      }));
 
       renderWithIntl(
         <TestComponent
