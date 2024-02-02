@@ -4,17 +4,26 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
+
+import { AT_MAXIMUM, OVER_THRESHOLD } from '../../constants';
 import { useGenerateNumber, useNumberGenerators } from '../../hooks';
+
 import css from '../../Styles.css';
 
 const NumberGeneratorButton = ({
   buttonLabel,
   callback,
+  disabled, // Take control of disabling the button manually
+  displayError = true,
+  displayWarning = false,
   id,
   generator, // This is the numberGenerator code
   sequence, // This is the sequence code
-  suppressWarning = true,
-  suppressError = false,
+  /* useGenerateNumber callback, generator and sequence are handled by direct props
+   * but the rest of the parameters for useGenerateNumber can be passed here.
+   * (Including the above 3, where this prop will take precedence)
+   */
+  useGenerateNumberParams = {},
   ...buttonProps
 }) => {
   const { data: { results: { 0: { sequences = [] } = {} } = [] } = {} } = useNumberGenerators(generator);
@@ -22,28 +31,29 @@ const NumberGeneratorButton = ({
   const selectedSequence = useMemo(() => sequences.find(seq => seq.code === sequence), [sequence, sequences]);
   const enabled = useMemo(() => selectedSequence?.enabled ?? false, [selectedSequence]);
 
-  const overThreshold = useMemo(() => selectedSequence?.maximumCheck?.value === 'over_threshold', [selectedSequence?.maximumCheck?.value]);
-  const atMaximum = useMemo(() => selectedSequence?.maximumCheck?.value === 'at_maximum', [selectedSequence?.maximumCheck?.value]);
+  const overThreshold = useMemo(() => selectedSequence?.maximumCheck?.value === OVER_THRESHOLD, [selectedSequence?.maximumCheck?.value]);
+  const atMaximum = useMemo(() => selectedSequence?.maximumCheck?.value === AT_MAXIMUM, [selectedSequence?.maximumCheck?.value]);
 
   const { generate } = useGenerateNumber({
     callback,
     generator,
     sequence,
+    ...useGenerateNumberParams
   });
 
   const renderWarningsAndErrors = () => {
-    if (overThreshold && !suppressWarning) {
+    if (displayWarning && overThreshold) {
       return (
         <div className={css.warningText}>
-          <FormattedMessage id="ui-service-interaction.numberGenerator.sequenceOverThresholdWarning" />
+          <FormattedMessage id="ui-service-interaction.numberGenerator.warning.sequenceOverThresholdWarning" values={{ name: selectedSequence.name, maxVal: selectedSequence.maximumNumber }} />
         </div>
       );
     }
 
-    if (atMaximum && !suppressError) {
+    if (displayError && atMaximum) {
       return (
         <div className={css.errorText}>
-          <FormattedMessage id="ui-service-interaction.numberGenerator.sequenceOverMaximumError" />
+          <FormattedMessage id="ui-service-interaction.numberGenerator.error.sequenceOverMaximumError" values={{ name: selectedSequence.name, maxVal: selectedSequence.maximumNumber }} />
         </div>
       );
     }
@@ -55,7 +65,7 @@ const NumberGeneratorButton = ({
     <>
       <Button
         buttonStyle="primary"
-        disabled={!enabled || atMaximum}
+        disabled={disabled ?? (!enabled || atMaximum)}
         id={`clickable-trigger-number-generator-${id}`}
         onClick={generate}
         {...buttonProps}
@@ -76,11 +86,13 @@ NumberGeneratorButton.propTypes = {
     PropTypes.node
   ]),
   callback: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  displayError: PropTypes.bool,
+  displayWarning: PropTypes.bool,
   id: PropTypes.string.isRequired,
   generator: PropTypes.string.isRequired,
   sequence: PropTypes.string.isRequired,
-  suppressWarning: PropTypes.bool,
-  suppressError: PropTypes.bool
+  useGenerateNumberParams: PropTypes.object
 };
 
 export default NumberGeneratorButton;
