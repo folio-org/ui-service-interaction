@@ -20,7 +20,7 @@ const expectedText = {
   EnabledInfo: 'An enabled number generator sequence will be displayed when selecting the sequence in the App UI. A sequence with the status false will not be displayed in the App UI until it is enabled again.',
   FormatInfo: 'The Format field defines the length of the generated number. Use # to define the length without padding, e.g. "####". Or use a character to include padding. E.g. "0000" will set the length to 4 and add zeros to produce outputs such as 0045.',
   NameInfo: 'Name of the number generator sequence. In cases where a selection from number sequences is required, this name will be displayed in the Modal for generating a new number. This field is editable.',
-  NextValueInfo: 'This field shows the <strong>next value</strong> in the sequence based on the current value in the database. It can be set manually as the starting value for a new sequence. Once saved, "Next value" cannot be edited.',
+  NextValueInfo: 'This field shows the <strong>next value</strong> in the sequence based on the current value in the database. It can be set manually as the starting value for a new sequence.',
   OutputTemplateInfo: 'The output template defines the rules applied to create the sequence. Templates are formed using Groovy. See below for more information.'
 };
 
