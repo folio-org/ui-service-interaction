@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { useQuery, useQueryClient } from 'react-query';
 
@@ -9,7 +9,13 @@ import { useCallout, useOkapiKy } from '@folio/stripes/core';
 import useNumberGeneratorSequences from '../useNumberGeneratorSequences';
 
 import { NUMBER_GENERATORS_ENDPOINT } from '../../utilities';
-import { GENERATE_ERROR_CODE_MAX_REACHED, GENERATE_STATUS_ERROR, GENERATE_STATUS_WARNING, GENERATE_WARNING_CODE_HIT_MAXIMUM, GENERATE_WARNING_CODE_OVER_THRESHOLD, OVER_THRESHOLD } from '../../constants';
+import {
+  GENERATE_ERROR_CODE_MAX_REACHED,
+  GENERATE_STATUS_ERROR,
+  GENERATE_STATUS_WARNING,
+  GENERATE_WARNING_CODE_HIT_MAXIMUM,
+  GENERATE_WARNING_CODE_OVER_THRESHOLD,
+} from '../../constants';
 
 const useGenerateNumber = ({
   callback = () => null,

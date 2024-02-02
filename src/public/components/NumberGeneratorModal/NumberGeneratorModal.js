@@ -185,7 +185,6 @@ const NumberGeneratorModal = forwardRef(({
         error={renderErrorText()}
         label={<FormattedMessage id="ui-service-interaction.numberGenerator.generator" />}
         onChange={(e) => {
-          console.log("This should happen immediately")
           // Grab selectedNG from selectedSequenceId
           const chosenNumberGenerator = data?.find(ng => ng?.sequences?.some(s => s.id === e.target.value))?.code;
           setSelectedNG(chosenNumberGenerator);
