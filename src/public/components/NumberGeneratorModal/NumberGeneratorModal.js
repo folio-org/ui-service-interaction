@@ -319,6 +319,7 @@ const NumberGeneratorModal = forwardRef(({
     >
       {renderTop ? renderTop() : null}
       <QueryTypedown
+        displayClearItem={false}
         endOfList={renderEndOFList()}
         id={SEQUENCE_TYPEDOWN_ID}
         // To use this as a controlled component is currently a little fiddly, spoof an input opbject
