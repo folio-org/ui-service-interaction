@@ -8,7 +8,7 @@ import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import useNumberGeneratorSequences from '../useNumberGeneratorSequences';
 
-import { NUMBER_GENERATORS_ENDPOINT } from '../../utilities';
+import { NUMBER_GENERATORS_ENDPOINT, NUMBER_GENERATOR_SEQUENCES_ENDPOINT } from '../../utilities';
 import {
   GENERATE_ERROR_CODE_MAX_REACHED,
   GENERATE_STATUS_ERROR,
@@ -33,6 +33,7 @@ const useGenerateNumber = ({
   const queryClient = useQueryClient();
 
   const invalidateNumberGenerators = () => queryClient.invalidateQueries(NUMBER_GENERATORS_ENDPOINT);
+  const invalidateNumberGeneratorSequences = () => queryClient.invalidateQueries(NUMBER_GENERATOR_SEQUENCES_ENDPOINT);
 
   const queryParams = generateKiwtQueryParams(
     {
@@ -114,7 +115,10 @@ const useGenerateNumber = ({
         callback(res?.nextValue);
         return res;
       }).then(handleCallouts)
-      .then(() => invalidateNumberGenerators()),
+      .then(() => {
+        invalidateNumberGenerators();
+        invalidateNumberGeneratorSequences();
+      }),
     {
       enabled: false,
       cacheTime: 0,

@@ -5,7 +5,7 @@ import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { NUMBER_GENERATORS_ENDPOINT } from '../../utilities/endpoints';
 
-const useNumberGenerators = (code) => {
+const useNumberGenerators = (code, queryOptions = {}) => {
   const ky = useOkapiKy();
 
   const paramMap = {
@@ -30,7 +30,8 @@ const useNumberGenerators = (code) => {
   const queryParams = generateKiwtQueryParams(paramMap, {});
   return useQuery(
     [NUMBER_GENERATORS_ENDPOINT, queryParams, 'ui-service-interaction', 'useNumberGenerators'],
-    () => ky.get(`${NUMBER_GENERATORS_ENDPOINT}?${queryParams.join('&')}`).json()
+    () => ky.get(`${NUMBER_GENERATORS_ENDPOINT}?${queryParams.join('&')}`).json(),
+    queryOptions
   );
 };
 

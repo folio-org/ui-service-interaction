@@ -1,3 +1,27 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+/*
+  NumberGeneratorModal
+*/
+.endOfTypedownList {
+  color: var(--color-text-p2);
+  padding: var(--gutter-static-two-thirds) 0;
+  margin-left: 1rem;
+}
+
+.greyItem {
+  color: var(--checkable-disabled-fill);
+}
+
+.boldItem {
+  font-weight: var(--text-weight-bold);
+}
+
+.itemMargin {
+  margin-left: var(--gutter-static-one-third);
+}
+
+/* Generic */
 .warningText {
   color: var(--warn)
 }

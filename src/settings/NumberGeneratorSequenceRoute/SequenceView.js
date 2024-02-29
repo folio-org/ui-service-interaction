@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { FormModal } from '@k-int/stripes-kint-components';
 
@@ -38,6 +38,7 @@ const NumberGeneratorSequence = ({
 }) => {
   const callout = useCallout();
   const stripes = useStripes();
+  const intl = useIntl();
 
   const { data: sequence = {} } = useNumberGeneratorSequence({
     id: seqId,
@@ -254,7 +255,7 @@ const NumberGeneratorSequence = ({
           <FormattedMessage id="ui-service-interaction.delete" />
         }
         heading={
-          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.deleteSequence" />
+          intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.deleteSequence' })
         }
         message={[
           <FormattedMessage

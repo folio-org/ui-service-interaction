@@ -40,7 +40,7 @@ Name | Type | Description | default | required
 --- | --- | --- | --- | ---
 callback | function | A callback which accepts a generated string. | | ✓ |
 displayError | Boolean | When set to "true" an error message will render underneath the sequence selection component when the selected sequence has maximumCheck "at_maximum" | true | ✕ |
-displayWarning | Boolean | When set to "true" a warning message will render underneath the sequence selection component when the selected sequence has maximumCheck "over_threshold" | true | ✕ |
+displayWarning | Boolean | When set to "true" a warning message will render underneath the sequence selection component when the selected sequence has maximumCheck "over_threshold" | false | ✕ |
 id | String | A string to uniquely identify the Modal. Will result in an id `number-generator-modal-${id}` on the modal itself and `clickable-trigger-number-generator-${id}` on the generate button inside the modal. | | ✓ |
 generateButtonLabel | String/Node | An override for the label of the button rendered within the modal | "Generate" | ✕ |
 generator | String | The `code` for a given NumberGenerator set up in `ui-service-interaction`'s Settings panel. When not provided the Select will comprise of all sequences for all NumberGenerators fetched. | | ✕ |

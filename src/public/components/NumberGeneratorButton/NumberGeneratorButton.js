@@ -26,7 +26,7 @@ const NumberGeneratorButton = ({
   useGenerateNumberParams = {},
   ...buttonProps
 }) => {
-  const { data: { results: { 0: { sequences = [] } = {} } = [] } = {} } = useNumberGenerators(generator);
+  const { data: { results: { 0: { sequences = [] } = {} } = [] } = {} } = useNumberGenerators(generator, { enabled: !!generator && !!sequence });
 
   const selectedSequence = useMemo(() => sequences.find(seq => seq.code === sequence), [sequence, sequences]);
   const enabled = useMemo(() => selectedSequence?.enabled ?? false, [selectedSequence]);
