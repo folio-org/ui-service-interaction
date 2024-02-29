@@ -1,10 +1,8 @@
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
-import classNames from 'classnames';
 
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
-import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
 
 import {
@@ -12,12 +10,12 @@ import {
   generateKiwtQueryParams,
   highlightString
 } from '@k-int/stripes-kint-components';
-import { Button, Layout, Modal, ModalFooter } from '@folio/stripes/components';
+import { Button, Checkbox, Layout, Modal, ModalFooter } from '@folio/stripes/components';
 
 import { InfoBox } from '@folio/stripes-erm-components';
 
 import { AT_MAXIMUM, BELOW_THRESHOLD, OVER_THRESHOLD } from '../../constants';
-import { useNumberGeneratorSequences, useNumberGenerators } from '../../hooks';
+import { useNumberGeneratorSequences } from '../../hooks';
 import NumberGeneratorButton from '../NumberGeneratorButton';
 
 import css from '../../Styles.css';
@@ -38,7 +36,6 @@ const NumberGeneratorModal = forwardRef(({
   renderBottom,
   ...modalProps
 }, ref) => {
-  const intl = useIntl();
   const [includeSequencesAtMaximum, setIncludeSequencesAtMaximum] = useState(false);
 
   // Separate this out, so we _know_ initial fetch will have same shape as queryTypedown does
@@ -69,22 +66,20 @@ const NumberGeneratorModal = forwardRef(({
     queryParams: standaloneSequenceCallParams
   });
 
-  // FIXME Can grab this from results list
-/*   const sequenceCount = useMemo(() => data.reduce((acc, curr) => {
-    return acc + curr?.sequences?.length;
-  }, 0), [data]); */
-
   // Manage the object states separately to the "select" state.
   const [selectedSequence, setSelectedSequence] = useState();
 
   useEffect(() => {
     if (!isStandaloneSequencesFetching) {
-      if (standaloneSequences.length > 0 && !selectedSequence) {
+      if (
+        // We've fetched all sequences, and there is none currently selected
+        (standaloneSequences.length > 0 && !selectedSequence) ||
+        // Selected sequence is no longer in standalone sequences -- likely due to passing maximum value
+        (selectedSequence && (standaloneSequences.filter(ss => ss.id === selectedSequence.id)?.length ?? 0) === 0)
+      ) {
         setSelectedSequence(standaloneSequences[0]);
       } else {
         const selectedSequenceInData = standaloneSequences?.filter(sq => sq.id === selectedSequence?.id)?.[0];
-        console.log("SS: %o", selectedSequence);
-        console.log("SSID: %o", selectedSequenceInData);
 
         if (!!selectedSequenceInData && !isEqual(selectedSequence, selectedSequenceInData)) {
           // Refetched SS differs, setSS
@@ -96,6 +91,30 @@ const NumberGeneratorModal = forwardRef(({
 
   const overThreshold = useMemo(() => selectedSequence?.maximumCheck?.value === OVER_THRESHOLD, [selectedSequence?.maximumCheck?.value]);
   const atMaximum = useMemo(() => selectedSequence?.maximumCheck?.value === AT_MAXIMUM, [selectedSequence?.maximumCheck?.value]);
+
+
+  const renderTypedownFooter = () => {
+    return (
+      <Layout className="display-flex flex-align-items-start">
+        <Layout style={{ 'padding-right': '30%' }}>
+          <Layout style={{ 'padding-right': '10px', display: 'inline' }}>
+            <Checkbox
+              checked={includeSequencesAtMaximum}
+              id="includeAtMaxSequences_label"
+              onChange={(e) => {
+                e.stopPropagation();
+                setIncludeSequencesAtMaximum(e?.target?.checked);
+              }}
+            />
+          </Layout>
+          <FormattedMessage
+            for="includeAtMaxSequences_label"
+            id="ui-service-interaction.numberGenerator.modal.includeAtMaxSequences"
+          />
+        </Layout>
+      </Layout>
+    );
+  };
 
   const renderWarningText = () => {
     if (displayWarning && overThreshold) {
@@ -135,29 +154,23 @@ const NumberGeneratorModal = forwardRef(({
   const renderListItem = (sequence, input) => {
     return (
       <Layout className="display-flex">
-        <Layout className="display-flex">
+        <Layout className={`display-flex ${css.boldItem}`}>
           {highlightString(
             input,
-            intl.formatMessage(
-              { id: 'ui-service-interaction.numberGenerator.modal.sequenceName' },
-              {
-                name: sequence.name,
-              }
-            )
+            sequence.name,
+            true,
+            false
           )}
         </Layout>
         <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
           <FormattedMessage id="ui-service-interaction.separator" />
         </Layout>
-        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+        <Layout className={`display-flex ${css.boldItem} ${css.greyItem} ${css.itemMargin}`}>
           {highlightString(
             input,
-            intl.formatMessage(
-              { id: 'ui-service-interaction.numberGenerator.modal.sequenceCode' },
-              {
-                code: sequence.code,
-              }
-            )
+            sequence.code,
+            true,
+            false
           )}
         </Layout>
         <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
@@ -245,6 +258,7 @@ const NumberGeneratorModal = forwardRef(({
         }}
         path="servint/numberGeneratorSequences"
         pathMutator={pathMutator}
+        renderFooter={renderTypedownFooter}
         renderListItem={renderListItem}
       />
       {renderBottom ? renderBottom() : null}

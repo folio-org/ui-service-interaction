@@ -86,8 +86,8 @@
   "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> has now hit <strong>{maxVal}</strong>, its maximum value, and further generations will not be possible.",
   "numberGenerator.error": "<strong>Error:</strong> The number generator sequence <strong>{name}</strong> could not generate, but no known reason was specified.",
   "numberGenerator.error.sequenceOverMaximumError": "<strong>Error:</strong> The number generator sequence <strong>{name}</strong> has reached <strong>{maxVal}</strong>, its maximum value. Please select a different sequence or contact your administrator.",
-  "numberGenerator.modal.sequenceName": "<strong>{name}</strong>",
-  "numberGenerator.modal.sequenceCode": "<strong>{code}</strong>",
   "numberGenerator.modal.nextValue": "Next value: {value}",
-  "numberGenerator.modal.maximumCheck": "Usage status"
+  "numberGenerator.modal.maximumCheck": "Usage status",
+  "numberGenerator.modal.includeAtMaxSequences": "Include sequences which have reached their maximum value",
+  "numberGenerator.modal.exactCodeMatch": "Exact code match"
 }
