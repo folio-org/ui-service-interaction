@@ -68,3 +68,4 @@ const MyInvalidateButton = () => {
 Name | Index | Type | Description | default | required
 --- | --- | --- | --- | --- | --- |
 code | 0 | String | The `code` of a NumberGenerator set up in the Settings panel for `ui-service-interaction` | | ✕ |
+queryOptions | 1 | Object | An object to pass to the underlying `useQuery` | {} | ✕ |

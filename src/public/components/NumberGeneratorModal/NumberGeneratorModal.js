@@ -1,17 +1,28 @@
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
+import classNames from 'classnames';
+
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
 
-import { Button, Modal, ModalFooter, Select } from '@folio/stripes/components';
+import {
+  QueryTypedown,
+  generateKiwtQueryParams,
+  highlightString
+} from '@k-int/stripes-kint-components';
+import { Button, Layout, Modal, ModalFooter } from '@folio/stripes/components';
 
-import { AT_MAXIMUM, OVER_THRESHOLD } from '../../constants';
-import { useNumberGenerators } from '../../hooks';
+import { InfoBox } from '@folio/stripes-erm-components';
+
+import { AT_MAXIMUM, BELOW_THRESHOLD, OVER_THRESHOLD } from '../../constants';
+import { useNumberGeneratorSequences, useNumberGenerators } from '../../hooks';
 import NumberGeneratorButton from '../NumberGeneratorButton';
 
 import css from '../../Styles.css';
+
+const SEQUENCE_TYPEDOWN_ID = 'sequence_typedown';
 
 const NumberGeneratorModal = forwardRef(({
   callback,
@@ -27,103 +38,64 @@ const NumberGeneratorModal = forwardRef(({
   renderBottom,
   ...modalProps
 }, ref) => {
-  const { data: { results: data = [] } = {} } = useNumberGenerators(generator);
+  const intl = useIntl();
+  const [includeSequencesAtMaximum, setIncludeSequencesAtMaximum] = useState(false);
 
-  const sequenceCount = useMemo(() => data.reduce((acc, curr) => {
+  // Separate this out, so we _know_ initial fetch will have same shape as queryTypedown does
+  const kiwtQueryParamOptions = useMemo(() => ({
+    ...(generator && {
+      filters: [
+        {
+          path: 'owner.code',
+          value: generator
+        },
+        (!includeSequencesAtMaximum && {
+          // A OR B needs to be NOT(NOT(A) AND NOT(B)) instead...
+          // For whatever reason groupValues is not encoding && and || right now, which causes issues
+          value: '!(maximumCheck isNotNull&&maximumCheck.value==at_maximum)'
+        })
+      ]
+    }),
+    pageSize: 10,
+    searchKey: 'name,code',
+    stats: false,
+    sort: [{ path: 'owner.code' }, { path: 'name' }, { path: 'code' }],
+  }), [generator, includeSequencesAtMaximum]);
+
+  // We need extra call to ensure data integrity _after_selection.
+  // This will _only_ be used for updating after generation and initial population
+  const standaloneSequenceCallParams = generateKiwtQueryParams(kiwtQueryParamOptions, {});
+  const { data: standaloneSequences = [], isFetching: isStandaloneSequencesFetching } = useNumberGeneratorSequences({
+    queryParams: standaloneSequenceCallParams
+  });
+
+  // FIXME Can grab this from results list
+/*   const sequenceCount = useMemo(() => data.reduce((acc, curr) => {
     return acc + curr?.sequences?.length;
-  }, 0), [data]);
+  }, 0), [data]); */
 
-
-  // This is calculated from data, so only calculate once per data change
-  const sequenceGroup = useMemo(() => data.reduce((acc, curr) => {
-    const generatorCode = curr.code;
-    const returnObj = {
-      ...acc
-    };
-
-    const reduceSequences = [
-      ...(curr.sequences ?? [])?.filter(seq => seq.enabled)?.sort((a, b) => {
-        if (a.code.toLowerCase() < b.code.toLowerCase()) return -1;
-        if (a.code.toLowerCase() > b.code.toLowerCase()) return 1;
-        return 0;
-      })
-    ];
-
-    if (reduceSequences.length) {
-      returnObj[generatorCode] = {
-        name: curr.name,
-        code: curr.code,
-        sequences: reduceSequences
-      };
-    }
-
-    return returnObj;
-  }, {}), [data]);
-
-  /* Track which number generator has been selected.
-   * Obviously if a code is provided it will only be one,
-   * but if no code/in future maybe a list of codes are provided
-   * then this gives us a way to still send the correct generator down.
-   *
-   * Make the select a controlled form component, so we can set the selectedNG on change
-   */
   // Manage the object states separately to the "select" state.
-  const [selectedNG, setSelectedNG] = useState();
-  const [selectedSequence, setSelectedSequence] = useState('');
+  const [selectedSequence, setSelectedSequence] = useState();
 
   useEffect(() => {
-    const sequenceGroupEntries = Object.entries(sequenceGroup);
-    if (sequenceGroupEntries.length > 0 && !selectedNG) {
-      setSelectedNG(sequenceGroupEntries[0]?.[0]);
-      setSelectedSequence(sequenceGroupEntries[0]?.[1]?.sequences?.[0]);
-    } else {
-      // Check if we have more up to date versions of Seq, if so set them in state
-      const selectedNGInData = data?.filter(ng => ng.code === selectedNG)?.[0];
-      const selectedSequenceInData = selectedNGInData?.sequences?.filter(sq => sq.id === selectedSequence?.id)?.[0];
-      if (!!selectedSequenceInData && !isEqual(selectedSequence, selectedSequenceInData)) {
-        // Refetched SS differs, setSS
-        setSelectedSequence(selectedSequenceInData);
+    if (!isStandaloneSequencesFetching) {
+      if (standaloneSequences.length > 0 && !selectedSequence) {
+        setSelectedSequence(standaloneSequences[0]);
+      } else {
+        const selectedSequenceInData = standaloneSequences?.filter(sq => sq.id === selectedSequence?.id)?.[0];
+        console.log("SS: %o", selectedSequence);
+        console.log("SSID: %o", selectedSequenceInData);
+
+        if (!!selectedSequenceInData && !isEqual(selectedSequence, selectedSequenceInData)) {
+          // Refetched SS differs, setSS
+          setSelectedSequence(selectedSequenceInData);
+        }
       }
     }
-  }, [data, selectedNG, selectedSequence, sequenceGroup]);
+  }, [isStandaloneSequencesFetching, selectedSequence, standaloneSequences]);
 
   const overThreshold = useMemo(() => selectedSequence?.maximumCheck?.value === OVER_THRESHOLD, [selectedSequence?.maximumCheck?.value]);
   const atMaximum = useMemo(() => selectedSequence?.maximumCheck?.value === AT_MAXIMUM, [selectedSequence?.maximumCheck?.value]);
-
-  const optionFromSequence = useCallback((seq) => (
-    <option
-      key={seq.id}
-      value={seq.id}
-    >
-      {seq.name ?? seq.code ?? seq.id}
-    </option>
-  ), []);
-
-  const renderSelectOptions = useCallback(() => {
-    // If we have multiple generators, separate with optgroups, else display all in one
-    if ((Object.keys(sequenceGroup)?.length ?? 0) > 1) {
-      return (
-        orderBy(Object.entries(sequenceGroup), '0.code')?.map(([key, value]) => (
-          <optgroup
-            key={key}
-            label={value?.name ?? value?.code}
-          >
-            {value?.sequences?.map(v => (
-              optionFromSequence(v)
-            ))}
-          </optgroup>
-        ))
-      );
-    }
-
-    return (
-      Object.entries(sequenceGroup).map(([_k, value]) => (
-        value?.sequences?.map(v => (
-          optionFromSequence(v)
-        ))
-      ))
-    );
-  }, [optionFromSequence, sequenceGroup]);
 
   const renderWarningText = () => {
     if (displayWarning && overThreshold) {
@@ -149,9 +121,91 @@ const NumberGeneratorModal = forwardRef(({
     return undefined;
   };
 
+  const pathMutator = useCallback((input, path) => {
+    const queryParams = generateKiwtQueryParams(
+      kiwtQueryParamOptions,
+      {
+        query: input,
+      }
+    );
+
+    return `${path}?${queryParams.join('&')}`;
+  }, [kiwtQueryParamOptions]);
+
+  const renderListItem = (sequence, input) => {
+    return (
+      <Layout className="display-flex">
+        <Layout className="display-flex">
+          {highlightString(
+            input,
+            intl.formatMessage(
+              { id: 'ui-service-interaction.numberGenerator.modal.sequenceName' },
+              {
+                name: sequence.name,
+              }
+            )
+          )}
+        </Layout>
+        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
+          <FormattedMessage id="ui-service-interaction.separator" />
+        </Layout>
+        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+          {highlightString(
+            input,
+            intl.formatMessage(
+              { id: 'ui-service-interaction.numberGenerator.modal.sequenceCode' },
+              {
+                code: sequence.code,
+              }
+            )
+          )}
+        </Layout>
+        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+          <FormattedMessage id="ui-service-interaction.separator" />
+        </Layout>
+        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+          <FormattedMessage id="ui-service-interaction.numberGenerator.modal.nextValue" values={{ value: sequence.nextValue }} />
+        </Layout>
+        {sequence.maximumCheck?.value && sequence.maximumCheck.value !== BELOW_THRESHOLD &&
+          <>
+            <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+              <FormattedMessage id="ui-service-interaction.separator" />
+            </Layout>
+            <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+              <FormattedMessage id="ui-service-interaction.numberGenerator.modal.maximumCheck" />
+            </Layout>
+            {sequence.maximumCheck.value === OVER_THRESHOLD &&
+              <Layout className={`display-flex ${css.itemMargin}`}>
+                <InfoBox type="warn">
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.overThreshold" />
+                </InfoBox>
+              </Layout>
+            }
+            {sequence.maximumCheck.value === AT_MAXIMUM &&
+              <Layout className={`display-flex ${css.itemMargin}`}>
+                <InfoBox type="error">
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.atMax" />
+                </InfoBox>
+              </Layout>
+            }
+          </>
+        }
+      </Layout>
+    );
+  };
+
+  const renderEndOFList = () => {
+    return (
+      <Layout className={css.endOfTypedownList}>
+        <FormattedMessage id="ui-service-interaction.noResultsFound" />
+      </Layout>
+    );
+  };
+
   return (
     <Modal
       ref={ref}
+      enforceFocus={false} // Necessary to prevent it fighting focus handler in typedown
       footer={
         <ModalFooter>
           <NumberGeneratorButton
@@ -161,7 +215,7 @@ const NumberGeneratorModal = forwardRef(({
             }}
             displayError={false} // We are dealing with error/warning manually in the modal
             displayWarning={false}
-            generator={selectedNG ?? ''}
+            generator={selectedSequence?.owner?.code ?? ''}
             id={id}
             marginBottom0
             sequence={selectedSequence?.code ?? ''}
@@ -180,23 +234,19 @@ const NumberGeneratorModal = forwardRef(({
       {...modalProps}
     >
       {renderTop ? renderTop() : null}
-      <Select
-        disabled={sequenceCount <= 1}
-        error={renderErrorText()}
-        label={<FormattedMessage id="ui-service-interaction.numberGenerator.generator" />}
-        onChange={(e) => {
-          // Grab selectedNG from selectedSequenceId
-          const chosenNumberGenerator = data?.find(ng => ng?.sequences?.some(s => s.id === e.target.value))?.code;
-          setSelectedNG(chosenNumberGenerator);
-          const chosenSequence = sequenceGroup[chosenNumberGenerator]?.sequences?.find(seq => seq.id === e.target.value);
-          setSelectedSequence(chosenSequence);
+      <QueryTypedown
+        endOfList={renderEndOFList()}
+        id={SEQUENCE_TYPEDOWN_ID}
+        // To use this as a controlled component is currently a little fiddly, spoof an input opbject
+        input={{
+          name: SEQUENCE_TYPEDOWN_ID,
+          onChange: (seq) => setSelectedSequence(seq),
+          value: selectedSequence
         }}
-        placeholder={null} // placeholder default causes issues
-        value={selectedSequence?.id}
-        warning={renderWarningText()}
-      >
-        {renderSelectOptions()}
-      </Select>
+        path="servint/numberGeneratorSequences"
+        pathMutator={pathMutator}
+        renderListItem={renderListItem}
+      />
       {renderBottom ? renderBottom() : null}
     </Modal>
   );
