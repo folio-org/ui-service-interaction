@@ -25,7 +25,7 @@ const SEQUENCE_TYPEDOWN_ID = 'sequence_typedown';
 const NumberGeneratorModal = forwardRef(({
   callback,
   displayError = true,
-  displayWarning = true,
+  displayWarning = false,
   generateButtonLabel,
   // This is the numberGenerator code, and is optional.
   // Omitting will result in all sequences appearing in select
@@ -37,10 +37,17 @@ const NumberGeneratorModal = forwardRef(({
   ...modalProps
 }, ref) => {
   const [includeSequencesAtMaximum, setIncludeSequencesAtMaximum] = useState(false);
+  const [exactCodeMatch, setExactCodeMatch] = useState(false);
 
-  // Separate this out, so we _know_ initial fetch will have same shape as queryTypedown does
+  // Separate this out, so we know initial fetch will have same shape as queryTypedown does
+  // This will mean standalone won't know about any user facing queries, but that's fine
   const kiwtQueryParamOptions = useMemo(() => ({
     ...(generator && {
+      ...(exactCodeMatch && {
+        filterKeys: {
+          code: 'code',
+        },
+      }),
       filters: [
         {
           path: 'owner.code',
@@ -50,14 +57,17 @@ const NumberGeneratorModal = forwardRef(({
           // A OR B needs to be NOT(NOT(A) AND NOT(B)) instead...
           // For whatever reason groupValues is not encoding && and || right now, which causes issues
           value: '!(maximumCheck isNotNull&&maximumCheck.value==at_maximum)'
-        })
+        }),
       ]
     }),
     pageSize: 10,
-    searchKey: 'name,code',
+    // Do not do match if exactCodeMatch is set
+    ...(!exactCodeMatch && {
+      searchKey: 'name,code',
+    }),
     stats: false,
     sort: [{ path: 'owner.code' }, { path: 'name' }, { path: 'code' }],
-  }), [generator, includeSequencesAtMaximum]);
+  }), [exactCodeMatch, generator, includeSequencesAtMaximum]);
 
   // We need extra call to ensure data integrity _after_selection.
   // This will _only_ be used for updating after generation and initial population
@@ -112,6 +122,22 @@ const NumberGeneratorModal = forwardRef(({
             id="ui-service-interaction.numberGenerator.modal.includeAtMaxSequences"
           />
         </Layout>
+        <Layout style={{ 'padding-right': '30%' }}>
+          <Layout style={{ 'padding-right': '10px', display: 'inline' }}>
+            <Checkbox
+              checked={exactCodeMatch}
+              id="exact_match_label"
+              onChange={(e) => {
+                e.stopPropagation();
+                setExactCodeMatch(e?.target?.checked);
+              }}
+            />
+          </Layout>
+          <FormattedMessage
+            for="exact_match_label"
+            id="ui-service-interaction.numberGenerator.modal.exactCodeMatch"
+          />
+        </Layout>
       </Layout>
     );
   };
@@ -145,11 +171,14 @@ const NumberGeneratorModal = forwardRef(({
       kiwtQueryParamOptions,
       {
         query: input,
+        ...(exactCodeMatch && {
+          filters: `code.${input}`,
+        }),
       }
     );
 
     return `${path}?${queryParams.join('&')}`;
-  }, [kiwtQueryParamOptions]);
+  }, [exactCodeMatch, kiwtQueryParamOptions]);
 
   const renderListItem = (sequence, input) => {
     return (
@@ -261,6 +290,8 @@ const NumberGeneratorModal = forwardRef(({
         renderFooter={renderTypedownFooter}
         renderListItem={renderListItem}
       />
+      {renderWarningText()}
+      {renderErrorText()}
       {renderBottom ? renderBottom() : null}
     </Modal>
   );
