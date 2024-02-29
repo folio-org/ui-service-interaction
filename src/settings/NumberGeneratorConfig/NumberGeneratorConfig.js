@@ -166,7 +166,7 @@ const NumberGeneratorConfig = ({
           <FormattedMessage id="ui-service-interaction.delete" />
         }
         heading={
-          <FormattedMessage id="ui-service-interaction.settings.numberGenerators.deleteGenerator" />
+          intl.formatMessage({ id: 'ui-service-interaction.settings.numberGenerators.deleteGenerator' })
         }
         message={
           <FormattedMessage id="ui-service-interaction.settings.numberGenerators.deleteGenerator.message" values={{ name: removeGenerator?.label ?? removeGenerator?.code }} />

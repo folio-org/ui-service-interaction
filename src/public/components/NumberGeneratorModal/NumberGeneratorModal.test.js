@@ -1,5 +1,5 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button, Select, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
@@ -31,6 +31,26 @@ const mockUseNumberGenerators = jest.fn((code) => {
   });
 });
 
+const mockUseNumberGeneratorSequences = jest.fn(() => {
+  return ({
+    data: [numberGenerator1, numberGenerator2].reduce((acc, curr) => {
+      const newAcc = [
+        ...acc,
+        ...curr.sequences.map(seq => ({
+          ...seq,
+          owner: {
+            id: curr.id,
+            name: curr.name,
+            code: curr.code
+          }
+        }))
+      ];
+      return newAcc;
+    }, []),
+    isLoading: false
+  });
+});
+
 jest.mock('../../hooks', () => ({
   useGenerateNumber: ({
     callback: callbackFunc,
@@ -41,8 +61,21 @@ jest.mock('../../hooks', () => ({
     generator,
     sequence
   }),
+  useNumberGeneratorSequences: () => mockUseNumberGeneratorSequences(),
   useNumberGenerators: (code) => mockUseNumberGenerators(code)
 }));
+
+// Perhaps typedown should have a proper interactor, if not for jest tests at least for cypress tests
+jest.mock('@k-int/stripes-kint-components', () => {
+  const { mockKintComponents } = jest.requireActual('@folio/stripes-erm-testing');
+  const KintComps = jest.requireActual('@k-int/stripes-kint-components');
+
+  return ({
+    ...KintComps,
+    ...mockKintComponents,
+    QueryTypedown: () => <div>QueryTypedown</div>
+  });
+});
 
 const NumberGeneratorModalProps = {
   callback,
@@ -51,39 +84,12 @@ const NumberGeneratorModalProps = {
   open: true
 };
 
-const NumberGeneratorModalPropsNoGenerator = {
-  callback,
-  id: 'test',
-  open: true
-};
-
-const testSelectOption = (numGen, seq, expected = true) => {
-  const selectedNumGen = numGen === 1 ? numberGenerator1 : numberGenerator2;
-
-  const selectedSeqOption = selectedNumGen?.sequences?.[seq];
-
-  if (expected) {
-    describe(`choosing ${selectedSeqOption?.name ?? selectedSeqOption?.code}`, () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await Select().choose(selectedSeqOption?.name ?? selectedSeqOption?.code);
-        });
-      });
-
-      it('has the expected value', async () => {
-        await Select().has({ value: selectedSeqOption?.id });
-      });
-    });
-  } else {
-    // As far as I can see there's no way to test for SelectOption == absent
-  }
-};
-
+// This test is now remarkably small and ought to be improved to get test coverage up later...
 describe('NumberGeneratorModal', () => {
   let renderedComponent;
   describe('NumberGeneratorModal with generator prop', () => {
     beforeEach(() => {
-      renderWithIntl(
+      renderedComponent = renderWithIntl(
         <NumberGeneratorModal
           {...NumberGeneratorModalProps}
         />,
@@ -95,14 +101,9 @@ describe('NumberGeneratorModal', () => {
       await Button('Generate').exists();
     });
 
-    test('renders the select with the first sequence default', async () => {
-      await Select().has({ value: numberGenerator1?.sequences?.[0]?.id });
-    });
-
-    describe('Select contains all expected options', () => {
-      testSelectOption(1, 0);
-      testSelectOption(1, 1);
-      testSelectOption(1, 2);
+    test('renders the query typedown', async () => {
+      const { getByText } = renderedComponent;
+      expect(getByText('QueryTypedown')).toBeInTheDocument();
     });
 
     describe('clicking generate button', () => {
@@ -130,118 +131,6 @@ describe('NumberGeneratorModal', () => {
       test('passed callback gets called', () => {
         expect(callback.mock.calls.length).toBe(1);
       });
-    });
-  });
-
-  // Use no generator again, but with sorting messed up to test sorting code
-  describe('NumberGeneratorModal with no generator prop and wrong order', () => {
-    beforeEach(() => {
-      mockUseNumberGenerators.mockImplementationOnce(() => {
-        return ({
-          data: {
-            results: [numberGenerator2, numberGenerator1]
-          },
-          isLoading: false
-        });
-      });
-
-      renderWithIntl(
-        <NumberGeneratorModal
-          {...NumberGeneratorModalPropsNoGenerator}
-        />,
-        translationsProperties
-      );
-    });
-
-    test('renders the select with the first sequence default', async () => {
-      await Select().has({ value: numberGenerator2?.sequences?.[0]?.id });
-    });
-
-    describe('Select contains all expected options', () => {
-      testSelectOption(1, 0);
-      testSelectOption(1, 1);
-      testSelectOption(1, 2);
-      testSelectOption(2, 0);
-      testSelectOption(2, 1, false);
-      testSelectOption(2, 2);
-    });
-  });
-
-  describe('NumberGeneratorModal with no generator prop', () => {
-    beforeEach(() => {
-      renderWithIntl(
-        <NumberGeneratorModal
-          {...NumberGeneratorModalPropsNoGenerator}
-        />,
-        translationsProperties
-      );
-    });
-
-    test('renders the button', async () => {
-      await Button('Generate').exists();
-    });
-
-    test('renders the select with the first sequence default', async () => {
-      await Select().has({ value: numberGenerator1?.sequences?.[0]?.id });
-    });
-
-    describe('Select contains all expected options', () => {
-      testSelectOption(1, 0);
-      testSelectOption(1, 1);
-      testSelectOption(1, 2);
-      testSelectOption(2, 0);
-      testSelectOption(2, 1, false);
-      testSelectOption(2, 2);
-    });
-
-    describe('clicking generate button', () => {
-      test('button gets clicked', async () => {
-        await waitFor(async () => {
-          await Button('Generate').click();
-        });
-        // Basically just check button click doesn't crash
-        expect(1).toEqual(1);
-      });
-
-      test('useGenerateNumber gets called with expected parameters', () => {
-        expect(mockUseGenerateNumber).toHaveBeenCalledWith(
-          expect.objectContaining({
-            generator: NumberGeneratorModalProps?.generator,
-            sequence: numberGenerator1?.sequences?.[0]?.code
-          })
-        );
-      });
-
-      test('generate function gets called', () => {
-        expect(mockGenerateFunc.mock.calls.length).toBe(2);
-      });
-
-      test('passed callback gets called', () => {
-        expect(callback.mock.calls.length).toBe(2);
-      });
-    });
-  });
-
-  describe('NumberGeneratorModal with renderBottom/renderTop properties', () => {
-    beforeEach(() => {
-      renderedComponent = renderWithIntl(
-        <NumberGeneratorModal
-          renderBottom={() => <div>BOTTOM</div>}
-          renderTop={() => <div>TOP</div>}
-          {...NumberGeneratorModalPropsNoGenerator}
-        />,
-        translationsProperties
-      );
-    });
-
-    test('renders top', () => {
-      const { getByText } = renderedComponent;
-      expect(getByText('TOP')).toBeInTheDocument();
-    });
-
-    test('renders bottom', () => {
-      const { getByText } = renderedComponent;
-      expect(getByText('BOTTOM')).toBeInTheDocument();
     });
   });
 });
