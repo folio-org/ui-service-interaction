@@ -180,20 +180,57 @@ const NumberGeneratorModal = forwardRef(({
     return `${path}?${queryParams.join('&')}`;
   }, [exactCodeMatch, kiwtQueryParamOptions]);
 
-  const renderListItem = (sequence, input) => {
-    return (
-      <Layout className="display-flex">
-        <Layout className={`display-flex ${css.boldItem}`}>
+  const renderListItem = useCallback((sequence, input) => {
+    const layouts = [
+      <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+        <FormattedMessage id="ui-service-interaction.numberGenerator.modal.nextValue" values={{ value: sequence.nextValue }} />
+      </Layout>
+    ];
+
+    if (sequence.maximumCheck?.value && sequence.maximumCheck.value !== BELOW_THRESHOLD) {
+      layouts.push(
+        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+          <FormattedMessage id="ui-service-interaction.separator" />
+        </Layout>,
+        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+          <FormattedMessage id="ui-service-interaction.numberGenerator.modal.maximumCheck" />
+        </Layout>
+      );
+    }
+
+    if (sequence.maximumCheck?.value === OVER_THRESHOLD) {
+      layouts.push(
+        <Layout className={`display-flex ${css.itemMargin}`}>
+          <InfoBox type="warn">
+            <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.overThreshold" />
+          </InfoBox>
+        </Layout>
+      );
+    }
+
+    if (sequence.maximumCheck?.value === AT_MAXIMUM) {
+      layouts.push(
+        <Layout className={`display-flex ${css.itemMargin}`}>
+          <InfoBox type="error">
+            <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.atMax" />
+          </InfoBox>
+        </Layout>
+      );
+    }
+
+    if (!exactCodeMatch) {
+      layouts.unshift(
+        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
           {highlightString(
             input,
             sequence.name,
             true,
             false
           )}
-        </Layout>
+        </Layout>,
         <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
           <FormattedMessage id="ui-service-interaction.separator" />
-        </Layout>
+        </Layout>,
         <Layout className={`display-flex ${css.boldItem} ${css.greyItem} ${css.itemMargin}`}>
           {highlightString(
             input,
@@ -201,40 +238,45 @@ const NumberGeneratorModal = forwardRef(({
             true,
             false
           )}
-        </Layout>
+        </Layout>,
         <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
           <FormattedMessage id="ui-service-interaction.separator" />
         </Layout>
+      );
+    } else {
+      layouts.unshift(
+        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
+          {sequence.name}
+        </Layout>,
+        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
+          <FormattedMessage id="ui-service-interaction.separator" />
+        </Layout>,
+        <Layout className={`display-flex ${css.boldItem} ${css.greyItem} ${css.itemMargin}`}>
+          {input === sequence.code ? <mark>{sequence.code}</mark> : sequence.code}
+        </Layout>,
         <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
-          <FormattedMessage id="ui-service-interaction.numberGenerator.modal.nextValue" values={{ value: sequence.nextValue }} />
+          <FormattedMessage id="ui-service-interaction.separator" />
         </Layout>
-        {sequence.maximumCheck?.value && sequence.maximumCheck.value !== BELOW_THRESHOLD &&
-          <>
-            <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
-              <FormattedMessage id="ui-service-interaction.separator" />
-            </Layout>
-            <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
-              <FormattedMessage id="ui-service-interaction.numberGenerator.modal.maximumCheck" />
-            </Layout>
-            {sequence.maximumCheck.value === OVER_THRESHOLD &&
-              <Layout className={`display-flex ${css.itemMargin}`}>
-                <InfoBox type="warn">
-                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.overThreshold" />
-                </InfoBox>
-              </Layout>
-            }
-            {sequence.maximumCheck.value === AT_MAXIMUM &&
-              <Layout className={`display-flex ${css.itemMargin}`}>
-                <InfoBox type="error">
-                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.atMax" />
-                </InfoBox>
-              </Layout>
-            }
-          </>
-        }
+      );
+    }
+
+    if (!generator) {
+      layouts.unshift(
+        <Layout className={`display-flex ${css.boldItem}`}>
+          {sequence.owner.name}
+        </Layout>,
+        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
+          <FormattedMessage id="ui-service-interaction.separator" />
+        </Layout>
+      );
+    }
+
+    return (
+      <Layout className="display-flex">
+        {layouts}
       </Layout>
     );
-  };
+  }, [exactCodeMatch, generator]);
 
   const renderEndOFList = () => {
     return (
