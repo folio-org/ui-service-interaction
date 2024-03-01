@@ -52,6 +52,7 @@
         "permissionName": "ui-service-interaction.numberGenerator.manage",
         "displayName": "Settings (Service-interaction): Manage number generator settings and use number generators within apps",
         "subPermissions": [
+          "ui-service-interaction.numberGenerator.view",
           "servint.numberGenerator.manage"
         ],
         "visible": true
