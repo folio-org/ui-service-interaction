@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Badge, Col, Row, Select } from '@folio/stripes/components';
-import useSIRefdata from '../../hooks/useSIRefdata';
 
 import css from './SequenceSearch.css';
 
@@ -12,9 +11,7 @@ const SequenceFilters = ({
   filterHandlers,
   totalCount
 }) => {
-  const { 0: { values: checkValues = [] } = {} } = useSIRefdata({
-    desc: 'NumberGeneratorSequence.MaximumCheck',
-  });
+  const intl = useIntl();
 
   const renderEnabledFilter = () => {
     return (
@@ -49,8 +46,11 @@ const SequenceFilters = ({
     return (
       <Select
         dataOptions={[
+          // These options values are from refdata with desc 'NumberGeneratorSequence.MaximumCheck' -- setting manually to allow for translations
           { value: '', label: '' },
-          ...checkValues
+          { value: 'at_maximum', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.atMax' }) },
+          { value: 'below_threshold', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.belowThreshold' }) },
+          { value: 'over_threshold', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.overThreshold' }) }
         ]}
         label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck" />}
         name="maximumCheck"
