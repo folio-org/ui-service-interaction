@@ -10,12 +10,12 @@ import {
   generateKiwtQueryParams,
   highlightString
 } from '@k-int/stripes-kint-components';
+
 import { Button, Checkbox, Layout, Modal, ModalFooter } from '@folio/stripes/components';
+import { InfoBox, useParallelBatchFetch } from '@folio/stripes-erm-components';
 
-import { InfoBox } from '@folio/stripes-erm-components';
-
+import { NUMBER_GENERATOR_SEQUENCES_ENDPOINT } from '../../utilities';
 import { AT_MAXIMUM, BELOW_THRESHOLD, OVER_THRESHOLD } from '../../constants';
-import { useNumberGeneratorSequences } from '../../hooks';
 import NumberGeneratorButton from '../NumberGeneratorButton';
 
 import css from '../../Styles.css';
@@ -42,25 +42,27 @@ const NumberGeneratorModal = forwardRef(({
   // Separate this out, so we know initial fetch will have same shape as queryTypedown does
   // This will mean standalone won't know about any user facing queries, but that's fine
   const kiwtQueryParamOptions = useMemo(() => ({
-    ...(generator && {
-      ...(exactCodeMatch && {
-        filterKeys: {
-          code: 'code',
-        },
-      }),
-      filters: [
-        {
-          path: 'owner.code',
-          value: generator
-        },
-        (!includeSequencesAtMaximum && {
-          // A OR B needs to be NOT(NOT(A) AND NOT(B)) instead...
-          // For whatever reason groupValues is not encoding && and || right now, which causes issues
-          value: '!(maximumCheck isNotNull&&maximumCheck.value==at_maximum)'
-        }),
-      ]
+    ...(exactCodeMatch && {
+      filterKeys: {
+        code: 'code',
+      },
     }),
-    pageSize: 10,
+    filters: [
+      {
+        path: 'enabled',
+        value: true
+      },
+      (generator && {
+        path: 'owner.code',
+        value: generator
+      }),
+      (!includeSequencesAtMaximum && {
+        // A OR B needs to be NOT(NOT(A) AND NOT(B)) instead...
+        // For whatever reason groupValues is not encoding && and || right now, which causes issues
+        value: '!(maximumCheck isNotNull&&maximumCheck.value==at_maximum)'
+      }),
+    ],
+    perPage: 10,
     // Do not do match if exactCodeMatch is set
     ...(!exactCodeMatch && {
       searchKey: 'name,code',
@@ -71,9 +73,10 @@ const NumberGeneratorModal = forwardRef(({
 
   // We need extra call to ensure data integrity _after_selection.
   // This will _only_ be used for updating after generation and initial population
-  const standaloneSequenceCallParams = generateKiwtQueryParams(kiwtQueryParamOptions, {});
-  const { data: standaloneSequences = [], isFetching: isStandaloneSequencesFetching } = useNumberGeneratorSequences({
-    queryParams: standaloneSequenceCallParams
+  const { items: standaloneSequences, isLoading: isStandaloneSequencesFetching } = useParallelBatchFetch({
+    batchParams: kiwtQueryParamOptions,
+    endpoint: NUMBER_GENERATOR_SEQUENCES_ENDPOINT,
+    generateQueryKey: ({ batchParams, offset }) => [NUMBER_GENERATOR_SEQUENCES_ENDPOINT, batchParams, offset, 'ui-service-interaction', 'useNumberGeneratorSequences']
   });
 
   // Manage the object states separately to the "select" state.
