@@ -1,4 +1,4 @@
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
@@ -31,9 +31,9 @@ const mockUseNumberGenerators = jest.fn((code) => {
   });
 });
 
-const mockUseNumberGeneratorSequences = jest.fn(() => {
+const mockUseParallelBatchFetch = jest.fn(() => {
   return ({
-    data: [numberGenerator1, numberGenerator2].reduce((acc, curr) => {
+    items: [numberGenerator1, numberGenerator2].reduce((acc, curr) => {
       const newAcc = [
         ...acc,
         ...curr.sequences.map(seq => ({
@@ -61,10 +61,19 @@ jest.mock('../../hooks', () => ({
     generator,
     sequence
   }),
-  useNumberGeneratorSequences: () => mockUseNumberGeneratorSequences(),
   useNumberGenerators: (code) => mockUseNumberGenerators(code)
 }));
 
+jest.mock('@folio/stripes-erm-components', () => {
+  const { mockErmComponents } = jest.requireActual('@folio/stripes-erm-testing');
+  const ErmComps = jest.requireActual('@folio/stripes-erm-components');
+
+  return ({
+    ...ErmComps,
+    ...mockErmComponents,
+    useParallelBatchFetch: () => mockUseParallelBatchFetch()
+  });
+});
 // Perhaps typedown should have a proper interactor, if not for jest tests at least for cypress tests
 jest.mock('@k-int/stripes-kint-components', () => {
   const { mockKintComponents } = jest.requireActual('@folio/stripes-erm-testing');
