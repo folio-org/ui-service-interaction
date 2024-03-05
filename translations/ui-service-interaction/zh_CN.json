@@ -82,5 +82,12 @@
     "numberGenerator.warning.sequenceOverThresholdWarning": "<strong>警告： </strong>数字生成器序列<strong> {name} </strong>正在接近其最大值<strong> {maxVal} </strong> 。",
     "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>警告： </strong>数字生成器序列<strong> {name} </strong>现已达到<strong> {maxVal} </strong> ，其最大值，并且不可能再生成。",
     "numberGenerator.error": "<strong>错误： </strong>数字生成器序列<strong> {name} </strong>无法生成，但未指出已知原因。",
-    "numberGenerator.error.sequenceOverMaximumError": "<strong>错误： </strong>数字生成器序列<strong> {name} </strong>已达到<strong> {maxVal} </strong> ，其最大值。请选择不同的序列或联系管理员。"
+    "numberGenerator.error.sequenceOverMaximumError": "<strong>错误： </strong>数字生成器序列<strong> {name} </strong>已达到<strong> {maxVal} </strong> ，其最大值。请选择不同的序列或联系管理员。",
+    "noResultsFound": "No results found",
+    "separator": "·",
+    "separatorStrong": "<strong>·</strong>",
+    "numberGenerator.modal.nextValue": "Next value: {value}",
+    "numberGenerator.modal.maximumCheck": "Usage status",
+    "numberGenerator.modal.includeAtMaxSequences": "Include sequences which have reached their maximum value",
+    "numberGenerator.modal.exactCodeMatch": "Exact code match"
 }
