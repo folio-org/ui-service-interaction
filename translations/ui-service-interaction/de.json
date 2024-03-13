@@ -83,11 +83,11 @@
     "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Warnung:</strong> Der Nummernkreis <strong>{name}</strong> hat nun <strong>{maxVal}</strong>, seinen maximalen Wert, erreicht und weitere Generierungen sind nicht mehr möglich.",
     "numberGenerator.error": "<strong>Fehler:</strong> Im Nummernkreis <strong>{name}</strong> konnte nicht generiert werden, aber es wurde kein bekannter Grund angegeben.",
     "numberGenerator.error.sequenceOverMaximumError": "<strong>Fehler:</strong> Der Nummernkreis <strong>{name}</strong> hat <strong>{maxVal}</strong> erreicht, seinen maximalen Wert. Bitte einen anderen Nummernkreis auswählen oder den Administrator kontaktieren.",
-    "noResultsFound": "No results found",
+    "noResultsFound": "Keine Ergebnisse gefunden",
     "separator": "·",
     "separatorStrong": "<strong>·</strong>",
-    "numberGenerator.modal.nextValue": "Next value: {value}",
-    "numberGenerator.modal.maximumCheck": "Usage status",
-    "numberGenerator.modal.includeAtMaxSequences": "Include sequences which have reached their maximum value",
-    "numberGenerator.modal.exactCodeMatch": "Exact code match"
+    "numberGenerator.modal.nextValue": "Nächster Wert: {value}",
+    "numberGenerator.modal.maximumCheck": "Verwendungsstatus",
+    "numberGenerator.modal.includeAtMaxSequences": "Nummernkreise einbeziehen, die ihren maximalen Wert erreicht haben",
+    "numberGenerator.modal.exactCodeMatch": "Genaue Code-Übereinstimmung"
 }
