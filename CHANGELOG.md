@@ -1,4 +1,10 @@
-## 2.1.0 In progress
+## 3.0.0 2024-03-22
+  * SI-44 Refinement wording in number generators and sequences
+  * SI-43 Permissions for ui service interaction and number generators
+  * SI-42 Display alerts when the next value in a sequence is over the threshold or = max value
+  * SI-22 Replace the component for selecting a sequence, in-app
+  * SI-6 Alert the user when a sequence is approaching the end of its available numbers
+  * SI-4 Add search, sort and filter to Sequences page
 
 ## 2.0.0 2023-10-16
   * Added test coverage for components and hooks
