@@ -77,7 +77,7 @@
     "settings.numberGeneratorSequences.maximumCheck.belowThreshold": "Pod prahovou hodnotou",
     "all": "Všechny",
     "nFound": "{total} nalezeno",
-    "settings.numberGeneratorSequences.nextValue.changedWarning": "Changing the \"next value\" field can result in non-unique generated numbers.",
+    "settings.numberGeneratorSequences.nextValue.changedWarning": "Změna pole „další hodnota“ může mít za následek vygenerování nejedinečných čísel.",
     "numberGenerator.warning": "<strong>Varování:</strong> Sekvence generátoru čísel <strong>{name}</strong> byla vygenerována s upozorněním, ale není známý důvod.",
     "numberGenerator.warning.sequenceOverThresholdWarning": "<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> is approaching <strong>{maxVal}</strong>, its maximum value.",
     "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> has now hit <strong>{maxVal}</strong>, its maximum value, and further generations will not be possible.",
