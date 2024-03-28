@@ -182,18 +182,43 @@ const NumberGeneratorSelector = ({
   }, [exactCodeMatch, kiwtQueryParamOptions]);
 
   const renderListItem = useCallback((sequence, input) => {
+    const keyBase = `${uniqueId}-${sequence.id}`;
+
+    const cssLayoutItem = `display-flex ${css.itemMargin}`;
+    const cssLayoutGreyItem = `${cssLayoutItem} ${css.greyItem}`;
+    const cssLayoutBoldItem = `${cssLayoutItem} ${css.boldItem}`;
+
+    const Separator = ({ bold = false }) => (
+      <Layout
+        className={bold ? cssLayoutBoldItem : cssLayoutGreyItem}
+      >
+        <FormattedMessage id="ui-service-interaction.separator" />
+      </Layout>
+    );
+
+    Separator.propTypes = {
+      bold: PropTypes.bool,
+    };
+
+
     const layouts = [
-      <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+      <Layout
+        key={`${keyBase}-nextValue-layout`}
+        className={cssLayoutGreyItem}
+      >
         <FormattedMessage id="ui-service-interaction.numberGenerator.modal.nextValue" values={{ value: sequence.nextValue }} />
       </Layout>
     ];
 
     if (sequence.maximumCheck?.value && sequence.maximumCheck.value !== BELOW_THRESHOLD) {
       layouts.push(
-        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
-          <FormattedMessage id="ui-service-interaction.separator" />
-        </Layout>,
-        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
+        <Separator
+          key={`${keyBase}-separator-maxCheck-layout`}
+        />,
+        <Layout
+          key={`${keyBase}-maxCheck-layout`}
+          className={cssLayoutGreyItem}
+        >
           <FormattedMessage id="ui-service-interaction.numberGenerator.modal.maximumCheck" />
         </Layout>
       );
@@ -201,7 +226,10 @@ const NumberGeneratorSelector = ({
 
     if (sequence.maximumCheck?.value === OVER_THRESHOLD) {
       layouts.push(
-        <Layout className={`display-flex ${css.itemMargin}`}>
+        <Layout
+          key={`${keyBase}-maxCheck-infoBox-layout`}
+          className={cssLayoutItem}
+        >
           <InfoBox type="warn">
             <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.overThreshold" />
           </InfoBox>
@@ -211,7 +239,10 @@ const NumberGeneratorSelector = ({
 
     if (sequence.maximumCheck?.value === AT_MAXIMUM) {
       layouts.push(
-        <Layout className={`display-flex ${css.itemMargin}`}>
+        <Layout
+          key={`${keyBase}-maxCheck-infoBox-layout`}
+          className={cssLayoutItem}
+        >
           <InfoBox type="error">
             <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.atMax" />
           </InfoBox>
@@ -221,7 +252,10 @@ const NumberGeneratorSelector = ({
 
     if (!exactCodeMatch) {
       layouts.unshift(
-        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
+        <Layout
+          key={`${keyBase}-name-layout`}
+          className={cssLayoutBoldItem}
+        >
           {highlightString(
             input,
             sequence.name,
@@ -229,10 +263,14 @@ const NumberGeneratorSelector = ({
             false
           )}
         </Layout>,
-        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
-          <FormattedMessage id="ui-service-interaction.separator" />
-        </Layout>,
-        <Layout className={`display-flex ${css.boldItem} ${css.greyItem} ${css.itemMargin}`}>
+        <Separator
+          key={`${keyBase}-separator-code-layout`}
+          bold
+        />,
+        <Layout
+          key={`${keyBase}-code-layout`}
+          className={cssLayoutGreyItem}
+        >
           {highlightString(
             input,
             sequence.code,
@@ -240,35 +278,45 @@ const NumberGeneratorSelector = ({
             false
           )}
         </Layout>,
-        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
-          <FormattedMessage id="ui-service-interaction.separator" />
-        </Layout>
+        <Separator
+          key={`${keyBase}-separator-after-code-layout`}
+        />,
       );
     } else {
       layouts.unshift(
-        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
+        <Layout
+          key={`${keyBase}-name-layout`}
+          className={cssLayoutBoldItem}
+        >
           {sequence.name}
         </Layout>,
-        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
-          <FormattedMessage id="ui-service-interaction.separator" />
-        </Layout>,
-        <Layout className={`display-flex ${css.boldItem} ${css.greyItem} ${css.itemMargin}`}>
+        <Separator
+          key={`${keyBase}-separator-code-layout`}
+        />,
+        <Layout
+          key={`${keyBase}-code-layout`}
+          className={cssLayoutGreyItem}
+        >
           {input === sequence.code ? <mark>{sequence.code}</mark> : sequence.code}
         </Layout>,
-        <Layout className={`display-flex ${css.greyItem} ${css.itemMargin}`}>
-          <FormattedMessage id="ui-service-interaction.separator" />
-        </Layout>
+        <Separator
+          key={`${keyBase}-separator-after-code-layout`}
+        />,
       );
     }
 
     if (!generator) {
       layouts.unshift(
-        <Layout className={`display-flex ${css.boldItem}`}>
+        <Layout
+          key={`${keyBase}-owner-layout`}
+          className={cssLayoutBoldItem}
+        >
           {sequence.owner.name}
         </Layout>,
-        <Layout className={`display-flex ${css.boldItem} ${css.itemMargin}`}>
-          <FormattedMessage id="ui-service-interaction.separator" />
-        </Layout>
+        <Separator
+          key={`${keyBase}-separator-after-owner-layout`}
+          bold
+        />,
       );
     }
 
@@ -277,7 +325,7 @@ const NumberGeneratorSelector = ({
         {layouts}
       </Layout>
     );
-  }, [exactCodeMatch, generator]);
+  }, [exactCodeMatch, generator, uniqueId]);
 
   const renderEndOFList = () => {
     return (
@@ -318,7 +366,7 @@ NumberGeneratorSelector.propTypes = {
   displayError: PropTypes.bool,
   displayWarning: PropTypes.bool,
   generator: PropTypes.string,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   onSequenceChange: PropTypes.func
 };
 
