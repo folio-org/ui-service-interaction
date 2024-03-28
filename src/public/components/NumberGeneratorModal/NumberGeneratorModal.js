@@ -6,8 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Button, Modal, ModalFooter } from '@folio/stripes/components';
 
 import NumberGeneratorButton from '../NumberGeneratorButton';
-import NumberGeneratorSelector from '../NumberGeneratorSelector/NumberGeneratorSelector';
-
+import NumberGeneratorSelector from '../NumberGeneratorSelector';
 
 const NumberGeneratorModal = forwardRef(({
   callback,

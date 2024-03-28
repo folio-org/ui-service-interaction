@@ -1,90 +1,39 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as MockButton } from '@folio/stripes/components';
 import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
-import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
+import {
+  numberGenerator1 as mockNG,
+} from '../../../../test/jest/mockGenerators';
 
 import NumberGeneratorModal from './NumberGeneratorModal';
 
 const callback = jest.fn();
-const mockGenerateFunc = jest.fn();
-const mockUseGenerateNumber = jest.fn(({ callback: callbackFunc }) => ({
-  generate: () => {
-    mockGenerateFunc();
-    callbackFunc();
-  }
-}));
+const mockOnClick = jest.fn();
 
-const mockUseNumberGenerators = jest.fn((code) => {
-  let generators = [];
-  if (!code) {
-    generators = [numberGenerator1, numberGenerator2];
-  } else {
-    generators = [numberGenerator1];
-  }
+jest.mock('../NumberGeneratorSelector', () => ({ onSequenceChange }) => (
+  <div>
+    NumberGeneratorSelector
+    <MockButton
+      onClick={() => onSequenceChange(mockNG.sequences[0])}
+    >
+      ChangeSelector
+    </MockButton>
+  </div>
+));
 
-  return ({
-    data: {
-      results: generators
-    },
-    isLoading: false
-  });
-});
-
-const mockUseParallelBatchFetch = jest.fn(() => {
-  return ({
-    items: [numberGenerator1, numberGenerator2].reduce((acc, curr) => {
-      const newAcc = [
-        ...acc,
-        ...curr.sequences.map(seq => ({
-          ...seq,
-          owner: {
-            id: curr.id,
-            name: curr.name,
-            code: curr.code
-          }
-        }))
-      ];
-      return newAcc;
-    }, []),
-    isLoading: false
-  });
-});
-
-jest.mock('../../hooks', () => ({
-  useGenerateNumber: ({
-    callback: callbackFunc,
-    generator,
-    sequence
-  }) => mockUseGenerateNumber({
-    callback: callbackFunc,
-    generator,
-    sequence
-  }),
-  useNumberGenerators: (code) => mockUseNumberGenerators(code)
-}));
-
-jest.mock('@folio/stripes-erm-components', () => {
-  const { mockErmComponents } = jest.requireActual('@folio/stripes-erm-testing');
-  const ErmComps = jest.requireActual('@folio/stripes-erm-components');
-
-  return ({
-    ...ErmComps,
-    ...mockErmComponents,
-    useParallelBatchFetch: () => mockUseParallelBatchFetch()
-  });
-});
-// Perhaps typedown should have a proper interactor, if not for jest tests at least for cypress tests
-jest.mock('@k-int/stripes-kint-components', () => {
-  const { mockKintComponents } = jest.requireActual('@folio/stripes-erm-testing');
-  const KintComps = jest.requireActual('@k-int/stripes-kint-components');
-
-  return ({
-    ...KintComps,
-    ...mockKintComponents,
-    QueryTypedown: () => <div>QueryTypedown</div>
-  });
-});
+jest.mock('../NumberGeneratorButton', () => ({ callback: callbackProp, sequence }) => (
+  <MockButton
+    disabled={sequence === ''}
+    onClick={() => {
+      mockOnClick();
+      callbackProp();
+    }}
+  >
+    NumberGeneratorButton
+  </MockButton>
+));
 
 const NumberGeneratorModalProps = {
   callback,
@@ -107,38 +56,41 @@ describe('NumberGeneratorModal', () => {
     });
 
     test('renders the button', async () => {
-      await Button('Generate').exists();
+      await Button('NumberGeneratorButton').has({ disabled: true });
     });
 
-    test('renders the query typedown', async () => {
+    test('renders the selector Component', async () => {
       const { getByText } = renderedComponent;
-      expect(getByText('QueryTypedown')).toBeInTheDocument();
+      expect(getByText('NumberGeneratorSelector')).toBeInTheDocument();
     });
 
-    describe('clicking generate button', () => {
-      test('button gets clicked', async () => {
+    describe('selecting a component', () => {
+      beforeEach(async () => {
         await waitFor(async () => {
-          await Button('Generate').click();
+          await Button('ChangeSelector').click();
         });
-        // Basically just check button click doesn't crash
-        expect(1).toEqual(1);
       });
 
-      test('useGenerateNumber gets called with expected parameters', () => {
-        expect(mockUseGenerateNumber).toHaveBeenCalledWith(
-          expect.objectContaining({
-            generator: NumberGeneratorModalProps?.generator,
-            sequence: numberGenerator1?.sequences?.[0]?.code
-          })
-        );
+      test('button is no longer disabled', async () => {
+        await Button('NumberGeneratorButton').has({ disabled: false });
       });
 
-      test('generate function gets called', () => {
-        expect(mockGenerateFunc.mock.calls.length).toBe(1);
-      });
+      describe('clicking generate button', () => {
+        test('button gets clicked', async () => {
+          await waitFor(async () => {
+            await Button('NumberGeneratorButton').click();
+          });
+          // Basically just check button click doesn't crash
+          expect(1).toEqual(1);
+        });
 
-      test('passed callback gets called', () => {
-        expect(callback.mock.calls.length).toBe(1);
+        test('passed callback gets called', () => {
+          expect(callback.mock.calls.length).toBe(1);
+        });
+
+        test('passed onClick gets called', () => {
+          expect(mockOnClick.mock.calls.length).toBe(1);
+        });
       });
     });
   });
