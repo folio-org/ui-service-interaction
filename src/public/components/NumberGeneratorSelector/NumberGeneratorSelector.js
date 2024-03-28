@@ -80,6 +80,11 @@ const NumberGeneratorSelector = ({
   // Manage the object states separately to the "select" state.
   const [selectedSequence, setSelectedSequence] = useState();
 
+  const changeSelectedSequence = useCallback((seq) => {
+    setSelectedSequence(seq);
+    onSequenceChange(seq);
+  }, [onSequenceChange]);
+
   useEffect(() => {
     if (!isStandaloneSequencesFetching) {
       if (
@@ -88,17 +93,22 @@ const NumberGeneratorSelector = ({
         // Selected sequence is no longer in standalone sequences -- likely due to passing maximum value
         (selectedSequence && (standaloneSequences.filter(ss => ss.id === selectedSequence.id)?.length ?? 0) === 0)
       ) {
-        setSelectedSequence(standaloneSequences[0]);
+        changeSelectedSequence(standaloneSequences[0]);
       } else {
         const selectedSequenceInData = standaloneSequences?.filter(sq => sq.id === selectedSequence?.id)?.[0];
 
         if (!!selectedSequenceInData && !isEqual(selectedSequence, selectedSequenceInData)) {
           // Refetched SS differs, setSS
-          setSelectedSequence(selectedSequenceInData);
+          changeSelectedSequence(selectedSequenceInData);
         }
       }
     }
-  }, [isStandaloneSequencesFetching, selectedSequence, standaloneSequences]);
+  }, [
+    changeSelectedSequence,
+    isStandaloneSequencesFetching,
+    selectedSequence,
+    standaloneSequences
+  ]);
 
   const overThreshold = useMemo(() => selectedSequence?.maximumCheck?.value === OVER_THRESHOLD, [selectedSequence?.maximumCheck?.value]);
   const atMaximum = useMemo(() => selectedSequence?.maximumCheck?.value === AT_MAXIMUM, [selectedSequence?.maximumCheck?.value]);
@@ -107,8 +117,8 @@ const NumberGeneratorSelector = ({
   const renderTypedownFooter = () => {
     return (
       <Layout className="display-flex flex-align-items-start">
-        <Layout style={{ 'padding-right': '30%' }}>
-          <Layout style={{ 'padding-right': '10px', display: 'inline' }}>
+        <Layout style={{ paddingRight: '30%' }}>
+          <Layout style={{ paddingRight: '10px', display: 'inline' }}>
             <Checkbox
               checked={includeSequencesAtMaximum}
               id="includeAtMaxSequences_label"
@@ -123,8 +133,8 @@ const NumberGeneratorSelector = ({
             id="ui-service-interaction.numberGenerator.modal.includeAtMaxSequences"
           />
         </Layout>
-        <Layout style={{ 'padding-right': '30%' }}>
-          <Layout style={{ 'padding-right': '10px', display: 'inline' }}>
+        <Layout style={{ paddingRight: '30%' }}>
+          <Layout style={{ paddingRight: '10px', display: 'inline' }}>
             <Checkbox
               checked={exactCodeMatch}
               id="exact_match_label"
@@ -344,10 +354,7 @@ const NumberGeneratorSelector = ({
         // To use this as a controlled component is currently a little fiddly, spoof an input opbject
         input={{
           name: uniqueId,
-          onChange: (seq) => {
-            setSelectedSequence(seq);
-            onSequenceChange(seq);
-          },
+          onChange: (seq) => changeSelectedSequence(seq),
           value: selectedSequence
         }}
         path={NUMBER_GENERATOR_SEQUENCES_ENDPOINT}
