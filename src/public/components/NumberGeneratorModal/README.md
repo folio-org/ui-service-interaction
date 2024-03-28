@@ -33,7 +33,7 @@ const MyComponent = () => {
 
 ```
 
-The above will render a Modal (Openable via the also rendered Button). This modal will present the user with a Select and a Button marked "Generate". The Select allows the user to select between sequences on the given generator, and the generate button acts as a `NumberGeneratorButton`.
+The above will render a Modal (Openable via the also rendered Button). This modal will present the user with a Typedown (`NumberGeneratorSelector`) and a Button marked "Generate". The Typedown allows the user to select between sequences on the given generator, and the generate button acts as a `NumberGeneratorButton`.
 
 ## Props
 Name | Type | Description | default | required

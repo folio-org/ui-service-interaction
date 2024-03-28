@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { NUMBER_GENERATORS_ENDPOINT, NUMBER_GENERATOR_ENDPOINT } from '../utilities/endpoints';
+import { NUMBER_GENERATORS_ENDPOINT, NUMBER_GENERATOR_ENDPOINT } from '../constants/endpoints';
 
 const useMutateNumberGenerator = ({
   afterQueryCalls,

@@ -1,7 +1,6 @@
 import orderBy from 'lodash/orderBy';
 import { useRefdata, refdataOptions } from '@k-int/stripes-kint-components';
-
-const REFDATA_ENDPOINT = 'servint/refdata';
+import { REFDATA_ENDPOINT } from '../public/constants';
 
 const sortRefdata = (refdataData) => {
   const sortedRefData = [...(refdataData ?? [])];
