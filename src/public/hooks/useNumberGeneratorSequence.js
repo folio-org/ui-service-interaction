@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
-import { NUMBER_GENERATOR_SEQUENCE_ENDPOINT } from '../utilities';
+import { NUMBER_GENERATOR_SEQUENCE_ENDPOINT } from '../constants';
 
 const useNumberGeneratorSequence = ({
   id,

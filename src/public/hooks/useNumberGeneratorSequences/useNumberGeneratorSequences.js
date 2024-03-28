@@ -3,7 +3,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
-import { NUMBER_GENERATOR_SEQUENCES_ENDPOINT } from '../../utilities/endpoints';
+import { NUMBER_GENERATOR_SEQUENCES_ENDPOINT } from '../../constants';
 
 const useNumberGeneratorSequences = ({
   queryOptions = {},

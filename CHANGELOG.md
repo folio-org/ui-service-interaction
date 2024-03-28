@@ -1,4 +1,5 @@
 ## 3.1.0 In progress
+  * NumberGeneratorSelector: New exposed component NumberGeneratorSelector which was previously an internal implementation within NumberGeneratorModal. Now available for use in other implementations, with slightly expanded confiugurability and functionality.
 
 ## 3.0.0 2024-03-22
   * SI-44 Refinement wording in number generators and sequences

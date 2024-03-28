@@ -8,13 +8,14 @@ import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import useNumberGeneratorSequences from '../useNumberGeneratorSequences';
 
-import { NUMBER_GENERATORS_ENDPOINT, NUMBER_GENERATOR_SEQUENCES_ENDPOINT } from '../../utilities';
 import {
   GENERATE_ERROR_CODE_MAX_REACHED,
   GENERATE_STATUS_ERROR,
   GENERATE_STATUS_WARNING,
   GENERATE_WARNING_CODE_HIT_MAXIMUM,
   GENERATE_WARNING_CODE_OVER_THRESHOLD,
+  NUMBER_GENERATORS_ENDPOINT,
+  NUMBER_GENERATOR_SEQUENCES_ENDPOINT
 } from '../../constants';
 
 const useGenerateNumber = ({
@@ -107,7 +108,7 @@ const useGenerateNumber = ({
     warningCalloutParams
   ]);
 
-  const path = `servint/numberGenerators/getNextNumber?generator=${generator}&sequence=${sequence}`;
+  const path = `${NUMBER_GENERATORS_ENDPOINT}/getNextNumber?generator=${generator}&sequence=${sequence}`;
   const queryObject = useQuery(
     [path, 'ui-service-interaction', 'useGenerateNumber'],
     () => ky.get(path).json()
