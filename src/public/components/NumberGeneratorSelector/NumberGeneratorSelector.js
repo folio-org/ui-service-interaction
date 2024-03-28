@@ -79,7 +79,8 @@ const NumberGeneratorSelector = ({
 
   // We need extra call to ensure data integrity _after_selection.
   // This will _only_ be used for updating after generation and initial population
-  // TODO Since we're already fetching all sequences, should we refactor from QueryTypedown to just Typedown?
+
+  // Since we're already fetching all sequences, should we refactor from QueryTypedown to just Typedown?
   const { items: standaloneSequences, isLoading: isStandaloneSequencesFetching } = useParallelBatchFetch({
     batchParams: kiwtQueryParamOptions,
     endpoint: NUMBER_GENERATOR_SEQUENCES_ENDPOINT,
@@ -169,7 +170,7 @@ const NumberGeneratorSelector = ({
   };
 
   const renderWarningText = () => {
-    if (displayWarning && overThreshold) {
+    if (selectedSequence && displayWarning && overThreshold) {
       return (
         <div className={css.warningText}>
           <FormattedMessage id="ui-service-interaction.numberGenerator.warning.sequenceOverThresholdWarning" values={{ name: selectedSequence.name, maxVal: selectedSequence.maximumNumber }} />
@@ -181,7 +182,7 @@ const NumberGeneratorSelector = ({
   };
 
   const renderErrorText = () => {
-    if (displayError && atMaximum) {
+    if (selectedSequence && displayError && atMaximum) {
       return (
         <div className={css.errorText}>
           <FormattedMessage id="ui-service-interaction.numberGenerator.error.sequenceOverMaximumError" values={{ name: selectedSequence.name, maxVal: selectedSequence.maximumNumber }} />
