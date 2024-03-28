@@ -116,9 +116,10 @@ const useGenerateNumber = ({
         callback(res?.nextValue);
         return res;
       }).then(handleCallouts)
-      .then(() => {
+      .then((res) => {
         invalidateNumberGenerators();
         invalidateNumberGeneratorSequences();
+        return res;
       }),
     {
       enabled: false,
@@ -127,11 +128,13 @@ const useGenerateNumber = ({
     }
   );
 
+  const sendDisabledSequenceCallout = () => callout.sendCallout({
+    message: intl.formatMessage({ id: 'ui-service-interaction.numberGenerator.generateDisabledSequenceError' }),
+    type: 'error',
+  });
+
   return ({
-    generate: sequenceEnabled ? queryObject.refetch : () => callout.sendCallout({
-      message: intl.formatMessage({ id: 'ui-service-interaction.numberGenerator.generateDisabledSequenceError' }),
-      type: 'error',
-    }),
+    generate: sequenceEnabled ? queryObject.refetch : sendDisabledSequenceCallout,
     queryObject
   });
 };
