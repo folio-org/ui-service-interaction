@@ -44,7 +44,8 @@ displayWarning | Boolean | When set to "true" a warning message will render unde
 id | String | A string to uniquely identify the Modal. Will result in an id `number-generator-modal-${id}` on the modal itself and `clickable-trigger-number-generator-${id}` on the generate button inside the modal. | | ✓ |
 generateButtonLabel | String/Node | An override for the label of the button rendered within the modal | "Generate" | ✕ |
 generator | String | The `code` for a given NumberGenerator set up in `ui-service-interaction`'s Settings panel. When not provided the Select will comprise of all sequences for all NumberGenerators fetched. | | ✕ |
-generatorButtonProps | object | An object containing button props to be passed onto the "generate" button within the modal (Accepts props of the form taken by `NumberGeneratorButton`). Take care with props such as `useNumberGeneratorParams`, as those could intefere with intended behaviour here.✓ | | ✕ |
+generatorButtonProps | object | An object containing button props to be passed onto the "generate" button within the modal (Accepts props of the form taken by `NumberGeneratorButton`). Take care with props such as `useNumberGeneratorParams`, as those could intefere with intended behaviour here. | | ✕ |
 renderBottom | function | A function which renders at the bottom of the modal, below the select(s) and generate button. | | ✕ |
-renderTop | function | A function which renders at the top of the modal, above the select(s). | | ✕ |
+selectorProps | object | An object containing props to be passed onto the "selector" component within the modal (Accepts props of the form taken by `NumberGeneratorSelector`) | | ✕ |
+renderTop | function | A function which renders at the top of the modal, above the selector. | | ✕ |
 ...modalProps | destructured object | Any other props passed to NumberGeneratorModal will be assumed to be modal props and passed directly on. Within these it is vital to provide an `open` and an `onClose` prop, as per the stripes-components Modal. | | ✕ |

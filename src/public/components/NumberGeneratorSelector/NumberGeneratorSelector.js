@@ -30,12 +30,20 @@ const NumberGeneratorSelector = ({
   id, // Can be null, necessary when there are multiple NumberGeneratorSelectors on screen
   // The actual selection is internal (can't be controlled component rn) but we can perform an action on sequenceSelected
   onSequenceChange = noop,
+  // Turn this off to render selector with no sequence selected automatically
+  selectFirstSequenceOnMount = true,
   ...queryTypedownProps
 }) => {
   const uniqueId = id ? SEQUENCE_TYPEDOWN_ID_UNIQUE(id) : SEQUENCE_TYPEDOWN_ID;
 
   const [includeSequencesAtMaximum, setIncludeSequencesAtMaximum] = useState(false);
   const [exactCodeMatch, setExactCodeMatch] = useState(false);
+
+  // Manage the object states separately to the "select" state.
+  const [selectedSequence, setSelectedSequence] = useState();
+
+  // Track "first mount" selection of first sequence
+  const [selectFirstSequence, setSelectFirstSequence] = useState(selectFirstSequenceOnMount);
 
   // Separate this out, so we know initial fetch will have same shape as queryTypedown does
   // This will mean standalone won't know about any user facing queries, but that's fine
@@ -71,14 +79,12 @@ const NumberGeneratorSelector = ({
 
   // We need extra call to ensure data integrity _after_selection.
   // This will _only_ be used for updating after generation and initial population
+  // TODO Since we're already fetching all sequences, should we refactor from QueryTypedown to just Typedown?
   const { items: standaloneSequences, isLoading: isStandaloneSequencesFetching } = useParallelBatchFetch({
     batchParams: kiwtQueryParamOptions,
     endpoint: NUMBER_GENERATOR_SEQUENCES_ENDPOINT,
     generateQueryKey: ({ batchParams, offset }) => [NUMBER_GENERATOR_SEQUENCES_ENDPOINT, batchParams, offset, 'ui-service-interaction', 'useNumberGeneratorSequences']
   });
-
-  // Manage the object states separately to the "select" state.
-  const [selectedSequence, setSelectedSequence] = useState();
 
   const changeSelectedSequence = useCallback((seq) => {
     setSelectedSequence(seq);
@@ -89,9 +95,12 @@ const NumberGeneratorSelector = ({
     if (!isStandaloneSequencesFetching) {
       if (
         // We've fetched all sequences, and there is none currently selected
-        (standaloneSequences.length > 0 && !selectedSequence) ||
-        // Selected sequence is no longer in standalone sequences -- likely due to passing maximum value
-        (selectedSequence && (standaloneSequences.filter(ss => ss.id === selectedSequence.id)?.length ?? 0) === 0)
+        (
+          (standaloneSequences.length > 0 && !selectedSequence) ||
+          // Selected sequence is no longer in standalone sequences -- likely due to passing maximum value
+          (selectedSequence && (standaloneSequences.filter(ss => ss.id === selectedSequence.id)?.length ?? 0) === 0)
+        ) &&
+        selectFirstSequence
       ) {
         changeSelectedSequence(standaloneSequences[0]);
       } else {
@@ -102,10 +111,16 @@ const NumberGeneratorSelector = ({
           changeSelectedSequence(selectedSequenceInData);
         }
       }
+      setSelectFirstSequence(false);
     }
+
+    // On unmount reset selection lock
+    return () => setSelectFirstSequence(selectFirstSequenceOnMount);
   }, [
     changeSelectedSequence,
     isStandaloneSequencesFetching,
+    selectFirstSequence,
+    selectFirstSequenceOnMount,
     selectedSequence,
     standaloneSequences
   ]);
@@ -374,7 +389,8 @@ NumberGeneratorSelector.propTypes = {
   displayWarning: PropTypes.bool,
   generator: PropTypes.string,
   id: PropTypes.string,
-  onSequenceChange: PropTypes.func
+  onSequenceChange: PropTypes.func,
+  selectFirstSequenceOnMount: PropTypes.bool
 };
 
 export default NumberGeneratorSelector;

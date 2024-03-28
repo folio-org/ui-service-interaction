@@ -19,6 +19,7 @@ const NumberGeneratorModal = forwardRef(({
   generator,
   generatorButtonProps,
   id,
+  selectorProps = {},
   renderTop,
   renderBottom,
   ...modalProps
@@ -62,6 +63,7 @@ const NumberGeneratorModal = forwardRef(({
         displayWarning={displayWarning}
         generator={generator}
         onSequenceChange={(seq) => setSelectedSequence(seq)}
+        {...selectorProps}
       />
       {renderBottom ? renderBottom() : null}
     </Modal>
@@ -79,6 +81,7 @@ NumberGeneratorModal.propTypes = {
   generator: PropTypes.string,
   generatorButtonProps: PropTypes.object,
   id: PropTypes.string.isRequired,
+  selectorProps: PropTypes.object,
   renderBottom: PropTypes.func,
   renderTop: PropTypes.func,
 };

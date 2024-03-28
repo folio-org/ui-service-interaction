@@ -36,4 +36,5 @@ displayWarning | Boolean | When set to "true" a warning message will render unde
 id | String | A string to uniquely identify the Modal. Will result in an id `number-generator-modal-${id}` on the modal itself and `clickable-trigger-number-generator-${id}` on the generate button inside the modal. | | ✓ |
 generator | String | The `code` for a given NumberGenerator set up in `ui-service-interaction`'s Settings panel. When not provided the Select will comprise of all sequences for all NumberGenerators fetched. | | ✕ |
 onSequenceChange | Function | A function which takes a sequence object as a parameter. When the sequence is selected or removed, this callback will also be triggered so the calling component can hook into the internal state.
+selectFirstSequenceOnMount | Boolean | When set to "true", on first loading the sequences, the Typedown will automatically populate with the first sequence in the list. | true | ✕ |
 ...queryTypedownProps | destructured object | Any other props passed to NumberGeneratorSelector will be assumed to be QueryTypedown props and passed directly on. | | ✕ |
