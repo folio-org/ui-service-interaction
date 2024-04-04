@@ -14,6 +14,8 @@ import {
   TextField
 } from '@folio/stripes/components';
 
+import { preventMinusKey, preventPasteNegative } from '@folio/stripes-erm-components';
+
 import {
   ChecksumAlgoInfo,
   CodeInfo,
@@ -167,6 +169,8 @@ const NumberGeneratorSequenceForm = () => {
               }
               min={1}
               name="maximumNumber"
+              onKeyDown={preventMinusKey}
+              onPaste={preventPasteNegative}
               parse={v => v}
               type="number"
               validate={validateMaximumNumber}
@@ -186,6 +190,8 @@ const NumberGeneratorSequenceForm = () => {
               }
               min={1}
               name="maximumNumberThreshold"
+              onKeyDown={preventMinusKey}
+              onPaste={preventPasteNegative}
               parse={v => v}
               type="number"
               validate={validateMaximumNumberThreshold}
@@ -209,6 +215,9 @@ const NumberGeneratorSequenceForm = () => {
                       <NextValueInfo />
                     </>
                   }
+                  min={1}
+                  onKeyDown={preventMinusKey}
+                  onPaste={preventPasteNegative}
                   type="number"
                   warning={getNextValueWarning(input.value, meta.initial)}
                 />
