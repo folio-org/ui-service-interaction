@@ -6,6 +6,7 @@ import { NUMBER_GENERATORS_ENDPOINT, NUMBER_GENERATOR_ENDPOINT, NUMBER_GENERATOR
 // We _could_ do this directly with the newer endpoint, but this way works *shrug*
 const useMutateNumberGeneratorSequence = ({
   afterQueryCalls,
+  catchQueryCalls,
   id, // This is the ID of the parent NumberGenerator
   queryParams,
   returnQueryObject = {
@@ -40,11 +41,13 @@ const useMutateNumberGeneratorSequence = ({
         }
       }
     ).json()
-      .then(afterQueryCalls?.delete)
-      .then(() => {
+      .then((res) => {
         invalidateNumberGenerators();
         invalidateNumberGeneratorSequences();
-      }),
+        return res;
+      })
+      .then(afterQueryCalls?.delete)
+      .catch(catchQueryCalls?.delete),
     queryParams?.delete
   );
 
@@ -62,12 +65,14 @@ const useMutateNumberGeneratorSequence = ({
         }
       }
     ).json()
-      .then(res => afterQueryCalls?.put(res, data))
-      .then(() => {
+      .then((res) => {
         invalidateNumberGenerators();
         invalidateNumberGeneratorSequences();
         invalidateNumberGeneratorSequence(data.id);
-      }),
+        return res;
+      })
+      .then(res => afterQueryCalls?.put(res, data))
+      .catch(res => catchQueryCalls?.put(res, data)),
     queryParams?.put
   );
 
@@ -86,11 +91,13 @@ const useMutateNumberGeneratorSequence = ({
         }
       }
     ).json()
-      .then(res => afterQueryCalls?.post(res, data))
-      .then(() => {
+      .then((res) => {
         invalidateNumberGenerators();
         invalidateNumberGeneratorSequences();
-      }),
+        return res;
+      })
+      .then(res => afterQueryCalls?.post(res, data))
+      .catch(res => catchQueryCalls?.post(res, data)),
     queryParams?.post
   );
 

@@ -22,8 +22,11 @@ const useMutateNumberGenerator = ({
   const deleteQueryObject = useMutation(
     ['ui-service-interaction', 'useMutateNumberGenerator', 'delete'],
     async (genId) => ky.delete(NUMBER_GENERATOR_ENDPOINT(genId)).json()
-      .then(afterQueryCalls?.delete)
-      .then(() => invalidateNumberGenerators()),
+      .then((res) => {
+        invalidateNumberGenerators();
+        return res;
+      })
+      .then(afterQueryCalls?.delete),
     queryParams?.delete
   );
 
@@ -31,8 +34,11 @@ const useMutateNumberGenerator = ({
   const putQueryObject = useMutation(
     ['ui-service-interaction', 'useMutateNumberGenerator', 'edit'],
     async (data) => ky.put(NUMBER_GENERATOR_ENDPOINT(data?.id), { json: data }).json()
-      .then(afterQueryCalls?.put)
-      .then(() => invalidateNumberGenerators()),
+      .then((res) => {
+        invalidateNumberGenerators();
+        return res;
+      })
+      .then(afterQueryCalls?.put),
     queryParams?.put
   );
 
@@ -40,8 +46,11 @@ const useMutateNumberGenerator = ({
   const postQueryObject = useMutation(
     ['ui-service-interaction', 'useMutateNumberGenerator', 'add'],
     async (data) => ky.post(NUMBER_GENERATORS_ENDPOINT, { json: data }).json()
-      .then(afterQueryCalls?.post)
-      .then(() => invalidateNumberGenerators()),
+      .then((res) => {
+        invalidateNumberGenerators();
+        return res;
+      })
+      .then(afterQueryCalls?.post),
     queryParams?.post
   );
 
