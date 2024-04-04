@@ -77,6 +77,7 @@
   "settings.numberGeneratorSequences.callout.delete": "Number generator sequence <strong>{name}</strong> was successfully <strong>deleted</strong>.",
   "settings.numberGeneratorSequences.callout.edit": "Number generator sequence <strong>{name}</strong> was successfully <strong>edited</strong>.",
   "settings.numberGeneratorSequences.callout.create": "Number generator sequence <strong>{name}</strong> was successfully <strong>created</strong>.",
+  "settings.numberGeneratorSequences.callout.create.error": "Number generator sequence <strong>{name}</strong> could not be <strong>created</strong>: {err}",
   "numberGenerator.generateDisabledSequenceError": "This sequence is marked as disabled and cannot be generated from. Please contact a system admin",
   "numberGenerator.generate": "Generate",
   "numberGenerator.selectGenerator": "Select generator",
