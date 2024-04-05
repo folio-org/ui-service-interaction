@@ -47,10 +47,12 @@ const SequenceFilters = ({
       <Select
         dataOptions={[
           // These options values are from refdata with desc 'NumberGeneratorSequence.MaximumCheck' -- setting manually to allow for translations
-          { value: '', label: '' },
-          { value: 'at_maximum', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.atMax' }) },
-          { value: 'below_threshold', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.belowThreshold' }) },
-          { value: 'over_threshold', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.overThreshold' }) }
+          // Also we need to use direct filters here since there's an "isNull" option
+          { value: '', label: intl.formatMessage({ id: 'ui-service-interaction.all' }) },
+          { value: 'maximumCheck.value==at_maximum', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.atMax' }) },
+          { value: 'maximumCheck.value==below_threshold', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.belowThreshold' }) },
+          { value: 'maximumCheck.value==over_threshold', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.overThreshold' }) },
+          { value: 'maximumCheck isNull', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.noMaxSet' }) }
         ]}
         label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck" />}
         name="maximumCheck"

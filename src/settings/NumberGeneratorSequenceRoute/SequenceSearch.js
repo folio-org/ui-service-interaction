@@ -69,7 +69,8 @@ const SequenceSearch = ({
         searchKey,
         filterKeys: {
           'enabled': 'enabled', // This seems remarkably stupid
-          'maximumCheck': 'maximumCheck.value'
+          // No longer include maximumCheck filterKey since we're
+          // manually handling that in the filter component options now
         },
         filters: [
           {
