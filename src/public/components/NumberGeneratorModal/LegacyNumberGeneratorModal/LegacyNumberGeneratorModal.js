@@ -42,7 +42,7 @@ const LegacyNumberGeneratorModal = forwardRef(({
     };
 
     const reduceSequences = [
-      ...(curr.sequences ?? [])?.filter(seq => seq.enabled)?.sort((a, b) => {
+      ...(curr.sequences ?? []).filter(seq => seq.enabled).sort((a, b) => {
         if (a.code.toLowerCase() < b.code.toLowerCase()) return -1;
         if (a.code.toLowerCase() > b.code.toLowerCase()) return 1;
         return 0;

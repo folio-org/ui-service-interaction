@@ -21,6 +21,23 @@ import css from '../../Styles.css';
 export const SEQUENCE_TYPEDOWN_ID = 'sequence_typedown';
 export const SEQUENCE_TYPEDOWN_ID_UNIQUE = (id) => `${SEQUENCE_TYPEDOWN_ID}_${id}`;
 
+// CSS Components
+const cssLayoutItem = `display-flex ${css.itemMargin}`;
+const cssLayoutGreyItem = `${cssLayoutItem} ${css.greyItem}`;
+const cssLayoutBoldItem = `${cssLayoutItem} ${css.boldItem}`;
+
+const Separator = ({ bold = false }) => (
+  <Layout
+    className={bold ? cssLayoutBoldItem : cssLayoutGreyItem}
+  >
+    <FormattedMessage id="ui-service-interaction.separator" />
+  </Layout>
+);
+
+Separator.propTypes = {
+  bold: PropTypes.bool,
+};
+
 const NumberGeneratorSelector = ({
   displayError = true,
   displayWarning = false,
@@ -209,23 +226,6 @@ const NumberGeneratorSelector = ({
 
   const renderListItem = useCallback((sequence, input) => {
     const keyBase = `${uniqueId}-${sequence.id}`;
-
-    const cssLayoutItem = `display-flex ${css.itemMargin}`;
-    const cssLayoutGreyItem = `${cssLayoutItem} ${css.greyItem}`;
-    const cssLayoutBoldItem = `${cssLayoutItem} ${css.boldItem}`;
-
-    const Separator = ({ bold = false }) => (
-      <Layout
-        className={bold ? cssLayoutBoldItem : cssLayoutGreyItem}
-      >
-        <FormattedMessage id="ui-service-interaction.separator" />
-      </Layout>
-    );
-
-    Separator.propTypes = {
-      bold: PropTypes.bool,
-    };
-
 
     const layouts = [
       <Layout

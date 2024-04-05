@@ -63,9 +63,6 @@ const useGenerateNumber = ({
     },
   });
 
-  /* const { data: { results: { 0: { sequences = [] } = {} } = [] } = {} } = useNumberGenerators(generator);
-  // Find full sequence object from DB
-  const sequenceObj = sequences.find(seq => seq.code === sequence); */
   // If sequence object does not exist at all, allow generation.
   // If sequence object _does_ exist and "enabled" is NOT true, do not allow generation.
   const sequenceEnabled = sequenceObj?.enabled ?? true;
