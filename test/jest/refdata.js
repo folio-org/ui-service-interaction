@@ -62,6 +62,28 @@ const refdata = [
         label: 'EAN13'
       }
     ]
+  },
+  {
+    id: '2c9180908eabe9f4018eabf4ab1f0000',
+    desc: 'NumberGeneratorSequence.MaximumCheck',
+    internal: true,
+    values: [
+      {
+        id: '2c9180908eabe9f4018eabf4ab490002',
+        value: 'over_threshold',
+        label: 'Over threshold'
+      },
+      {
+        id: '2c9180908eabe9f4018eabf4ab370001',
+        value: 'below_threshold',
+        label: 'Below threshold'
+      },
+      {
+        id: '2c9180908eabe9f4018eabf4ab540003',
+        value: 'at_maximum',
+        label: 'At maximum'
+      }
+    ]
   }
 ];
 
