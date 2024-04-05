@@ -1,7 +1,11 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button as MockButton, KeyValue as MockKeyValue } from '@folio/stripes/components';
-
-import { Button, Checkbox, KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
+import {
+  Button,
+  Checkbox,
+  KeyValue,
+  mockTypedownGetter,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
 
 import { translationsProperties } from '../../../../test/helpers';
 import {
@@ -74,28 +78,7 @@ jest.mock('@k-int/stripes-kint-components', () => {
   return ({
     ...KintComps,
     ...mockKintComponents,
-    QueryTypedown: ({ id, input: { onChange, value }, renderFooter, renderListItem }) => {
-      return (
-        <div>
-          {`QueryTypedown-${id}`}
-          <MockKeyValue
-            label={`QueryTypedown-${id}-selected-option`}
-            value={value ? renderListItem(value, '') : 'Nothing selected'}
-          />
-          {mockNumberGenerator3.sequences.map(seq => {
-            return (
-              <MockButton
-                key={`QueryTypedown-${id}-option-${seq.id}`}
-                onClick={() => onChange(seq)}
-              >
-                {`QueryTypedown-${id}-option-${seq.id}`}
-              </MockButton>
-            );
-          })}
-          {renderFooter()}
-        </div>
-      );
-    }
+    QueryTypedown: mockTypedownGetter(mockNumberGenerator3.sequences)
   });
 });
 
@@ -131,10 +114,10 @@ const renderSelectorAndSelectOptionFromSeqIndex = async (seqIndex, extraProps = 
     `${seq.name}·${seq.code}·Next value: ${seq.nextValue}`;
 
   await waitFor(async () => {
-    await Button(`QueryTypedown-sequence_typedown-option-${seq.id}`).click();
+    await Button(`Typedown-sequence_typedown-option-${seq.id}`).click();
   });
 
-  await KeyValue('QueryTypedown-sequence_typedown-selected-option').has({ value: expectedKeyValue });
+  await KeyValue('Typedown-sequence_typedown-selected-option').has({ value: expectedKeyValue });
 };
 
 const warningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> is approaching <strong>{maxVal}</strong>, its maximum value.';
@@ -171,7 +154,7 @@ describe('NumberGeneratorSelector', () => {
 
     test('renders the query typedown', () => {
       const { getByText } = renderedComponent;
-      expect(getByText('QueryTypedown-sequence_typedown')).toBeInTheDocument();
+      expect(getByText('Typedown-sequence_typedown')).toBeInTheDocument();
     });
 
     test('renders the query typedown footer', async () => {
@@ -228,7 +211,7 @@ describe('NumberGeneratorSelector', () => {
 
     test('renders the query typedown', async () => {
       const { getByText } = renderedComponent;
-      expect(getByText('QueryTypedown-sequence_typedown_my_id')).toBeInTheDocument();
+      expect(getByText('Typedown-sequence_typedown_my_id')).toBeInTheDocument();
     });
   });
 
@@ -250,7 +233,7 @@ describe('NumberGeneratorSelector', () => {
     });
 
     test('QueryTypedown KeyValue shows nothing selected', async () => {
-      await KeyValue('QueryTypedown-sequence_typedown-selected-option').has({ value: 'Nothing selected' });
+      await KeyValue('Typedown-sequence_typedown-selected-option').has({ value: 'Nothing selected' });
     });
   });
 
