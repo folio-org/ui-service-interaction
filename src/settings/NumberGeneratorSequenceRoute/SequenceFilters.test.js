@@ -41,19 +41,21 @@ const TestComponent = (props) => {
   );
 };
 
+const makeSelectChoice = async (selectLabel, selectChoice) => {
+  await waitFor(async () => {
+    await Select(selectLabel).choose(selectChoice);
+  });
+};
+
 const runSelectTest = (selectLabel, selectChoice, expectedJSON, initialValue = null) => {
   return describe(`Selecting ${selectLabel} ${selectChoice}`, () => {
     beforeEach(async () => {
       // Allow an initial select before the one we're testing (Needed for default cases to select away and back)
       if (initialValue) {
-        await waitFor(async () => {
-          await Select(selectLabel).choose(initialValue);
-        });
+        await makeSelectChoice(selectLabel, initialValue);
       }
 
-      await waitFor(async () => {
-        await Select(selectLabel).choose(selectChoice);
-      });
+      await makeSelectChoice(selectLabel, selectChoice);
     });
 
     test('JSON Filters are as expected', async () => {
@@ -80,17 +82,9 @@ describe('SequenceFilters', () => {
   });
 
   test('Enabled select has expected options', async () => {
-    await waitFor(async () => {
-      await Select(enabledLabel).choose('All');
-    });
-
-    await waitFor(async () => {
-      await Select(enabledLabel).choose('True');
-    });
-
-    await waitFor(async () => {
-      await Select(enabledLabel).choose('False');
-    });
+    await makeSelectChoice(enabledLabel, 'All');
+    await makeSelectChoice(enabledLabel, 'True');
+    await makeSelectChoice(enabledLabel, 'False');
   });
 
   test('renders expected Usage status select with expected default', async () => {
@@ -99,25 +93,11 @@ describe('SequenceFilters', () => {
   });
 
   test('Usage status select has expected options', async () => {
-    await waitFor(async () => {
-      await Select(usageStatusLabel).choose('All');
-    });
-
-    await waitFor(async () => {
-      await Select(usageStatusLabel).choose('At maximum');
-    });
-
-    await waitFor(async () => {
-      await Select(usageStatusLabel).choose('Below threshold');
-    });
-
-    await waitFor(async () => {
-      await Select(usageStatusLabel).choose('Over threshold');
-    });
-
-    await waitFor(async () => {
-      await Select(usageStatusLabel).choose('No maximum set');
-    });
+    await makeSelectChoice(usageStatusLabel, 'All');
+    await makeSelectChoice(usageStatusLabel, 'At maximum');
+    await makeSelectChoice(usageStatusLabel, 'Below threshold');
+    await makeSelectChoice(usageStatusLabel, 'Over threshold');
+    await makeSelectChoice(usageStatusLabel, 'No maximum set');
   });
 
   // Tests for Enabled
