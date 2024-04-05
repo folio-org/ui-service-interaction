@@ -8,7 +8,7 @@ import { NUMBER_GENERATOR_SEQUENCES_ENDPOINT } from '../../constants';
 const useNumberGeneratorSequences = ({
   queryOptions = {},
   queryParams // Expects to be in the shape output by generateKiwtQueryParams
-}) => {
+} = {}) => {
   const ky = useOkapiKy();
 
   const paramMap = {
@@ -28,7 +28,7 @@ const useNumberGeneratorSequences = ({
   const qp = queryParams ?? defaultQueryParams;
 
   return useQuery(
-    [NUMBER_GENERATOR_SEQUENCES_ENDPOINT, queryParams, 'ui-service-interaction', 'useNumberGeneratorSequences'],
+    [NUMBER_GENERATOR_SEQUENCES_ENDPOINT, qp, 'ui-service-interaction', 'useNumberGeneratorSequences'],
     () => ky.get(`${NUMBER_GENERATOR_SEQUENCES_ENDPOINT}?${qp.join('&')}`).json(),
     queryOptions
   );

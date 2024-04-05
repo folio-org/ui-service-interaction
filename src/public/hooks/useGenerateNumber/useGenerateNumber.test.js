@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { render, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -8,6 +8,14 @@ import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import useGenerateNumber from './useGenerateNumber';
 import useNumberGeneratorSequences from '../useNumberGeneratorSequences';
+
+import {
+  GENERATE_ERROR_CODE_MAX_REACHED,
+  GENERATE_STATUS_ERROR,
+  GENERATE_STATUS_WARNING,
+  GENERATE_WARNING_CODE_HIT_MAXIMUM,
+  GENERATE_WARNING_CODE_OVER_THRESHOLD,
+} from '../../constants';
 
 import { translationsProperties } from '../../../../test/helpers';
 import { numberGenerator2 } from '../../../../test/jest/mockGenerators';
@@ -32,15 +40,15 @@ const mockUseQuery = jest.fn();
 const mockGet = jest.fn();
 const callback = jest.fn();
 
-const resetMocks = () => {
+const resetMocks = (returnGetValue = { nextValue: 'callback1' }) => {
   callback.mockReset();
   mockUseQuery.mockReset();
   mockGet.mockReset();
   // EXAMPLE mock return value undefined, sometimes it needs to be mocked in beforeEach
   // Ensure we can call .json() on return
-  mockGet.mockReturnValue({ json: jest.fn(() => Promise.resolve({ nextValue: 'callback1' })) });
+  mockGet.mockReturnValue({ json: jest.fn(() => Promise.resolve(returnGetValue)) });
   // This is from mockReactQuery... probably a better way to import this
-  mockUseQuery.mockReturnValue(({ data: {}, refetch: jest.fn(), isLoading: false }));
+  mockUseQuery.mockImplementation((_key, func) => ({ data: {}, refetch: jest.fn(() => func()), isLoading: false }));
 
   // Mock implementations again
   useQuery.mockImplementation(mockUseQuery);
@@ -48,13 +56,16 @@ const resetMocks = () => {
 };
 
 const TestComponent = ({
+  cb = callback,
   generator,
-  sequence
+  sequence,
+  ...otherProps
 }) => {
   const { generate } = useGenerateNumber({
-    callback,
+    callback: cb,
     generator,
-    sequence
+    sequence,
+    ...otherProps
   });
   return (
     <MockButton
@@ -220,6 +231,137 @@ describe('useGenerateNumbers', () => {
       test('disabled warning sequence renders', async () => {
         await Callout('This sequence is marked as disabled and cannot be generated from. Please contact a system admin').exists();
       });
+    });
+  });
+
+
+  const approachingMaxWarningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> is approaching <strong>{maxVal}</strong>, its maximum value.';
+  const hitMaxWarningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> has now hit <strong>{maxVal}</strong>, its maximum value, and further generations will not be possible.';
+  const testWarningCode = (warningCode, expectedCalloutText, sendWarningCallouts = true) => {
+    describe(`Warning code: ${warningCode}`, () => {
+      beforeEach(() => {
+        resetMocks({ nextValue: 'callback1', status: GENERATE_STATUS_WARNING, warningCode });
+        useNumberGeneratorSequences.mockImplementation(() => ({
+          data: {
+            results: [
+              numberGenerator2.sequences?.find(s => s.code === 'seq2.1')
+            ]
+          }
+        }));
+
+        renderWithIntl(
+          <TestComponent
+            generator="numberGen2"
+            sendWarningCallouts={sendWarningCallouts}
+            sequence="seq2.1"
+          />,
+          translationsProperties,
+          render,
+          {
+            intlKey: 'ui-service-interaction',
+            moduleName: '@folio/service-interaction'
+          }
+        );
+      });
+
+      test('renders button', async () => {
+        await Button('GENERATE').exists();
+      });
+
+      describe('clicking \'GENERATE\'', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('GENERATE').click();
+          });
+        });
+
+        if (sendWarningCallouts) {
+          test('expected warning callout renders', async () => {
+            await Callout(expectedCalloutText).exists();
+          });
+        } else {
+          test('warning callout does not render', async () => {
+            await Callout(expectedCalloutText).absent();
+          });
+        }
+      });
+    });
+  };
+
+  const errorMax = '<strong>Error:</strong> The number generator sequence <strong>{name}</strong> has reached <strong>{maxVal}</strong>, its maximum value. Please select a different sequence or contact your administrator.';
+  const errorGeneric = '<strong>Error:</strong> The number generator sequence <strong>{name}</strong> could not generate, but no known reason was specified.';
+  const testErrorCode = (errorCode, expectedCalloutText, sendErrorCallouts = true) => {
+    describe(`Error code: ${errorCode}`, () => {
+      beforeEach(() => {
+        resetMocks({ nextValue: 'callback1', status: GENERATE_STATUS_ERROR, errorCode });
+        useNumberGeneratorSequences.mockImplementation(() => ({
+          data: {
+            results: [
+              numberGenerator2.sequences?.find(s => s.code === 'seq2.1')
+            ]
+          }
+        }));
+
+        renderWithIntl(
+          <TestComponent
+            generator="numberGen2"
+            sendErrorCallouts={sendErrorCallouts}
+            sequence="seq2.1"
+          />,
+          translationsProperties,
+          render,
+          {
+            intlKey: 'ui-service-interaction',
+            moduleName: '@folio/service-interaction'
+          }
+        );
+      });
+
+      test('renders button', async () => {
+        await Button('GENERATE').exists();
+      });
+
+      describe('clicking \'GENERATE\'', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('GENERATE').click();
+          });
+        });
+
+        if (sendErrorCallouts) {
+          test('expected error callout renders', async () => {
+            await Callout(expectedCalloutText).exists();
+          });
+        } else {
+          test('error callout does not render', async () => {
+            await Callout(expectedCalloutText).absent();
+          });
+        }
+      });
+    });
+  };
+
+  describe('send warning callouts', () => {
+    describe('sendWarningCallouts = true', () => {
+      testWarningCode(GENERATE_WARNING_CODE_OVER_THRESHOLD, approachingMaxWarningText);
+      testWarningCode(GENERATE_WARNING_CODE_HIT_MAXIMUM, hitMaxWarningText);
+    });
+
+    describe('sendWarningCallouts = false', () => {
+      testWarningCode(GENERATE_WARNING_CODE_OVER_THRESHOLD, approachingMaxWarningText, false);
+      testWarningCode(GENERATE_WARNING_CODE_HIT_MAXIMUM, hitMaxWarningText, false);
+    });
+  });
+
+  describe('send error callouts', () => {
+    describe('sendErrorCallouts = true', () => {
+      testErrorCode(GENERATE_ERROR_CODE_MAX_REACHED, errorMax);
+      testErrorCode('UnknownCode', errorGeneric);
+    });
+
+    describe('sendErrorCallouts = false', () => {
+      testErrorCode(GENERATE_ERROR_CODE_MAX_REACHED, errorMax, false);
+      testErrorCode('UnknownCode', errorGeneric, false);
     });
   });
 });
