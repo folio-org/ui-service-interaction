@@ -1,5 +1,15 @@
 ## 3.1.0 In progress
+  * SI-46: Number generator openAccess not considering sequence information output template and format
+  * Sequence filters in settings expanded to include "No maximum set" and relabel "" to "All"
+  * Fix form reset after failed sequence POST/PUT, makes use of kint-components v5.6.0
+  * Hook improvements
+    * Added catchQueryCalls prop to useMutateNumberGeneratorSequence
+    * Ensured query results are passed back to afterQueryCalls for both useMutateNumberGenerator and useMutateNumberGeneratorSequence
+  * Prevent negative number entry into Number Generator Sequence fields in settings
+  * Code cleanup and test coverage
   * NumberGeneratorSelector: New exposed component NumberGeneratorSelector which was previously an internal implementation within NumberGeneratorModal. Now available for use in other implementations, with slightly expanded confiugurability and functionality.
+
+
 
 ## 3.0.0 2024-03-22
   * SI-44 Refinement wording in number generators and sequences
