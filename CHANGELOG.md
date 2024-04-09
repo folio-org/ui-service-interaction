@@ -1,3 +1,9 @@
+## 3.0.1 2024-04-09
+    * SI-46: Number generator openAccess not considering sequence information output template and format
+  * Sequence filters in settings expanded to include "No maximum set" and relabel "" to "All"
+  * Fix form reset after failed sequence POST/PUT, makes use of kint-components v5.6.0
+  * Prevent negative number entry into Number Generator Sequence fields in settings
+
 ## 3.0.0 2024-03-22
   * SI-44 Refinement wording in number generators and sequences
   * SI-43 Permissions for ui service interaction and number generators
