@@ -1,6 +1,6 @@
 {
   "name": "@folio/service-interaction",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "FOLIO app for service-interaction",
   "main": "src/index.js",
   "repository": "folio-org/ui-service-interaction",
@@ -67,7 +67,7 @@
     ]
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^5.5.1",
+    "@k-int/stripes-kint-components": "^5.6.0",
     "dom-helpers": "^3.4.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",

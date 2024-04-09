@@ -69,7 +69,8 @@ const SequenceSearch = ({
         searchKey,
         filterKeys: {
           'enabled': 'enabled', // This seems remarkably stupid
-          'maximumCheck': 'maximumCheck.value'
+          // No longer include maximumCheck filterKey since we're
+          // manually handling that in the filter component options now
         },
         filters: [
           {
@@ -114,15 +115,32 @@ const SequenceSearch = ({
     post: addSeq,
   } = useMutateNumberGeneratorSequence({
     afterQueryCalls: {
-      post: (res, postValues) => {
+      post: (res) => {
         setCreating(false);
         callout.sendCallout({
           message: <FormattedMessage
             id="ui-service-interaction.settings.numberGeneratorSequences.callout.create"
-            values={{ name: postValues.code }}
+            values={{ name: res.code }}
           />
         });
+
+        return res;
       },
+    },
+    catchQueryCalls: {
+      // Catch post error here instead of in onError of FormModal as we have access to postData here
+      post: (err, postData) => {
+        callout.sendCallout({
+          type: 'error',
+          message: <FormattedMessage
+            id="ui-service-interaction.settings.numberGeneratorSequences.callout.create.error"
+            values={{ name: postData.code, err: err.message }}
+          />
+        });
+
+        // FormModal needs errors rethrown to avoid restarting form
+        throw err;
+      }
     },
     id: numGenId
   });
