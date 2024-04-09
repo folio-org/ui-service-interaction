@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { render, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
