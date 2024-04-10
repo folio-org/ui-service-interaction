@@ -58,8 +58,14 @@ const SequenceSearch = ({
   const callout = useCallout();
   const stripes = useStripes();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
-  const { qIndexChanged, qIndexSASQProps, searchKey } = useSASQQIndex({ defaultQIndex: 'name,code' });
-
+  const {
+    qIndexChanged,
+    qIndexSASQProps,
+    searchKey
+  } = useSASQQIndex({
+    defaultQIndex: 'name,code',
+    defaultSearchKey: 'name,code,description,outputTemplate'
+  });
   // Normally usePrevNextPagination is used split in two, so we have another call to it down the file
   const { currentPage } = usePrevNextPagination();
 
