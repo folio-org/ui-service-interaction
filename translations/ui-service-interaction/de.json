@@ -44,7 +44,7 @@
     "settings.numberGeneratorSequences.outputTemplate": "Ausgabevorlage",
     "settings.numberGeneratorSequences.outputTemplate.info": "Die Ausgabevorlage definiert die Regeln, die bei der Verwendung des Nummernkreises angewendet werden. Vorlagen werden mit Groovy erstellt. Siehe unten für weitere Informationen.",
     "settings.numberGeneratorSequences.nextValue": "Nächster Wert",
-    "settings.numberGeneratorSequences.nextValue.info": "Dieses Feld zeigt den <strong>nächsten Wert</strong> in dem Nummernkreis an, basierend auf dem aktuellen Wert in der Datenbank. Dieser Nächste Wert kann manuell als Startwert für einen neuen Nummernkreis festgelegt werden.",
+    "settings.numberGeneratorSequences.nextValue.info": "Dieses Feld zeigt den <strong>nächsten Wert</strong> in dem Nummernkreis an, basierend auf dem aktuellen Wert in der Datenbank. Dieser nächste Wert kann manuell als Startwert für einen neuen Nummernkreis festgelegt werden.",
     "settings.numberGeneratorSequences.prefix": "Präfix",
     "settings.numberGeneratorSequences.postfix": "Suffix",
     "settings.numberGeneratorSequences.description": "Bemerkungen",
@@ -89,5 +89,7 @@
     "numberGenerator.modal.nextValue": "Nächster Wert: {value}",
     "numberGenerator.modal.maximumCheck": "Verwendungsstatus",
     "numberGenerator.modal.includeAtMaxSequences": "Nummernkreise einbeziehen, die ihren maximalen Wert erreicht haben",
-    "numberGenerator.modal.exactCodeMatch": "Genaue Code-Übereinstimmung"
+    "numberGenerator.modal.exactCodeMatch": "Genaue Code-Übereinstimmung",
+    "settings.numberGeneratorSequences.callout.create.error": "Nummernkreis <strong>{name}</strong> konnte <strong>nicht</strong> erstellt werden: {err}",
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Kein maximaler Wert festgelegt"
 }
