@@ -130,7 +130,7 @@ const testNoWarning = () => test('warning does not render', () => {
   expect(queryByText(warningText, { exact: false })).not.toBeInTheDocument();
 });
 
-const errorText = '<strong>Error:</strong> The number generator sequence <strong>{name}</strong> has reached <strong>{maxVal}</strong>, its maximum value. Please select a different sequence or contact your administrator.';
+const errorText = '<strong>Error:</strong> The number was not generated because the sequence <strong>{name}</strong> has reached <strong>{maxVal}</strong>, its maximum value. Please select a different sequence or contact your administrator.';
 const testError = () => test('error renders', () => {
   const { getByText } = renderedComponent;
   expect(getByText(errorText, { exact: false })).toBeInTheDocument();
