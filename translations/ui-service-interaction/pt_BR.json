@@ -89,5 +89,7 @@
     "numberGenerator.modal.nextValue": "Próximo valor: {value}",
     "numberGenerator.modal.maximumCheck": "Status de uso",
     "numberGenerator.modal.includeAtMaxSequences": "Incluir sequências que atingiram seu valor máximo",
-    "numberGenerator.modal.exactCodeMatch": "Correspondência exata de código"
+    "numberGenerator.modal.exactCodeMatch": "Correspondência exata de código",
+    "settings.numberGeneratorSequences.callout.create.error": "Não foi possível <strong>criar</strong> a sequência no gerador de números <strong>{name}</strong>: {err}",
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Sem valor máximo definido"
 }
