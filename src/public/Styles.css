@@ -10,7 +10,7 @@
 }
 
 .greyItem {
-  color: var(--checkable-disabled-fill);
+  color: #666666; /* Needed for accessibility against grey background in striped list */
 }
 
 .boldItem {

@@ -23,12 +23,12 @@ export const SEQUENCE_TYPEDOWN_ID_UNIQUE = (id) => `${SEQUENCE_TYPEDOWN_ID}_${id
 
 // CSS Components
 const cssLayoutItem = `display-flex ${css.itemMargin}`;
-const cssLayoutGreyItem = `${cssLayoutItem} ${css.greyItem}`;
+const cssLayoutGreyItem = (isSelected) => { return isSelected ? cssLayoutItem : `${cssLayoutItem} ${css.greyItem}`; };
 const cssLayoutBoldItem = `${cssLayoutItem} ${css.boldItem}`;
 
-const Separator = ({ bold = false }) => (
+const Separator = ({ bold = false, isSelected = false }) => (
   <Layout
-    className={bold ? cssLayoutBoldItem : cssLayoutGreyItem}
+    className={bold ? cssLayoutBoldItem : cssLayoutGreyItem(isSelected)}
   >
     <FormattedMessage id="ui-service-interaction.separator" />
   </Layout>
@@ -36,6 +36,7 @@ const Separator = ({ bold = false }) => (
 
 Separator.propTypes = {
   bold: PropTypes.bool,
+  isSelected: PropTypes.bool
 };
 
 const NumberGeneratorSelector = ({
@@ -150,8 +151,8 @@ const NumberGeneratorSelector = ({
   const renderTypedownFooter = () => {
     return (
       <Layout className="display-flex flex-align-items-start">
-        <Layout style={{ paddingRight: '30%' }}>
-          <Layout style={{ paddingRight: '10px', display: 'inline' }}>
+        <Layout style={{ display: 'flex', width: '100%' }}>
+          <Layout style={{ display: 'flex' }}>
             <Checkbox
               checked={includeSequencesAtMaximum}
               id="includeAtMaxSequences_label"
@@ -161,13 +162,15 @@ const NumberGeneratorSelector = ({
               }}
             />
           </Layout>
-          <FormattedMessage
-            for="includeAtMaxSequences_label"
-            id="ui-service-interaction.numberGenerator.modal.includeAtMaxSequences"
-          />
+          <Layout style={{ display: 'flex', paddingLeft: '10px' }}>
+            <FormattedMessage
+              for="includeAtMaxSequences_label"
+              id="ui-service-interaction.numberGenerator.modal.includeAtMaxSequences"
+            />
+          </Layout>
         </Layout>
-        <Layout style={{ paddingRight: '30%' }}>
-          <Layout style={{ paddingRight: '10px', display: 'inline' }}>
+        <Layout style={{ display: 'flex', width: '100%' }}>
+          <Layout style={{ display: 'flex' }}>
             <Checkbox
               checked={exactCodeMatch}
               id="exact_match_label"
@@ -177,10 +180,12 @@ const NumberGeneratorSelector = ({
               }}
             />
           </Layout>
-          <FormattedMessage
-            for="exact_match_label"
-            id="ui-service-interaction.numberGenerator.modal.exactCodeMatch"
-          />
+          <Layout style={{ display: 'flex', paddingLeft: '10px' }}>
+            <FormattedMessage
+              for="exact_match_label"
+              id="ui-service-interaction.numberGenerator.modal.exactCodeMatch"
+            />
+          </Layout>
         </Layout>
       </Layout>
     );
@@ -224,13 +229,13 @@ const NumberGeneratorSelector = ({
     return `${path}?${queryParams.join('&')}`;
   }, [exactCodeMatch, kiwtQueryParamOptions]);
 
-  const renderListItem = useCallback((sequence, input) => {
+  const renderListItem = useCallback((sequence, input, _e, isSelected) => {
     const keyBase = `${uniqueId}-${sequence.id}`;
 
     const layouts = [
       <Layout
         key={`${keyBase}-nextValue-layout`}
-        className={cssLayoutGreyItem}
+        className={cssLayoutGreyItem(isSelected)}
       >
         <FormattedMessage id="ui-service-interaction.numberGenerator.modal.nextValue" values={{ value: sequence.nextValue }} />
       </Layout>
@@ -240,10 +245,11 @@ const NumberGeneratorSelector = ({
       layouts.push(
         <Separator
           key={`${keyBase}-separator-maxCheck-layout`}
+          isSelected={isSelected}
         />,
         <Layout
           key={`${keyBase}-maxCheck-layout`}
-          className={cssLayoutGreyItem}
+          className={cssLayoutGreyItem(isSelected)}
         >
           <FormattedMessage id="ui-service-interaction.numberGenerator.modal.maximumCheck" />
         </Layout>
@@ -292,10 +298,11 @@ const NumberGeneratorSelector = ({
         <Separator
           key={`${keyBase}-separator-code-layout`}
           bold
+          isSelected={isSelected}
         />,
         <Layout
           key={`${keyBase}-code-layout`}
-          className={cssLayoutGreyItem}
+          className={cssLayoutGreyItem(isSelected)}
         >
           {highlightString(
             input,
@@ -306,6 +313,7 @@ const NumberGeneratorSelector = ({
         </Layout>,
         <Separator
           key={`${keyBase}-separator-after-code-layout`}
+          isSelected={isSelected}
         />,
       );
     } else {
@@ -318,15 +326,17 @@ const NumberGeneratorSelector = ({
         </Layout>,
         <Separator
           key={`${keyBase}-separator-code-layout`}
+          isSelected={isSelected}
         />,
         <Layout
           key={`${keyBase}-code-layout`}
-          className={cssLayoutGreyItem}
+          className={cssLayoutGreyItem(isSelected)}
         >
           {input === sequence.code ? <mark>{sequence.code}</mark> : sequence.code}
         </Layout>,
         <Separator
           key={`${keyBase}-separator-after-code-layout`}
+          isSelected={isSelected}
         />,
       );
     }
@@ -342,6 +352,7 @@ const NumberGeneratorSelector = ({
         <Separator
           key={`${keyBase}-separator-after-owner-layout`}
           bold
+          isSelected={isSelected}
         />,
       );
     }
