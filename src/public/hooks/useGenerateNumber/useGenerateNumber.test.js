@@ -76,7 +76,7 @@ const TestComponent = ({
   );
 };
 
-describe('useGenerateNumbers', () => {
+describe('useGenerateNumber', () => {
   describe('render with enabled sequence', () => {
     beforeEach(() => {
       resetMocks();
@@ -236,7 +236,7 @@ describe('useGenerateNumbers', () => {
 
 
   const approachingMaxWarningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> is approaching <strong>{maxVal}</strong>, its maximum value.';
-  const hitMaxWarningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> has now hit <strong>{maxVal}</strong>, its maximum value, and further generations will not be possible.';
+  const hitMaxWarningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> has now reached its maximum value of <strong>{maxVal}</strong>and cannot be used again.';
   const testWarningCode = (warningCode, expectedCalloutText, sendWarningCallouts = true) => {
     describe(`Warning code: ${warningCode}`, () => {
       beforeEach(() => {
@@ -288,8 +288,8 @@ describe('useGenerateNumbers', () => {
     });
   };
 
-  const errorMax = '<strong>Error:</strong> The number generator sequence <strong>{name}</strong> has reached <strong>{maxVal}</strong>, its maximum value. Please select a different sequence or contact your administrator.';
-  const errorGeneric = '<strong>Error:</strong> The number generator sequence <strong>{name}</strong> could not generate, but no known reason was specified.';
+  const errorMax = '<strong>Error:</strong> The number was not generated because the sequence <strong>{name}</strong> has reached <strong>{maxVal}</strong>, its maximum value. Please select a different sequence or contact your administrator.';
+  const errorGeneric = '<strong>Error:</strong> Unable to generate a number using the sequence <strong>{name}</strong>. Please try again. If this error recurs contact your administrator.';
   const testErrorCode = (errorCode, expectedCalloutText, sendErrorCallouts = true) => {
     describe(`Error code: ${errorCode}`, () => {
       beforeEach(() => {
