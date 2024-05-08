@@ -63,6 +63,7 @@
     "settings.numberGeneratorSequences.callout.delete": "Number generator sequence <strong>{name}</strong> was successfully <strong>deleted</strong>.",
     "settings.numberGeneratorSequences.callout.edit": "Number generator sequence <strong>{name}</strong> was successfully <strong>edited</strong>.",
     "settings.numberGeneratorSequences.callout.create": "Number generator sequence <strong>{name}</strong> was successfully <strong>created</strong>.",
+    "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.", 
     "numberGenerator.generateDisabledSequenceError": "This sequence is marked as disabled and cannot be generated from. Please contact a system admin",
     "settings.numberGeneratorSequences.maximumNumber": "Maximum value",
     "settings.numberGeneratorSequences.maximumNumber.info": "This is the maximum possible value for the sequence. When the maximum is reached, the sequence will no longer be usable.",
@@ -90,6 +91,5 @@
     "numberGenerator.modal.maximumCheck": "Usage status",
     "numberGenerator.modal.includeAtMaxSequences": "Include sequences which have reached their maximum value",
     "numberGenerator.modal.exactCodeMatch": "Exact code match",
-    "settings.numberGeneratorSequences.callout.create.error": "Number generator sequence <strong>{name}</strong> could not be <strong>created</strong>: {err}",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set"
 }
