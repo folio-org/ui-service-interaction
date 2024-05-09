@@ -78,7 +78,7 @@
     "all": "全部",
     "nFound": "找到{total}",
     "settings.numberGeneratorSequences.nextValue.changedWarning": "更改“下一个值”字段可能会导致生成的数字不唯一。",
-    "numberGenerator.warning": "<strong>警告： </strong>生成的数字生成器序列<strong> {name} </strong>带有警告，但未指出已知原因。",
+    "numberGenerator.warning": "<strong>Warning:</strong> The number was generated successfully but with an unspecified warning. It could be a temporary glitch. If this issue recurs please contact your administrator.",
     "numberGenerator.warning.sequenceOverThresholdWarning": "<strong>警告： </strong>数字生成器序列<strong> {name} </strong>正在接近其最大值<strong> {maxVal} </strong> 。",
     "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>警告： </strong>数字生成器序列<strong> {name} </strong>现已达到<strong> {maxVal} </strong> ，其最大值，并且不可能再生成。",
     "numberGenerator.error": "<strong>错误： </strong>数字生成器序列<strong> {name} </strong>无法生成，但未指出已知原因。",
@@ -90,6 +90,6 @@
     "numberGenerator.modal.maximumCheck": "使用状态",
     "numberGenerator.modal.includeAtMaxSequences": "包括已达到最大值的序列",
     "numberGenerator.modal.exactCodeMatch": "代码精确匹配",
-    "settings.numberGeneratorSequences.callout.create.error": "Number generator sequence <strong>{name}</strong> could not be <strong>created</strong>: {err}",
+    "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set"
 }
