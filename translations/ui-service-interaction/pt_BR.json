@@ -78,11 +78,11 @@
     "all": "Todos",
     "nFound": "{total} encontrado(s)",
     "settings.numberGeneratorSequences.nextValue.changedWarning": "Alterar o campo \"próximo valor\" pode resultar em números gerados não exclusivos.",
-    "numberGenerator.warning": "<strong>Aviso: </strong> A sequência do gerador de números <strong>{name}</strong> foi gerada com um aviso, mas nenhum motivo conhecido foi especificado.",
+    "numberGenerator.warning": "<strong>Aviso:</strong> O número foi gerado com sucesso, mas com um aviso não especificado. Pode ser uma falha temporária. Se o problema persistir, entre em contato com o administrador.",
     "numberGenerator.warning.sequenceOverThresholdWarning": "<strong>Aviso:</strong> A sequência do gerador de números <strong>{name}</strong> está se aproximando de <strong>{maxVal} </strong> , seu valor máximo.",
-    "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Aviso:</strong> A sequência do gerador de números <strong>{name}</strong> atingiu agora <strong>{maxVal}</strong> , seu valor máximo e gerações futuras não serão possíveis.",
-    "numberGenerator.error": "<strong>Erro:</strong> A sequência do gerador de números <strong>{name}</strong> não pôde ser gerada, mas nenhum motivo conhecido foi especificado.",
-    "numberGenerator.error.sequenceOverMaximumError": "<strong>Erro:</strong> A sequência do gerador de números <strong>{name}</strong> atingiu <strong>{maxVal}</strong> , seu valor máximo. Selecione uma sequência diferente ou entre em contato com o administrador.",
+    "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Aviso:</strong> A sequência do gerador de números <strong>{name}</strong> atingiu seu valor máximo de <strong>{maxVal}</strong> e não pode ser usada novamente.",
+    "numberGenerator.error": "<strong>Erro:</strong> Não é possível gerar um número usando a sequência <strong>{name}</strong>. Por favor, tente novamente. Se esse erro ocorrer novamente, entre em contato com o administrador.",
+    "numberGenerator.error.sequenceOverMaximumError": "<strong>Erro:</strong> O número não foi gerado porque a sequência <strong>{name}</strong> atingiu <strong>{maxVal}</strong>, seu valor máximo. Selecione uma sequência diferente ou entre em contato com o administrador.",
     "noResultsFound": "Nenhum resultado encontrado",
     "separator": "·",
     "separatorStrong": "<strong> · </strong>",
@@ -90,6 +90,6 @@
     "numberGenerator.modal.maximumCheck": "Status de uso",
     "numberGenerator.modal.includeAtMaxSequences": "Incluir sequências que atingiram seu valor máximo",
     "numberGenerator.modal.exactCodeMatch": "Correspondência exata de código",
-    "settings.numberGeneratorSequences.callout.create.error": "Não foi possível <strong>criar</strong> a sequência no gerador de números <strong>{name}</strong>: {err}",
+    "settings.numberGeneratorSequences.callout.create.error": "<strong>Erro:</strong> A sequência <strong>{name}</strong> não foi criada. Verifique se o <strong>código</strong> é único e tente salvar novamente. Se esse erro persistir, entre em contato com seu administrador.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Sem valor máximo definido"
 }

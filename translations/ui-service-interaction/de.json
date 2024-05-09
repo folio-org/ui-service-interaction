@@ -78,7 +78,7 @@
     "all": "Alle",
     "nFound": "{total} gefunden",
     "settings.numberGeneratorSequences.nextValue.changedWarning": "Das Ändern des Wertes im Feld \"nächster Wert\" kann zu nicht eindeutigen generierten Zahlen führen.",
-    "numberGenerator.warning": "<strong>Warnung:</strong> Im Nummernkreis <strong>{name}</strong> wurde mit einer Warnung generiert, aber es wurde kein bekannter Grund angegeben.",
+    "numberGenerator.warning": "<strong>Warning:</strong> The number was generated successfully but with an unspecified warning. It could be a temporary glitch. If this issue recurs please contact your administrator.",
     "numberGenerator.warning.sequenceOverThresholdWarning": "<strong>Warnung:</strong> Der Nummernkreis <strong>{name}</strong> nähert sich <strong>{maxVal}</strong>, seinem maximalen Wert.",
     "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Warnung:</strong> Der Nummernkreis <strong>{name}</strong> hat nun <strong>{maxVal}</strong>, seinen maximalen Wert, erreicht und weitere Generierungen sind nicht mehr möglich.",
     "numberGenerator.error": "<strong>Fehler:</strong> Im Nummernkreis <strong>{name}</strong> konnte nicht generiert werden, aber es wurde kein bekannter Grund angegeben.",
@@ -90,6 +90,6 @@
     "numberGenerator.modal.maximumCheck": "Verwendungsstatus",
     "numberGenerator.modal.includeAtMaxSequences": "Nummernkreise einbeziehen, die ihren maximalen Wert erreicht haben",
     "numberGenerator.modal.exactCodeMatch": "Genaue Code-Übereinstimmung",
-    "settings.numberGeneratorSequences.callout.create.error": "Nummernkreis <strong>{name}</strong> konnte <strong>nicht</strong> erstellt werden: {err}",
+    "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Kein maximaler Wert festgelegt"
 }
