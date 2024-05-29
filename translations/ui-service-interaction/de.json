@@ -78,11 +78,11 @@
     "all": "Alle",
     "nFound": "{total} gefunden",
     "settings.numberGeneratorSequences.nextValue.changedWarning": "Das Ändern des Wertes im Feld \"nächster Wert\" kann zu nicht eindeutigen generierten Zahlen führen.",
-    "numberGenerator.warning": "<strong>Warning:</strong> The number was generated successfully but with an unspecified warning. It could be a temporary glitch. If this issue recurs please contact your administrator.",
+    "numberGenerator.warning": "<strong>Warnung:</strong> Die Nummer wurde erfolgreich generiert, aber mit einer nicht näher spezifizierten Warnung. Es könnte sich um eine vorübergehende Störung handeln. Wenn dieses Problem erneut auftritt, bitte Administrator kontaktieren.",
     "numberGenerator.warning.sequenceOverThresholdWarning": "<strong>Warnung:</strong> Der Nummernkreis <strong>{name}</strong> nähert sich <strong>{maxVal}</strong>, seinem maximalen Wert.",
-    "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Warnung:</strong> Der Nummernkreis <strong>{name}</strong> hat nun <strong>{maxVal}</strong>, seinen maximalen Wert, erreicht und weitere Generierungen sind nicht mehr möglich.",
-    "numberGenerator.error": "<strong>Fehler:</strong> Im Nummernkreis <strong>{name}</strong> konnte nicht generiert werden, aber es wurde kein bekannter Grund angegeben.",
-    "numberGenerator.error.sequenceOverMaximumError": "<strong>Fehler:</strong> Der Nummernkreis <strong>{name}</strong> hat <strong>{maxVal}</strong> erreicht, seinen maximalen Wert. Bitte einen anderen Nummernkreis auswählen oder den Administrator kontaktieren.",
+    "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Warnung:</strong> Der Nummernkreis <strong>{name}</strong> hat nun seinen maximalen Wert <strong>{maxVal}</strong> erreicht und kann nicht mehr verwendet werden.",
+    "numberGenerator.error": "<strong>Fehler:</strong> Es konnte keine Nummer im Nummernkreis <strong>{name}</strong> generiert werden. Bitte erneut versuchen. Wenn dieser Fehler erneut auftritt, Administrator kontaktieren.",
+    "numberGenerator.error.sequenceOverMaximumError": "<strong>Fehler:</strong> Die Nummer wurde nicht generiert, da der Nummernkreis <strong>{name}</strong> seinen maximalen Wert <strong>{maxVal}</strong> erreicht hat. Bitte einen anderen Nummernkreis auswählen oder den Administrator kontaktieren.",
     "noResultsFound": "Keine Ergebnisse gefunden",
     "separator": "·",
     "separatorStrong": "<strong>·</strong>",
@@ -90,6 +90,6 @@
     "numberGenerator.modal.maximumCheck": "Verwendungsstatus",
     "numberGenerator.modal.includeAtMaxSequences": "Nummernkreise einbeziehen, die ihren maximalen Wert erreicht haben",
     "numberGenerator.modal.exactCodeMatch": "Genaue Code-Übereinstimmung",
-    "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
+    "settings.numberGeneratorSequences.callout.create.error": "<strong>Fehler:</strong> Nummernkreis <strong>{name}</strong> wurde nicht erstellt. Bitte überprüfen, dass der <strong>Code</strong> eindeutig ist und danach erneut abspeichern. Sollte dieser Fehler erneut auftreten, bitte an den Administrator wenden.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Kein maximaler Wert festgelegt"
 }
