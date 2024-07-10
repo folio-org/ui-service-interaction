@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
 
-import { composeValidators, required as requiredValidator } from '@k-int/stripes-kint-components';
+import { NumberField, composeValidators, required as requiredValidator } from '@k-int/stripes-kint-components';
 
 import {
   Checkbox,
@@ -160,7 +160,7 @@ const NumberGeneratorSequenceForm = () => {
         <Col xs={6}>
           <Layout className="flex">
             <Field
-              component={TextField}
+              component={NumberField}
               label={
                 <>
                   <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber" />
@@ -172,7 +172,6 @@ const NumberGeneratorSequenceForm = () => {
               onKeyDown={preventMinusKey}
               onPaste={preventPasteNegative}
               parse={v => v}
-              type="number"
               validate={validateMaximumNumber}
             />
           </Layout>
@@ -180,7 +179,7 @@ const NumberGeneratorSequenceForm = () => {
         <Col xs={6}>
           <Layout className="flex">
             <Field
-              component={TextField}
+              component={NumberField}
               disabled={!values?.maximumNumber}
               label={
                 <>
@@ -193,7 +192,6 @@ const NumberGeneratorSequenceForm = () => {
               onKeyDown={preventMinusKey}
               onPaste={preventPasteNegative}
               parse={v => v}
-              type="number"
               validate={validateMaximumNumberThreshold}
             />
           </Layout>
@@ -207,7 +205,7 @@ const NumberGeneratorSequenceForm = () => {
           >
             {({ input, meta }) => {
               return (
-                <TextField
+                <NumberField
                   {...input}
                   label={
                     <>
@@ -218,7 +216,6 @@ const NumberGeneratorSequenceForm = () => {
                   min={1}
                   onKeyDown={preventMinusKey}
                   onPaste={preventPasteNegative}
-                  type="number"
                   warning={getNextValueWarning(input.value, meta.initial)}
                 />
               );
