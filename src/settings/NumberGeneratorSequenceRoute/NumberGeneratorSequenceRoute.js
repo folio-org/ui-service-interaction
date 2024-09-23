@@ -1,9 +1,9 @@
-import { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import { Route } from '@folio/stripes/core';
+import { useCallback, useEffect } from 'react';
 
 import { getIdsFromUrl } from '@folio/stripes-erm-components';
+import { Paneset } from '@folio/stripes/components';
+import { Route } from '@folio/stripes/core';
 
 
 import { useNumberGenerators } from '../../public';
@@ -16,7 +16,7 @@ const NumberGeneratorSequenceRoute = ({
   history,
   location,
   match,
-}) => {
+} = {}) => {
   const { data: { results: data = [] } = {}, isLoading } = useNumberGenerators();
   // Separate state to trial stuff
   const changeGenerator = useCallback((id) => {
@@ -70,10 +70,12 @@ const NumberGeneratorSequenceRoute = ({
   }, [history, location.pathname, location.search, match.url]);
 
   return (
-    <>
+    <Paneset
+      id="number-generator-settings"
+    >
       <Route component={renderSequenceSearch} path={`${match.path}/:numGenId?`} />
       <Route component={renderSequenceView} path={`${match.path}/:numGenId/:seqId`} />
-    </>
+    </Paneset>
   );
 };
 

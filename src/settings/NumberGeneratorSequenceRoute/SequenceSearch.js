@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useCallback, useMemo, useState } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -9,8 +9,6 @@ import {
   useKiwtSASQuery
 } from '@k-int/stripes-kint-components';
 
-import { useCallout, useStripes } from '@folio/stripes/core';
-import { SearchAndSortQuery } from '@folio/stripes/smart-components';
 import {
   Accordion,
   Button,
@@ -19,6 +17,8 @@ import {
   PaneHeader,
   Select
 } from '@folio/stripes/components';
+import { useCallout, useStripes } from '@folio/stripes/core';
+import { SearchAndSortQuery } from '@folio/stripes/smart-components';
 
 import {
   InfoBox,
@@ -36,9 +36,9 @@ import {
 
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 
+import SequenceFilters from './SequenceFilters';
 import css from './SequenceSearch.css';
 import SequenceSearchBar from './SequenceSearchBar';
-import SequenceFilters from './SequenceFilters';
 
 const PER_PAGE = 25;
 
@@ -54,7 +54,7 @@ const SequenceSearch = ({
     url,
   },
   numberGenerators
-}) => {
+} = {}) => {
   const callout = useCallout();
   const stripes = useStripes();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
@@ -235,7 +235,7 @@ const SequenceSearch = ({
           const disableReset = () => !filterChanged && !searchChanged && !qIndexChanged;
           return (
             <Pane
-              defaultWidth="20%"
+              defaultWidth="fill"
               id="settings-numberGeneratorSequences-list"
               renderHeader={(renderProps) => (
                 <PaneHeader
