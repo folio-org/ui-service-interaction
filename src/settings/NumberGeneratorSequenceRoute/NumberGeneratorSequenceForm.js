@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
+import { FormattedMessage } from 'react-intl';
 
 import { NumberField, composeValidators, required as requiredValidator } from '@k-int/stripes-kint-components';
 
@@ -16,6 +16,7 @@ import {
 
 import { preventMinusKey, preventPasteNegative } from '@folio/stripes-erm-components';
 
+import useSIRefdata from '../../hooks/useSIRefdata';
 import {
   ChecksumAlgoInfo,
   CodeInfo,
@@ -27,7 +28,6 @@ import {
   NextValueInfo,
   OutputTemplateInfo
 } from '../InfoPopovers';
-import useSIRefdata from '../../hooks/useSIRefdata';
 
 import css from './SequenceSearch.css';
 
@@ -206,7 +206,7 @@ const NumberGeneratorSequenceForm = () => {
             {({ input, meta }) => {
               return (
                 <NumberField
-                  {...input}
+                  input={input}
                   label={
                     <>
                       <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.nextValue" />

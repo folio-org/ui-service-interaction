@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { FormModal } from '@k-int/stripes-kint-components';
@@ -101,10 +101,32 @@ const NumberGeneratorSequence = ({
     ]
   ), [setEditing]);
 
+  const renderForm = useCallback(() => {
+    if (editing) {
+      return (
+        <FormModal
+          initialValues={sequence}
+          modalProps={{
+            dismissible: true,
+            label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.editModal" />,
+            onClose: () => setEditing(false),
+            open: editing
+          }}
+          onSubmit={editSeq}
+        >
+          <NumberGeneratorSequenceForm />
+        </FormModal>
+      );
+    }
+
+    return null;
+  }, [editSeq, editing, sequence]);
+
   return (
     <>
       <Pane
         defaultWidth="fill"
+        id="settings-number-generator-sequences-view"
         renderHeader={(renderProps) => (
           <PaneHeader
             {...renderProps}
@@ -235,20 +257,7 @@ const NumberGeneratorSequence = ({
           </Col>
         </Row>
       </Pane>
-      {editing &&
-        <FormModal
-          initialValues={sequence}
-          modalProps={{
-            dismissible: true,
-            label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.editModal" />,
-            onClose: () => setEditing(false),
-            open: editing
-          }}
-          onSubmit={editSeq}
-        >
-          <NumberGeneratorSequenceForm />
-        </FormModal>
-      }
+      {renderForm()}
       <ConfirmationModal
         buttonStyle="danger"
         confirmLabel={
