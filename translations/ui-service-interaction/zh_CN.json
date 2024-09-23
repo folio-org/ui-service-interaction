@@ -78,11 +78,11 @@
     "all": "全部",
     "nFound": "找到{total}",
     "settings.numberGeneratorSequences.nextValue.changedWarning": "更改“下一个值”字段可能会导致生成的数字不唯一。",
-    "numberGenerator.warning": "<strong>Warning:</strong> The number was generated successfully but with an unspecified warning. It could be a temporary glitch. If this issue recurs please contact your administrator.",
+    "numberGenerator.warning": "<strong>警告： </strong>号码生成成功，但出现未指定的警告。这可能是暂时故障。如果此问题再次出现，请联系管理员。",
     "numberGenerator.warning.sequenceOverThresholdWarning": "<strong>警告： </strong>数字生成器序列<strong> {name} </strong>正在接近其最大值<strong> {maxVal} </strong> 。",
-    "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>警告： </strong>数字生成器序列<strong> {name} </strong>现已达到<strong> {maxVal} </strong> ，其最大值，并且不可能再生成。",
-    "numberGenerator.error": "<strong>错误： </strong>数字生成器序列<strong> {name} </strong>无法生成，但未指出已知原因。",
-    "numberGenerator.error.sequenceOverMaximumError": "<strong>错误： </strong>数字生成器序列<strong> {name} </strong>已达到<strong> {maxVal} </strong> ，其最大值。请选择不同的序列或联系管理员。",
+    "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>警告： </strong>数字生成器序列<strong> {name} </strong>现已达到其最大值<strong> {maxVal} </strong> ，无法再次使用。",
+    "numberGenerator.error": "<strong>错误： </strong>无法使用序列<strong> {name} </strong>生成数字。请重试。如果此错误再次出现，请联系管理员。",
+    "numberGenerator.error.sequenceOverMaximumError": "<strong>错误： </strong>未生成数字，因为序列<strong> {name} </strong>已达到其最大值<strong> {maxVal} </strong> 。请选择其他序列或联系管理员。",
     "noResultsFound": "找不到结果",
     "separator": "·",
     "separatorStrong": "<strong> · </strong>",
@@ -90,6 +90,6 @@
     "numberGenerator.modal.maximumCheck": "使用状态",
     "numberGenerator.modal.includeAtMaxSequences": "包括已达到最大值的序列",
     "numberGenerator.modal.exactCodeMatch": "代码精确匹配",
-    "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set"
+    "settings.numberGeneratorSequences.callout.create.error": "<strong>错误： </strong>序列<strong> {name} </strong>未创建。请检查<strong>代码</strong>是否唯一，然后重试保存。如果此错误再次出现，请联系管理员。",
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "无最大值设置"
 }
