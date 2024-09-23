@@ -1,16 +1,16 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { Button as MockButton } from '@folio/stripes/components';
 import {
   Button,
   Callout,
   IconButton,
   renderWithIntl
 } from '@folio/stripes-erm-testing';
+import { Button as MockButton } from '@folio/stripes/components';
 
-import NumberGeneratorConfig from './NumberGeneratorConfig';
 import { translationsProperties } from '../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../test/jest/mockGenerators';
+import NumberGeneratorConfig from './NumberGeneratorConfig';
 
 const push = jest.fn();
 const mockUseNumberGenerators = jest.fn((code) => {
@@ -171,17 +171,17 @@ describe('NumberGeneratorConfig', () => {
         });
       });
     });
+  });
 
-    describe('closing pane', () => {
-      beforeEach(async () => {
-        await waitFor(async () => {
-          await IconButton('Close ').click();
-        });
+  describe('closing pane', () => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await IconButton('Close ').click();
       });
+    });
 
-      test('history push gets called', () => {
-        expect(push).toHaveBeenCalledWith('someUrl');
-      });
+    test('history push gets called', () => {
+      expect(push).toHaveBeenCalledWith('someUrl');
     });
   });
 });
