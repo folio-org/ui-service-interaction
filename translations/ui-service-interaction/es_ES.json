@@ -1,11 +1,11 @@
 {
-    "meta.title": "Service interaction",
-    "settings.numberGenerators": "Number generators",
-    "settings.numberGeneratorSequences": "Number generator sequences",
-    "settings.numberGeneratorSequences.edit": "Number generator sequence edit",
-    "settings.numberGenerator.edit": "Number generator edit",
-    "numberGenerator.generate": "Generate",
-    "numberGenerator.selectGenerator": "Select generator",
+    "meta.title": "Interacción de servicios",
+    "settings.numberGenerators": "Generadores de números",
+    "settings.numberGeneratorSequences": "Secuencias de generadores de números",
+    "settings.numberGeneratorSequences.edit": "Secuencia generadora de números editar",
+    "settings.numberGenerator.edit": "Generador de números edit",
+    "numberGenerator.generate": "Generar",
+    "numberGenerator.selectGenerator": "Seleccionar generador",
     "new": "New",
     "edit": "Edit",
     "delete": "Delete",
@@ -91,5 +91,5 @@
     "numberGenerator.modal.includeAtMaxSequences": "Include sequences which have reached their maximum value",
     "numberGenerator.modal.exactCodeMatch": "Exact code match",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set"
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Sin conjunto máximo"
 }
