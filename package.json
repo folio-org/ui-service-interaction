@@ -96,6 +96,7 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^9.1.0",
+    "@folio/stripes-erm-components": "^9.1.0",
     "moment": "^2.22.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
