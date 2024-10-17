@@ -39,7 +39,7 @@ const NumberGeneratorSequenceForm = () => {
     desc: 'NumberGeneratorSequence.CheckDigitAlgo',
   });
 
-  // Longer term we will support more of the values than these two
+  // I'd like a smarter way to do this in future, potentially "custom" checksums set up by the users.
   const currentlySupportedChecksums = [
     'none',
     'ean13',
