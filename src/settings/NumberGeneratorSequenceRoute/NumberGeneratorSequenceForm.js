@@ -47,6 +47,7 @@ const NumberGeneratorSequenceForm = () => {
     'isbn10checkdigit',
     'luhncheckdigit',
     '1793ltrmod10',
+    '12ltrmod10',
     'issncheckdigit'
   ];
 
