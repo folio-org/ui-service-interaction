@@ -26,7 +26,8 @@ import {
   MaximumNumberThresholdInfo,
   NameInfo,
   NextValueInfo,
-  OutputTemplateInfo
+  OutputTemplateInfo,
+  PreChecksumTemplateInfo
 } from '../InfoPopovers';
 
 import { useMutateNumberGeneratorSequence, useNumberGeneratorSequence } from '../../public';
@@ -232,6 +233,19 @@ const NumberGeneratorSequence = ({
                 </>
               }
               value={sequence.checkDigitAlgo?.label}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={
+                <>
+                  <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.preChecksumTemplate" />
+                  <PreChecksumTemplateInfo />
+                </>
+              }
+              value={sequence.preChecksumTemplate}
             />
           </Col>
         </Row>
