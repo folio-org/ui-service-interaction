@@ -43,7 +43,6 @@ const NumberGeneratorSequenceForm = () => {
   const currentlySupportedChecksums = [
     'none',
     'ean13',
-    'modulustencheckdigit',
     'isbn10checkdigit',
     'luhncheckdigit',
     '1793ltrmod10',
