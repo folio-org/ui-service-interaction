@@ -5,6 +5,7 @@
   * Code cleanup and test coverage
   * NumberGeneratorSelector: New exposed component NumberGeneratorSelector which was previously an internal implementation within NumberGeneratorModal. Now available for use in other implementations, with slightly expanded confiugurability and functionality.
   * Fixed Number Generator Sequence settings page not querying by all qIndices when all options are deselected (For stripes-erm-components versions including fix for ERM-3186)
+  * FOLIO-4086 Fix GitHub Actions workflow not running for tags
 
 ## 3.0.1 2024-04-09
   * SI-46: Number generator openAccess not considering sequence information output template and format
