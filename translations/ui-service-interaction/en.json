@@ -45,6 +45,8 @@
   "settings.numberGeneratorSequences.format.info": "The Format field defines the length of the generated number. Use # to define the length without padding, e.g. \"####\". Or use a character to include padding. E.g. \"0000\" will set the length to 4 and add zeros to produce outputs such as 0045.",
   "settings.numberGeneratorSequences.outputTemplate": "Output template",
   "settings.numberGeneratorSequences.outputTemplate.info": "The output template defines the rules applied to create the sequence. Templates are formed using Groovy. See below for more information.",
+  "settings.numberGeneratorSequences.preChecksumTemplate": "Pre-checksum template",
+  "settings.numberGeneratorSequences.preChecksumTemplate.info": "The pre-checksum template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information.",
   "settings.numberGeneratorSequences.nextValue": "Next value",
   "settings.numberGeneratorSequences.nextValue.info": "This field shows the <strong>next value</strong> in the sequence based on the current value in the database. It can be set manually as the starting value for a new sequence.",
   "settings.numberGeneratorSequences.nextValue.changedWarning": "Changing the \"next value\" field can result in non-unique generated numbers.",

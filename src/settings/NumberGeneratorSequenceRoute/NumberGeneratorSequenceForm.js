@@ -26,7 +26,8 @@ import {
   MaximumNumberThresholdInfo,
   NameInfo,
   NextValueInfo,
-  OutputTemplateInfo
+  OutputTemplateInfo,
+  PreChecksumTemplateInfo
 } from '../InfoPopovers';
 
 import css from './SequenceSearch.css';
@@ -38,10 +39,15 @@ const NumberGeneratorSequenceForm = () => {
     desc: 'NumberGeneratorSequence.CheckDigitAlgo',
   });
 
-  // Longer term we will support more of the values than these two
+  // I'd like a smarter way to do this in future, potentially "custom" checksums set up by the users.
   const currentlySupportedChecksums = [
     'none',
-    'ean13'
+    'ean13',
+    'isbn10checkdigit',
+    'luhncheckdigit',
+    '1793ltrmod10',
+    '12ltrmod10',
+    'issncheckdigit'
   ];
 
   const checkDigitAlgoOptions = [
@@ -254,6 +260,21 @@ const NumberGeneratorSequenceForm = () => {
             parse={v => v}
             required
             validate={composeValidators(validateChecksum, requiredValidator)}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <Field
+            component={TextArea}
+            label={
+              <>
+                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.preChecksumTemplate" />
+                <PreChecksumTemplateInfo />
+              </>
+            }
+            name="preChecksumTemplate"
+            parse={v => v}
           />
         </Col>
       </Row>
