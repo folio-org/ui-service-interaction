@@ -1,4 +1,4 @@
-import { render, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Field as MockField } from 'react-final-form';
 
 import { TextField as MockTextField } from '@folio/stripes/components';
@@ -106,77 +106,88 @@ describe('SequenceView', () => {
     await Button('Actions').exists();
   });
 
-  describe('editing the sequence', () => {
+  describe('actions', () => {
     beforeEach(async () => {
       await waitFor(async () => {
         await Button('Actions').click();
-        await Button('Edit').click();
       });
     });
 
-    test('FormModal renders', async () => {
-      const { getByText } = renderComponent;
-      await waitFor(() => {
-        expect(getByText('NumberGeneratorSequenceForm')).toBeInTheDocument();
-      });
-    });
-
-    describe('saving the sequence', () => {
+    describe('editing the sequence', () => {
       beforeEach(async () => {
         await waitFor(async () => {
-          await TextField('TEST FIELD').fillIn('new name');
-          await Button('Save & close').click();
+          await Button('Edit').click();
         });
       });
 
-      test('edit callout fires', async () => {
-        // EXAMPLE currently callout interactor doesn't notice variable insertion?
-        await Callout('Number generator sequence <strong>{name}</strong> was successfully <strong>edited</strong>.').exists();
+      test('FormModal renders', async () => {
+        const { getByText } = renderComponent;
+        await waitFor(() => {
+          expect(getByText('NumberGeneratorSequenceForm')).toBeInTheDocument();
+        });
+      });
+
+      describe('saving the sequence', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await TextField('TEST FIELD').fillIn('new name');
+            await Button('Save & close').click();
+          });
+        });
+
+        test('edit callout fires', async () => {
+          // EXAMPLE currently callout interactor doesn't notice variable insertion?
+          await waitFor(async () => {
+            await Callout('Number generator sequence <strong>{name}</strong> was successfully <strong>edited</strong>.').exists();
+          });
+        });
       });
     });
-  });
 
-  describe('deleting the sequence', () => {
-    beforeEach(async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Delete').click();
-      });
-    });
-
-    test('Confirmation modal renders', async () => {
-      const { getByText } = renderComponent;
-      await waitFor(() => {
-        expect(getByText('Number generator sequence <strong>{name}</strong> will be permanently <strong>deleted</strong>.', { exact: false })).toBeInTheDocument();
-        expect(getByText('The sequence may be in use in one or more apps. If in doubt, consider disabling the sequence instead.', { exact: false })).toBeInTheDocument();
-      });
-    });
-
-    describe('clicking delete', () => {
+    describe('deleting the sequence', () => {
       beforeEach(async () => {
         await waitFor(async () => {
           await Button('Delete').click();
         });
       });
 
-      test('delete callout fires', async () => {
-        // EXAMPLE currently callout interactor doesn't notice variable insertion?
-        await Callout('Number generator sequence <strong>{name}</strong> was successfully <strong>deleted</strong>.').exists();
-      });
-    });
-
-    describe('cancelling delete', () => {
-      beforeEach(async () => {
+      test('Confirmation modal renders', async () => {
+        const { getByText } = renderComponent;
         await waitFor(async () => {
-          await Button('Cancel').click();
+          await expect(getByText('Number generator sequence <strong>{name}</strong> will be permanently <strong>deleted</strong>.', { exact: false })).toBeInTheDocument();
+          await expect(getByText('The sequence may be in use in one or more apps. If in doubt, consider disabling the sequence instead.', { exact: false })).toBeInTheDocument();
         });
       });
 
-      test('confirmation modal no longer renders', async () => {
-        const { queryByText } = renderComponent;
-        await waitFor(() => {
-          expect(queryByText('Number generator sequence <strong>{name}</strong> will be permanently <strong>deleted</strong>.', { exact: false })).not.toBeInTheDocument();
-          expect(queryByText('The sequence may be in use in one or more apps. If in doubt, consider disabling the sequence instead.', { exact: false })).not.toBeInTheDocument();
+      describe('clicking delete', () => {
+        // Make sure we click the modal button
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button({ id: 'clickable-delete-sequence-confirm' }).click();
+          });
+        });
+
+        test('delete callout fires', async () => {
+          // EXAMPLE currently callout interactor doesn't notice variable insertion?
+          await waitFor(async () => {
+            await Callout('Number generator sequence <strong>{name}</strong> was successfully <strong>deleted</strong>.').exists();
+          });
+        });
+      });
+
+      describe('cancelling delete', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Cancel').click();
+          });
+        });
+
+        test('confirmation modal no longer renders', async () => {
+          const { queryByText } = renderComponent;
+          await waitFor(() => {
+            expect(queryByText('Number generator sequence <strong>{name}</strong> will be permanently <strong>deleted</strong>.', { exact: false })).not.toBeInTheDocument();
+            expect(queryByText('The sequence may be in use in one or more apps. If in doubt, consider disabling the sequence instead.', { exact: false })).not.toBeInTheDocument();
+          });
         });
       });
     });
