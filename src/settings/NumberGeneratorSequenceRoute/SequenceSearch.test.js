@@ -141,8 +141,10 @@ describe('SequenceSearch', () => {
       });
     });
 
-    test('history push gets called', () => {
-      expect(push).toHaveBeenCalledWith('someUrl/ng1-seq1');
+    test('history push gets called', async () => {
+      await waitFor(() => {
+        expect(push).toHaveBeenCalledWith('someUrl/ng1-seq1');
+      });
     });
   });
 
@@ -182,8 +184,10 @@ describe('SequenceSearch', () => {
       });
     });
 
-    test('history push gets called', () => {
-      expect(push).toHaveBeenCalledWith('baseUrl');
+    test('history push gets called', async () => {
+      await waitFor(() => {
+        expect(push).toHaveBeenCalledWith('baseUrl');
+      })
     });
   });
 });

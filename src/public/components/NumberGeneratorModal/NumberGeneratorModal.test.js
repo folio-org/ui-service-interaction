@@ -76,20 +76,22 @@ describe('NumberGeneratorModal', () => {
       });
 
       describe('clicking generate button', () => {
-        test('button gets clicked', async () => {
+        beforeEach(async () => {
           await waitFor(async () => {
             await Button('NumberGeneratorButton').click();
           });
-          // Basically just check button click doesn't crash
-          expect(1).toEqual(1);
         });
 
-        test('passed callback gets called', () => {
-          expect(callback.mock.calls.length).toBe(1);
+        test('passed callback gets called', async () => {
+          await waitFor(() => {
+            expect(callback.mock.calls.length).toBe(1);
+          });
         });
 
-        test('passed onClick gets called', () => {
-          expect(mockOnClick.mock.calls.length).toBe(1);
+        test('passed onClick gets called', async () => {
+          await waitFor(() => {
+            expect(mockOnClick.mock.calls.length).toBe(1);
+          });
         });
       });
     });
