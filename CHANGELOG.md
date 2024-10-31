@@ -1,3 +1,5 @@
+## 3.2.0 IN PROGRESS
+
 ## 3.1.0 2024-10-31
   * ERM-3184 Make use of shared NumberField from kint-components
   * SI-67 List @folio/stripes-erm-components as dependency
