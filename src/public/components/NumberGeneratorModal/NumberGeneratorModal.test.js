@@ -77,6 +77,8 @@ describe('NumberGeneratorModal', () => {
 
       describe('clicking generate button', () => {
         beforeEach(async () => {
+          callback.mockClear();
+          mockOnClick.mockClear();
           await waitFor(async () => {
             await Button('NumberGeneratorButton').click();
           });

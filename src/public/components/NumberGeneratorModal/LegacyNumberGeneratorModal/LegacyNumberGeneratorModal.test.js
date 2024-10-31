@@ -107,6 +107,8 @@ describe('LegacyNumberGeneratorModal', () => {
 
     describe('clicking generate button', () => {
       beforeEach(async () => {
+        mockGenerateFunc.mockClear();
+        callback.mockClear();
         await waitFor(async () => {
           await Button('Generate').click();
         });
@@ -127,8 +129,10 @@ describe('LegacyNumberGeneratorModal', () => {
         });
       });
 
-      test('passed callback gets called', () => {
-        expect(callback.mock.calls.length).toBe(1);
+      test('passed callback gets called', async () => {
+        await waitFor(() => {
+          expect(callback.mock.calls.length).toBe(1);
+        });
       });
     });
   });
@@ -196,6 +200,8 @@ describe('LegacyNumberGeneratorModal', () => {
 
     describe('clicking generate button', () => {
       beforeEach(async () => {
+        mockGenerateFunc.mockClear();
+        callback.mockClear();
         await waitFor(async () => {
           await Button('Generate').click();
         });
@@ -212,12 +218,14 @@ describe('LegacyNumberGeneratorModal', () => {
 
       test('generate function gets called', async () => {
         await waitFor(() => {
-          expect(mockGenerateFunc.mock.calls.length).toBe(2);
+          expect(mockGenerateFunc.mock.calls.length).toBe(1);
         });
       });
 
-      test('passed callback gets called', () => {
-        expect(callback.mock.calls.length).toBe(2);
+      test('passed callback gets called', async () => {
+        await waitFor(() => {
+          expect(callback.mock.calls.length).toBe(1);
+        });
       });
     });
   });
