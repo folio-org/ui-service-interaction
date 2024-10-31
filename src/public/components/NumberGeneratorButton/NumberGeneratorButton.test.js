@@ -1,4 +1,5 @@
 import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { translationsProperties } from '../../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
@@ -66,26 +67,34 @@ describe('NumberGeneratorButton', () => {
   });
 
   describe('clicking the button', () => {
-    test('button gets clicked', async () => {
-      await Button('Generate').click();
-      // Basically just check button click doesn't crash
-      expect(1).toEqual(1);
-    });
-
-    test('useGenerateNumber gets called with expected parameters', () => {
-      expect(mockUseGenerateNumber).toHaveBeenCalledWith({
-        callback,
-        generator: NumberGeneratorButtonProps?.generator,
-        sequence: NumberGeneratorButtonProps?.sequence
+    beforeEach(async () => {
+      mockGenerateFunc.mockClear();
+      callback.mockClear();
+      await waitFor(async () => {
+        await Button('Generate').click();
       });
     });
 
-    test('generate function gets called', () => {
-      expect(mockGenerateFunc.mock.calls.length).toBe(1);
+    test('useGenerateNumber gets called with expected parameters', async () => {
+      await waitFor(() => {
+        expect(mockUseGenerateNumber).toHaveBeenCalledWith({
+          callback,
+          generator: NumberGeneratorButtonProps?.generator,
+          sequence: NumberGeneratorButtonProps?.sequence
+        });
+      });
     });
 
-    test('passed callback gets called', () => {
-      expect(callback.mock.calls.length).toBe(1);
+    test('generate function gets called', async () => {
+      await waitFor(() => {
+        expect(mockGenerateFunc.mock.calls.length).toBe(1);
+      });
+    });
+
+    test('passed callback gets called', async () => {
+      await waitFor(() => {
+        expect(callback.mock.calls.length).toBe(1);
+      });
     });
   });
 });

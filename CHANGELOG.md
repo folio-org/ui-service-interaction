@@ -1,4 +1,12 @@
-## 3.1.0 In progress
+## 3.1.0 2024-10-31
+  * ERM-3184 Make use of shared NumberField from kint-components
+  * SI-67 List @folio/stripes-erm-components as dependency
+  * SI-54 Number generator: Error Message for non-unique code of sequences while trying to create new sequence
+  * SI-49 Type down: selected generator text
+  * SI-48 Type down: checkbox presentation
+  * SI-47 Type down: Fix text and background contrast ratio
+  * SI-16 Service interaction > Number generator sequences “Certain ARIA roles must not contain children”
+  * SI-15 Service interaction > Number generators “Form elements must have labels”
   * Hook improvements
     * Added catchQueryCalls prop to useMutateNumberGeneratorSequence
     * Ensured query results are passed back to afterQueryCalls for both useMutateNumberGenerator and useMutateNumberGeneratorSequence
@@ -34,7 +42,7 @@
   * STRIPES-870 *BREAKING* upgrade react to v18
     * SI-27 upgrade React to v18
   * SI-37 *BREAKING* bump `react-intl` to `v6.4.4`
-  * SI26 Link to documentation to open in a new tab
+  * SI-26 Link to documentation to open in a new tab
   * SI-17 Added autofocus to first field in number generator sequence form modal  
   * SI-14 Number generators “id attribute value must be unique”
   * SI-13 Name and Code should be mandatory for a Number Generator

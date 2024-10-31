@@ -106,12 +106,12 @@ describe('LegacyNumberGeneratorModal', () => {
     });
 
     describe('clicking generate button', () => {
-      test('button gets clicked', async () => {
+      beforeEach(async () => {
+        mockGenerateFunc.mockClear();
+        callback.mockClear();
         await waitFor(async () => {
           await Button('Generate').click();
         });
-        // Basically just check button click doesn't crash
-        expect(1).toEqual(1);
       });
 
       test('useGenerateNumber gets called with expected parameters', () => {
@@ -123,12 +123,16 @@ describe('LegacyNumberGeneratorModal', () => {
         );
       });
 
-      test('generate function gets called', () => {
-        expect(mockGenerateFunc.mock.calls.length).toBe(1);
+      test('generate function gets called', async () => {
+        await waitFor(() => {
+          expect(mockGenerateFunc.mock.calls.length).toBe(1);
+        });
       });
 
-      test('passed callback gets called', () => {
-        expect(callback.mock.calls.length).toBe(1);
+      test('passed callback gets called', async () => {
+        await waitFor(() => {
+          expect(callback.mock.calls.length).toBe(1);
+        });
       });
     });
   });
@@ -195,12 +199,12 @@ describe('LegacyNumberGeneratorModal', () => {
     });
 
     describe('clicking generate button', () => {
-      test('button gets clicked', async () => {
+      beforeEach(async () => {
+        mockGenerateFunc.mockClear();
+        callback.mockClear();
         await waitFor(async () => {
           await Button('Generate').click();
         });
-        // Basically just check button click doesn't crash
-        expect(1).toEqual(1);
       });
 
       test('useGenerateNumber gets called with expected parameters', () => {
@@ -212,12 +216,16 @@ describe('LegacyNumberGeneratorModal', () => {
         );
       });
 
-      test('generate function gets called', () => {
-        expect(mockGenerateFunc.mock.calls.length).toBe(2);
+      test('generate function gets called', async () => {
+        await waitFor(() => {
+          expect(mockGenerateFunc.mock.calls.length).toBe(1);
+        });
       });
 
-      test('passed callback gets called', () => {
-        expect(callback.mock.calls.length).toBe(2);
+      test('passed callback gets called', async () => {
+        await waitFor(() => {
+          expect(callback.mock.calls.length).toBe(1);
+        });
       });
     });
   });

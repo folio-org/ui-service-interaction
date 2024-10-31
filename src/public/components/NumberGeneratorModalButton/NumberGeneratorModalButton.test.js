@@ -90,8 +90,10 @@ describe('NumberGeneratorModalButton', () => {
           });
         });
 
-        test('callback has been triggered', () => {
-          expect(mockCallback).toHaveBeenCalled();
+        test('callback has been triggered', async () => {
+          await waitFor(() => {
+            expect(mockCallback).toHaveBeenCalled();
+          });
         });
 
         test('modal has been closed', async () => {

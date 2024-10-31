@@ -280,6 +280,7 @@ const NumberGeneratorSequence = ({
         heading={
           intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.deleteSequence' })
         }
+        id="delete-sequence"
         message={[
           <FormattedMessage
             key="delete-sequence-message"
