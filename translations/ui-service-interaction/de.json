@@ -91,5 +91,7 @@
     "numberGenerator.modal.includeAtMaxSequences": "Nummernkreise einbeziehen, die ihren maximalen Wert erreicht haben",
     "numberGenerator.modal.exactCodeMatch": "Genaue Code-Übereinstimmung",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Fehler:</strong> Nummernkreis <strong>{name}</strong> wurde nicht erstellt. Bitte überprüfen, dass der <strong>Code</strong> eindeutig ist und danach erneut abspeichern. Sollte dieser Fehler erneut auftreten, bitte den Administrator kontaktieren.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Kein maximaler Wert festgelegt"
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Kein maximaler Wert festgelegt",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Pre-checksum template",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "The pre-checksum template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information."
 }

@@ -91,5 +91,7 @@
     "numberGenerator.modal.includeAtMaxSequences": "Include sequences which have reached their maximum value",
     "numberGenerator.modal.exactCodeMatch": "Exact code match",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set"
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Pre-checksum template",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "The pre-checksum template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information."
 }
