@@ -91,5 +91,7 @@
     "numberGenerator.modal.includeAtMaxSequences": "Zahrnout sekvence, které dosáhly své maximální hodnoty.",
     "numberGenerator.modal.exactCodeMatch": "Přesná shoda kódu",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Chyba:</strong> Sekvence <strong>{name}</strong> nebyla vytvořena. Zkontrolujte, zda je <strong>kód</strong> jedinečný, a zkuste jej uložit znovu. Pokud se tato chyba opakuje, kontaktujte svého správce.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Není nastaveno maximální číslo"
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Není nastaveno maximální číslo",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Pre-checksum template",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "The pre-checksum template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information."
 }

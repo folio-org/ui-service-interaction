@@ -91,5 +91,7 @@
     "numberGenerator.modal.includeAtMaxSequences": "包括已达到最大值的序列",
     "numberGenerator.modal.exactCodeMatch": "代码精确匹配",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>错误： </strong>序列<strong> {name} </strong>未创建。请检查<strong>代码</strong>是否唯一，然后重试保存。如果此错误再次出现，请联系管理员。",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "无最大值设置"
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "无最大值设置",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Pre-checksum template",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "The pre-checksum template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information."
 }
