@@ -91,5 +91,7 @@
     "numberGenerator.modal.includeAtMaxSequences": "Neem reeksen op die hun maximumwaarde hebben bereikt",
     "numberGenerator.modal.exactCodeMatch": "Exact overeenkomende code",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Fout:</strong> Reeks <strong>{name}</strong> is niet aangemaakt. Controleer of de <strong>code</strong> uniek is en probeer opnieuw op te slaan. Neem contact op met uw FOLIO-systeembeheerder als deze fout zich opnieuw voordoet.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Geen maximum ingesteld"
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Geen maximum ingesteld",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Pre-checksum template",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "The pre-checksum template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information."
 }

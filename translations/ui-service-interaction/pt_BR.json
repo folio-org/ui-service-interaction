@@ -91,5 +91,7 @@
     "numberGenerator.modal.includeAtMaxSequences": "Incluir sequências que atingiram seu valor máximo",
     "numberGenerator.modal.exactCodeMatch": "Correspondência exata de código",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Erro:</strong> A sequência <strong>{name}</strong> não foi criada. Verifique se o <strong>código</strong> é único e tente salvar novamente. Se esse erro persistir, entre em contato com seu administrador.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Sem valor máximo definido"
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Sem valor máximo definido",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Modelo de pré-soma de verificação",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "O modelo de pré-soma de verificação define as regras aplicadas para criar o número a partir do qual o dígito da soma de verificação será calculado. Os modelos são formados usando o Groovy. Veja abaixo mais informações."
 }
