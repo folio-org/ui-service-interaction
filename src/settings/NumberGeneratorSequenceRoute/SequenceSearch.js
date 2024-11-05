@@ -121,12 +121,12 @@ const SequenceSearch = ({
     post: addSeq,
   } = useMutateNumberGeneratorSequence({
     afterQueryCalls: {
-      post: (res) => {
+      post: (res, postData) => {
         setCreating(false);
         callout.sendCallout({
           message: <FormattedMessage
             id="ui-service-interaction.settings.numberGeneratorSequences.callout.create"
-            values={{ name: res.code }}
+            values={{ name: postData.name }}
           />
         });
 
