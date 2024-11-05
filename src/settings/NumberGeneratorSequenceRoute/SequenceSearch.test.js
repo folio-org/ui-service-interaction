@@ -1,4 +1,4 @@
-import { waitFor, render } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { Field as MockField } from 'react-final-form';
@@ -110,7 +110,6 @@ describe('SequenceSearch', () => {
         />
       </MemoryRouter>,
       translationsProperties,
-      render,
       {
         intlKey: 'ui-service-interaction',
         moduleName: '@folio/service-interaction'
