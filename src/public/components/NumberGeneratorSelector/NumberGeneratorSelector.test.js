@@ -4,16 +4,15 @@ import {
   Checkbox,
   KeyValue,
   mockTypedownGetter,
-  renderWithIntl
 } from '@folio/stripes-erm-testing';
 
-import { translationsProperties } from '../../../../test/helpers';
 import {
   numberGenerator2,
   numberGenerator3 as mockNumberGenerator3
 } from '../../../../test/jest/mockGenerators';
 
 import NumberGeneratorSelector from './NumberGeneratorSelector';
+import { renderWithTranslations } from '../../../../test/helpers';
 
 
 /* ****** MOCKS ****** */
@@ -100,13 +99,12 @@ let renderedComponent;
 const renderSelectorAndSelectOptionFromSeqIndex = async (seqIndex, extraProps = {}) => {
   seq = mockNumberGenerator3.sequences[seqIndex];
 
-  renderedComponent = renderWithIntl(
+  renderedComponent = renderWithTranslations(
     <NumberGeneratorSelector
       selectFirstSequenceOnMount={false}
       {...NumberGeneratorSelectorProps}
       {...extraProps}
     />,
-    translationsProperties
   );
 
   const expectedKeyValue = (seq.maximumCheck && (seq.maximumCheck.label === 'At maximum' || seq.maximumCheck.label === 'Over threshold')) ?
@@ -144,11 +142,10 @@ const testNoError = () => test('error does not render', () => {
 describe('NumberGeneratorSelector', () => {
   describe('NumberGeneratorSelector with no id prop', () => {
     beforeEach(() => {
-      renderedComponent = renderWithIntl(
+      renderedComponent = renderWithTranslations(
         <NumberGeneratorSelector
           {...NumberGeneratorSelectorProps}
         />,
-        translationsProperties
       );
     });
 
@@ -200,12 +197,11 @@ describe('NumberGeneratorSelector', () => {
 
   describe('NumberGeneratorSelector with an id prop', () => {
     beforeEach(() => {
-      renderedComponent = renderWithIntl(
+      renderedComponent = renderWithTranslations(
         <NumberGeneratorSelector
           id="my_id"
           {...NumberGeneratorSelectorProps}
         />,
-        translationsProperties
       );
     });
 
@@ -217,12 +213,11 @@ describe('NumberGeneratorSelector', () => {
 
   describe('NumberGeneratorSelector with selectFirstSequenceOnMount turned off', () => {
     beforeEach(() => {
-      renderedComponent = renderWithIntl(
+      renderedComponent = renderWithTranslations(
         <NumberGeneratorSelector
           selectFirstSequenceOnMount={false}
           {...NumberGeneratorSelectorProps}
         />,
-        translationsProperties
       );
       // Reset for this last test
       mockOnSequenceChange.mockReset();
@@ -237,6 +232,7 @@ describe('NumberGeneratorSelector', () => {
     });
   });
 
+  // TODO this can be DRASTICALLY improved with .each notation...
   describe('NumberGeneratorSelector display warnings', () => {
     describe('default behaviour -- no warnings', () => {
       const getTestFunc = (ind) => () => {

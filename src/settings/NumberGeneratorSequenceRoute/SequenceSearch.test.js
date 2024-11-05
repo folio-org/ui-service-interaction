@@ -11,12 +11,11 @@ import {
   MultiColumnListHeader,
   Select,
   TextField,
-  renderWithIntl
 } from '@folio/stripes-erm-testing';
 
 import SequenceSearch from './SequenceSearch';
-import { translationsProperties } from '../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../test/jest/mockGenerators';
+import { renderWithTranslations } from '../../../test/helpers';
 
 const push = jest.fn();
 // const changeGenerator = jest.fn();
@@ -98,7 +97,7 @@ jest.mock('../../public', () => {
 describe('SequenceSearch', () => {
   let renderComponent;
   beforeEach(async () => {
-    renderComponent = renderWithIntl(
+    renderComponent = renderWithTranslations(
       <MemoryRouter>
         <SequenceSearch
           baseUrl="baseUrl"
@@ -109,7 +108,6 @@ describe('SequenceSearch', () => {
           numberGenerators={mockGenerators}
         />
       </MemoryRouter>,
-      translationsProperties,
       {
         intlKey: 'ui-service-interaction',
         moduleName: '@folio/service-interaction'
@@ -186,7 +184,7 @@ describe('SequenceSearch', () => {
     test('history push gets called', async () => {
       await waitFor(() => {
         expect(push).toHaveBeenCalledWith('baseUrl');
-      })
+      });
     });
   });
 });
