@@ -40,29 +40,6 @@ const TestComponent = (props) => {
   );
 };
 
-const makeSelectChoice = async (selectLabel, selectChoice) => {
-  await waitFor(async () => {
-    await Select(selectLabel).choose(selectChoice);
-  });
-};
-
-const runSelectTest = (selectLabel, selectChoice, expectedJSON, initialValue = null) => {
-  return describe(`Selecting ${selectLabel} ${selectChoice}`, () => {
-    beforeEach(async () => {
-      // Allow an initial select before the one we're testing (Needed for default cases to select away and back)
-      if (initialValue) {
-        await makeSelectChoice(selectLabel, initialValue);
-      }
-
-      await makeSelectChoice(selectLabel, selectChoice);
-    });
-
-    test('JSON Filters are as expected', async () => {
-      await KeyValue(KVLabel).has({ value: expectedJSON });
-    });
-  });
-};
-
 describe('SequenceFilters', () => {
   beforeEach(async () => {
     renderWithTranslations(
@@ -74,39 +51,51 @@ describe('SequenceFilters', () => {
     await Badge().has({ value: '8 found' });
   });
 
-  test('renders expected Enabled select with expected default', async () => {
-    await Select(enabledLabel).exists();
-    await Select(enabledLabel).has({ selectedContent: 'All' });
+  describe.each([
+    {
+      selectLabel: enabledLabel,
+      selectOptions: [
+        { label: 'All', isDefault: true, selectedJSON: '{}' },
+        { label: 'True', selectedJSON: '{"enabled":["true"]}' },
+        { label: 'False', selectedJSON: '{"enabled":["false"]}' }
+      ],
+    },
+    {
+      selectLabel: usageStatusLabel,
+      selectOptions: [
+        { label: 'All', isDefault: true, selectedJSON: '{}' },
+        { label: 'At maximum', selectedJSON: '{"maximumCheck":["maximumCheck.value==at_maximum"]}' },
+        { label: 'Below threshold', selectedJSON: '{"maximumCheck":["maximumCheck.value==below_threshold"]}' },
+        { label: 'Over threshold', selectedJSON: '{"maximumCheck":["maximumCheck.value==over_threshold"]}' },
+        { label: 'No maximum set', selectedJSON: '{"maximumCheck":["maximumCheck isNull"]}' }
+      ],
+    }
+  ])('$selectLabel select', ({ selectLabel, selectOptions }) => {
+    const expectedDefault = selectOptions.find(so => so.isDefault).label;
+    const firstNonDefaultOption = selectOptions.find(so => !so.isDefault).label;
+
+    test(`renders expected ${selectLabel} select with expected default: ${expectedDefault}`, async () => {
+      await Select(selectLabel).exists();
+      await Select(selectLabel).has({ selectedContent: expectedDefault });
+    });
+
+    describe.each(selectOptions)(`choosing ${selectLabel} option $label`, ({ label, isDefault, selectedJSON }) => {
+      beforeEach(async () => {
+        if (isDefault) {
+          // For the default we need to briefly switch away and back again
+          await waitFor(async () => {
+            await Select(selectLabel).choose(firstNonDefaultOption);
+          });
+        }
+
+        await waitFor(async () => {
+          await Select(selectLabel).choose(label);
+        });
+      });
+
+      test('JSON Filters are as expected', async () => {
+        await KeyValue(KVLabel).has({ value: selectedJSON });
+      });
+    });
   });
-
-  test('Enabled select has expected options', async () => {
-    await makeSelectChoice(enabledLabel, 'All');
-    await makeSelectChoice(enabledLabel, 'True');
-    await makeSelectChoice(enabledLabel, 'False');
-  });
-
-  test('renders expected Usage status select with expected default', async () => {
-    await Select(usageStatusLabel).exists();
-    await Select(usageStatusLabel).has({ selectedContent: 'All' });
-  });
-
-  test('Usage status select has expected options', async () => {
-    await makeSelectChoice(usageStatusLabel, 'All');
-    await makeSelectChoice(usageStatusLabel, 'At maximum');
-    await makeSelectChoice(usageStatusLabel, 'Below threshold');
-    await makeSelectChoice(usageStatusLabel, 'Over threshold');
-    await makeSelectChoice(usageStatusLabel, 'No maximum set');
-  });
-
-  // Tests for Enabled
-  runSelectTest(enabledLabel, 'All', '{}', 'True');
-  runSelectTest(enabledLabel, 'True', '{"enabled":["true"]}');
-  runSelectTest(enabledLabel, 'False', '{"enabled":["false"]}');
-
-  // Tests for Usage status
-  runSelectTest(usageStatusLabel, 'All', '{}', 'At maximum');
-  runSelectTest(usageStatusLabel, 'At maximum', '{"maximumCheck":["maximumCheck.value==at_maximum"]}');
-  runSelectTest(usageStatusLabel, 'Below threshold', '{"maximumCheck":["maximumCheck.value==below_threshold"]}');
-  runSelectTest(usageStatusLabel, 'Over threshold', '{"maximumCheck":["maximumCheck.value==over_threshold"]}');
-  runSelectTest(usageStatusLabel, 'No maximum set', '{"maximumCheck":["maximumCheck isNull"]}');
 });
