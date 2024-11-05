@@ -1,8 +1,7 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import Settings from './index';
-
-import { translationsProperties } from '../../test/helpers';
 import { screen, within } from '@folio/jest-config-stripes/testing-library/react';
+
+import Settings from './index';
+import { renderWithTranslations } from '../../test/helpers';
 
 // Mocks for Number generator settings pages
 jest.mock('./NumberGeneratorConfig', () => () => <div>NumberGeneratorConfigComponent</div>);
@@ -55,9 +54,8 @@ jest.mock('@folio/stripes/smart-components', () => ({
 describe('Settings', () => {
   let renderComponent;
   beforeEach(async () => {
-    renderComponent = renderWithIntl(
-      <Settings />,
-      translationsProperties
+    renderComponent = renderWithTranslations(
+      <Settings />
     );
   });
 

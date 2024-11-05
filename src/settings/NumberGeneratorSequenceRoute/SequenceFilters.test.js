@@ -6,12 +6,11 @@ import { KeyValue as KeyValueComponent } from '@folio/stripes/components';
 import {
   Badge,
   KeyValue,
-  renderWithIntl,
   Select,
 } from '@folio/stripes-erm-testing';
 
-import { translationsProperties } from '../../../test/helpers';
 import SequenceFilters from './SequenceFilters';
+import { renderWithTranslations } from '../../../test/helpers';
 
 const KVLabel = 'JSON FILTERS';
 const enabledLabel = 'Enabled';
@@ -66,9 +65,8 @@ const runSelectTest = (selectLabel, selectChoice, expectedJSON, initialValue = n
 
 describe('SequenceFilters', () => {
   beforeEach(async () => {
-    renderWithIntl(
+    renderWithTranslations(
       <TestComponent totalCount={8} />,
-      translationsProperties,
     );
   });
 

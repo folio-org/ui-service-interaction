@@ -1,8 +1,6 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
-
-import { translationsProperties } from '../../../test/helpers';
+import { Button } from '@folio/stripes-erm-testing';
 
 import {
   ChecksumAlgoInfo,
@@ -14,6 +12,7 @@ import {
   OutputTemplateInfo,
   PreChecksumTemplateInfo
 } from './InfoPopovers';
+import { renderWithTranslations } from '../../../test/helpers';
 
 const expectedText = {
   ChecksumAlgoInfo: 'The check method for the check digit. Select “None” for no checksum calculation - please see documentation for further information on checksum.',
@@ -39,9 +38,8 @@ describe('InfoPopovers', () => {
     { key: 'PreChecksumTemplateInfo', component: <PreChecksumTemplateInfo /> }
   ])('$key', ({ key, component }) => {
     beforeEach(async () => {
-      renderedComponent = renderWithIntl(
+      renderedComponent = renderWithTranslations(
         component,
-        translationsProperties
       );
 
       await waitFor(async () => {

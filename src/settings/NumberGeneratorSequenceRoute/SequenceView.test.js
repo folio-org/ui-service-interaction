@@ -3,11 +3,11 @@ import { Field as MockField } from 'react-final-form';
 
 import { TextField as MockTextField } from '@folio/stripes/components';
 
-import { Button, Callout, KeyValue, TextField, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button, Callout, KeyValue, TextField } from '@folio/stripes-erm-testing';
 
 import SequenceView from './SequenceView';
-import { translationsProperties } from '../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../test/jest/mockGenerators';
+import { renderWithTranslations } from '../../../test/helpers';
 
 const onClose = jest.fn();
 const mockSequence = numberGenerator1?.sequences[0];
@@ -54,12 +54,11 @@ jest.mock('./NumberGeneratorSequenceForm', () => () => {
 let renderComponent;
 describe('SequenceView', () => {
   beforeEach(async () => {
-    renderComponent = renderWithIntl(
+    renderComponent = renderWithTranslations(
       <SequenceView
         match={{ params: { seqId: mockSequence?.id } }}
         onClose={onClose}
       />,
-      translationsProperties,
       // Ensure right intl key is used in kint-comps
       {
         intlKey: 'ui-service-interaction',
