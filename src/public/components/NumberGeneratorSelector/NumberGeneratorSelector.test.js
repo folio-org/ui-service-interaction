@@ -232,6 +232,7 @@ describe('NumberGeneratorSelector', () => {
     });
   });
 
+  // TODO this can be DRASTICALLY improved with .each notation...
   describe('NumberGeneratorSelector display warnings', () => {
     describe('default behaviour -- no warnings', () => {
       const getTestFunc = (ind) => () => {
