@@ -16,26 +16,31 @@ const ServintSettings = (settingProps) => {
     />
   ), [settingProps]);
 
-  const pages = [
+  const sections = [
     {
-      route: 'numberGenerators',
       label: <FormattedMessage id="ui-service-interaction.settings.numberGenerators" />,
-      component: renderNumberGeneratorConfig,
-      perm: numberGeneratorViewPerm
-    },
-    {
-      route: 'numberGeneratorSequences',
-      label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences" />,
-      component: renderNumberGeneratorSequenceRoute,
-      perm: numberGeneratorViewPerm
-    },
+      pages: [
+        {
+          route: 'numberGenerators',
+          label: <FormattedMessage id="ui-service-interaction.settings.numberGenerators" />,
+          component: renderNumberGeneratorConfig,
+          perm: numberGeneratorViewPerm
+        },
+        {
+          route: 'numberGeneratorSequences',
+          label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences" />,
+          component: renderNumberGeneratorSequenceRoute,
+          perm: numberGeneratorViewPerm
+        },
+      ]
+    }
   ];
 
   return (
     <Settings
       navPaneWidth="20%"
-      pages={pages}
       paneTitle={<FormattedMessage id="ui-service-interaction.meta.title" />}
+      sections={sections}
       {...settingProps}
     />
   );
