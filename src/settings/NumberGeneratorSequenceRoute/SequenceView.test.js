@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Field as MockField } from 'react-final-form';
 
 import { TextField as MockTextField } from '@folio/stripes/components';
@@ -60,7 +60,6 @@ describe('SequenceView', () => {
         onClose={onClose}
       />,
       translationsProperties,
-      render,
       // Ensure right intl key is used in kint-comps
       {
         intlKey: 'ui-service-interaction',

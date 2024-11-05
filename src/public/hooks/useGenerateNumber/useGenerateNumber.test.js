@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { render, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -93,7 +93,6 @@ describe('useGenerateNumber', () => {
           sequence="seq2.1"
         />,
         translationsProperties,
-        render,
         {
           intlKey: 'ui-service-interaction',
           moduleName: '@folio/service-interaction'
@@ -150,7 +149,6 @@ describe('useGenerateNumber', () => {
           sequence="fakesequence"
         />,
         translationsProperties,
-        render,
         {
           intlKey: 'ui-service-interaction',
           moduleName: '@folio/service-interaction'
@@ -209,7 +207,6 @@ describe('useGenerateNumber', () => {
           sequence="seq2.2"
         />,
         translationsProperties,
-        render,
         {
           intlKey: 'ui-service-interaction',
           moduleName: '@folio/service-interaction'
@@ -256,7 +253,6 @@ describe('useGenerateNumber', () => {
             sequence="seq2.1"
           />,
           translationsProperties,
-          render,
           {
             intlKey: 'ui-service-interaction',
             moduleName: '@folio/service-interaction'
@@ -309,7 +305,6 @@ describe('useGenerateNumber', () => {
             sequence="seq2.1"
           />,
           translationsProperties,
-          render,
           {
             intlKey: 'ui-service-interaction',
             moduleName: '@folio/service-interaction'
