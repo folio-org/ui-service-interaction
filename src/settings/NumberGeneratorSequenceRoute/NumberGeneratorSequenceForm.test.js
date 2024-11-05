@@ -1,15 +1,14 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   Checkbox,
-  renderWithIntl,
   Select,
   TestForm,
   TextArea,
   TextField,
 } from '@folio/stripes-erm-testing';
 
-import { translationsProperties } from '../../../test/helpers';
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
+import { renderWithTranslations } from '../../../test/helpers';
 
 const onSubmit = jest.fn();
 
@@ -17,11 +16,10 @@ jest.mock('../../hooks/useSIRefdata');
 
 describe('NumberGeneratorSequenceForm', () => {
   beforeEach(async () => {
-    renderWithIntl(
+    renderWithTranslations(
       <TestForm onSubmit={onSubmit}>
         <NumberGeneratorSequenceForm />
       </TestForm>,
-      translationsProperties,
     );
   });
 
