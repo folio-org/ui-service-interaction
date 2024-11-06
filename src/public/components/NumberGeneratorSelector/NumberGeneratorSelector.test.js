@@ -84,74 +84,47 @@ jest.mock('@k-int/stripes-kint-components', () => {
 const mockOnSequenceChange = jest.fn();
 
 /* ****** PROPS ****** */
-
-
 const NumberGeneratorSelectorProps = {
   generator: 'numberGen1',
   onSequenceChange: mockOnSequenceChange
 };
 
-/* ****** REPEATED TESTS ****** */
-
 // Keep selected seq and rendered component globally available
 let seq;
 let renderedComponent;
-const renderSelectorAndSelectOptionFromSeqIndex = async (seqIndex, extraProps = {}) => {
-  seq = mockNumberGenerator3.sequences[seqIndex];
-
-  renderedComponent = renderWithTranslations(
-    <NumberGeneratorSelector
-      selectFirstSequenceOnMount={false}
-      {...NumberGeneratorSelectorProps}
-      {...extraProps}
-    />,
-  );
-
-  const expectedKeyValue = (seq.maximumCheck && (seq.maximumCheck.label === 'At maximum' || seq.maximumCheck.label === 'Over threshold')) ?
-    `${seq.name}·${seq.code}·Next value: ${seq.nextValue}·Usage status${seq.maximumCheck.label}` :
-    `${seq.name}·${seq.code}·Next value: ${seq.nextValue}`;
-
-  await waitFor(async () => {
-    await Button(`Typedown-sequence_typedown-option-${seq.id}`).click();
-  });
-
-  await KeyValue('Typedown-sequence_typedown-selected-option').has({ value: expectedKeyValue });
-};
-
-const warningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> is approaching <strong>{maxVal}</strong>, its maximum value.';
-const testWarning = () => test('warning renders', () => {
-  const { getByText } = renderedComponent;
-  expect(getByText(warningText, { exact: false })).toBeInTheDocument();
-});
-const testNoWarning = () => test('warning does not render', () => {
-  const { queryByText } = renderedComponent;
-  expect(queryByText(warningText, { exact: false })).not.toBeInTheDocument();
-});
-
-const errorText = '<strong>Error:</strong> The number was not generated because the sequence <strong>{name}</strong> has reached <strong>{maxVal}</strong>, its maximum value. Please select a different sequence or contact your administrator.';
-const testError = () => test('error renders', () => {
-  const { getByText } = renderedComponent;
-  expect(getByText(errorText, { exact: false })).toBeInTheDocument();
-});
-const testNoError = () => test('error does not render', () => {
-  const { queryByText } = renderedComponent;
-  expect(queryByText(errorText, { exact: false })).not.toBeInTheDocument();
-});
 
 /* ****** TEST SUITE ****** */
+
+const getTypedownLabelFromSequence = (sequence) => {
+  return (sequence.maximumCheck && (sequence.maximumCheck.label === 'At maximum' || sequence.maximumCheck.label === 'Over threshold')) ?
+    `${sequence.name}·${sequence.code}·Next value: ${sequence.nextValue}·Usage status${sequence.maximumCheck.label}` :
+    `${sequence.name}·${sequence.code}·Next value: ${sequence.nextValue}`;
+};
+
 describe('NumberGeneratorSelector', () => {
-  describe('NumberGeneratorSelector with no id prop', () => {
+  describe.each([
+    { title: 'no id prop', componentProps: {} },
+    { title: 'with id prop', componentProps: { id: 'my_id' } },
+    { title: 'with selectFirstSequenceOnMount turned off', componentProps: { selectFirstSequenceOnMount: false } },
+  ])('$title', ({ componentProps }) => {
+    let typedownGetterString = 'Typedown-sequence_typedown';
+    if (componentProps.id) {
+      typedownGetterString = `${typedownGetterString}_${componentProps.id}`;
+    }
     beforeEach(() => {
+      mockOnSequenceChange.mockReset();
+
       renderedComponent = renderWithTranslations(
         <NumberGeneratorSelector
           {...NumberGeneratorSelectorProps}
+          {...componentProps}
         />,
       );
     });
 
     test('renders the query typedown', () => {
       const { getByText } = renderedComponent;
-      expect(getByText('Typedown-sequence_typedown')).toBeInTheDocument();
+      expect(getByText(typedownGetterString)).toBeInTheDocument();
     });
 
     test('renders the query typedown footer', async () => {
@@ -183,147 +156,99 @@ describe('NumberGeneratorSelector', () => {
       });
     });
 
-    test('after load onSequenceChange is called with expected parameters', async () => {
-      expect(mockOnSequenceChange).toHaveBeenCalledWith({
-        ...mockNumberGenerator3.sequences[0],
-        owner: {
-          code: mockNumberGenerator3.code,
-          id: mockNumberGenerator3.id,
-          name: mockNumberGenerator3.name
-        }
+    test('after load onSequenceChange is called with expected parameters', () => {
+      if (componentProps.selectFirstSequenceOnMount !== false) {
+        expect(mockOnSequenceChange).toHaveBeenCalledWith({
+          ...mockNumberGenerator3.sequences[0],
+          owner: {
+            code: mockNumberGenerator3.code,
+            id: mockNumberGenerator3.id,
+            name: mockNumberGenerator3.name
+          }
+        });
+      } else {
+        expect(mockOnSequenceChange).not.toHaveBeenCalled();
+      }
+    });
+
+    test('QueryTypedown KeyValue shows expected value', async () => {
+      if (componentProps.selectFirstSequenceOnMount !== false) {
+        await KeyValue(`${typedownGetterString}-selected-option`).has({ value: getTypedownLabelFromSequence(mockNumberGenerator3.sequences[0]) });
+      } else {
+        await KeyValue(`${typedownGetterString}-selected-option`).has({ value: 'Nothing selected' });
+      }
+    });
+  });
+
+  describe('NumberGeneratorSelector display errors/warnings', () => {
+    describe.each([
+      { label: 'default behaviour', componentProps: {}, expectWarnings: [], expectErrors: ['at_maximum'] },
+      { label: 'displayWarning = false', componentProps: { displayWarning: false }, expectWarnings: [], expectErrors: ['at_maximum'] },
+      { label: 'displayError = false', componentProps: { displayError: false }, expectWarnings: [], expectErrors: [] },
+      { label: 'displayWarning = true', componentProps: { displayWarning: true }, expectWarnings: ['over_threshold'], expectErrors: ['at_maximum'] },
+      { label: 'displayError = true', componentProps: { displayError: true }, expectWarnings: [], expectErrors: ['at_maximum'] },
+      { label: 'displayWarning = true, displayError = false', componentProps: { displayWarning: true, displayError: false }, expectWarnings: ['over_threshold'], expectErrors: [] },
+    ])('$label', ({ componentProps, expectErrors, expectWarnings }) => {
+      beforeEach(async () => {
+        // Render the selector with extra props
+        renderedComponent = renderWithTranslations(
+          <NumberGeneratorSelector
+            selectFirstSequenceOnMount={false}
+            {...NumberGeneratorSelectorProps}
+            {...componentProps}
+          />,
+        );
       });
-    });
-  });
 
-  describe('NumberGeneratorSelector with an id prop', () => {
-    beforeEach(() => {
-      renderedComponent = renderWithTranslations(
-        <NumberGeneratorSelector
-          id="my_id"
-          {...NumberGeneratorSelectorProps}
-        />,
-      );
-    });
+      describe.each([
+        { maxCheckValue: undefined, sequenceIndex: 0 },
+        { maxCheckValue: 'below_threshold', sequenceIndex: 4 },
+        { maxCheckValue: 'over_threshold', sequenceIndex: 5 },
+        { maxCheckValue: 'at_maximum', sequenceIndex: 2 },
+      ])('selecting sequence with maximum check value $maxCheckValue', ({ maxCheckValue }) => {
+        beforeEach(async () => {
+          seq = mockNumberGenerator3.sequences.find(s => s.maximumCheck?.value === maxCheckValue);
 
-    test('renders the query typedown', async () => {
-      const { getByText } = renderedComponent;
-      expect(getByText('Typedown-sequence_typedown_my_id')).toBeInTheDocument();
-    });
-  });
+          await waitFor(async () => {
+            await Button(`Typedown-sequence_typedown-option-${seq.id}`).click();
+          });
+        });
 
-  describe('NumberGeneratorSelector with selectFirstSequenceOnMount turned off', () => {
-    beforeEach(() => {
-      renderedComponent = renderWithTranslations(
-        <NumberGeneratorSelector
-          selectFirstSequenceOnMount={false}
-          {...NumberGeneratorSelectorProps}
-        />,
-      );
-      // Reset for this last test
-      mockOnSequenceChange.mockReset();
-    });
+        test('correct sequence was selected', async () => {
+          // Not thrilled with having to do all this work
+          const expectedKeyValue = getTypedownLabelFromSequence(seq);
+          await KeyValue('Typedown-sequence_typedown-selected-option').has({ value: expectedKeyValue });
+        });
 
-    test('after load onSequenceChange is not called', async () => {
-      expect(mockOnSequenceChange).not.toHaveBeenCalled();
-    });
-
-    test('QueryTypedown KeyValue shows nothing selected', async () => {
-      await KeyValue('Typedown-sequence_typedown-selected-option').has({ value: 'Nothing selected' });
-    });
-  });
-
-  // TODO this can be DRASTICALLY improved with .each notation...
-  describe('NumberGeneratorSelector display warnings', () => {
-    describe('default behaviour -- no warnings', () => {
-      const getTestFunc = (ind) => () => {
-        beforeEach(() => renderSelectorAndSelectOptionFromSeqIndex(ind));
-
-        testNoWarning();
-      };
-
-      describe('selecting sequence with no maximum check value', getTestFunc(0));
-      describe('selecting sequence with maximum check value "below_threshold"', getTestFunc(4));
-      describe('selecting sequence with maximum check value "over_threshold"', getTestFunc(5));
-      describe('selecting sequence with maximum check value "at_maximum"', getTestFunc(2));
-    });
-
-    describe('display warnings = false', () => {
-      const getTestFunc = (ind) => () => {
-        beforeEach(() => renderSelectorAndSelectOptionFromSeqIndex(ind, { displayWarning: false }));
-
-        testNoWarning();
-      };
-
-      describe('selecting sequence with no maximum check value', getTestFunc(0));
-      describe('selecting sequence with maximum check value "below_threshold"', getTestFunc(4));
-      describe('selecting sequence with maximum check value "over_threshold"', getTestFunc(5));
-      describe('selecting sequence with maximum check value "at_maximum"', getTestFunc(2));
-    });
-
-    describe('display warnings = true', () => {
-      const getTestFunc = (ind, expectWarning = false) => () => {
-        beforeEach(() => renderSelectorAndSelectOptionFromSeqIndex(ind, { displayWarning: true }));
-
-        if (expectWarning) {
-          testWarning();
-        } else {
-          testNoWarning();
-        }
-      };
-
-      describe('selecting sequence with no maximum check value', getTestFunc(0));
-      describe('selecting sequence with maximum check value "below_threshold"', getTestFunc(4));
-      describe('selecting sequence with maximum check value "over_threshold"', getTestFunc(5, true));
-      describe('selecting sequence with maximum check value "at_maximum"', getTestFunc(2));
-    });
-  });
-
-  describe('NumberGeneratorSelector display errors', () => {
-    describe('default behaviour -- errors on', () => {
-      const getTestFunc = (ind, expectError = false) => () => {
-        beforeEach(() => renderSelectorAndSelectOptionFromSeqIndex(ind));
-
-        if (expectError) {
-          testError();
-        } else {
-          testNoError();
-        }
-      };
-
-      describe('selecting sequence with no maximum check value', getTestFunc(0));
-      describe('selecting sequence with maximum check value "below_threshold"', getTestFunc(4));
-      describe('selecting sequence with maximum check value "over_threshold"', getTestFunc(5));
-      describe('selecting sequence with maximum check value "at_maximum"', getTestFunc(2, true));
-    });
-
-    describe('display errors = false', () => {
-      const getTestFunc = (ind) => () => {
-        beforeEach(() => renderSelectorAndSelectOptionFromSeqIndex(ind, { displayError: false }));
-
-        testNoError();
-      };
-
-      describe('selecting sequence with no maximum check value', getTestFunc(0));
-      describe('selecting sequence with maximum check value "below_threshold"', getTestFunc(4));
-      describe('selecting sequence with maximum check value "over_threshold"', getTestFunc(5));
-      describe('selecting sequence with maximum check value "at_maximum"', getTestFunc(2));
-    });
-
-    describe('display warnings = true', () => {
-      const getTestFunc = (ind, expectError = false) => () => {
-        beforeEach(() => renderSelectorAndSelectOptionFromSeqIndex(ind, { displayError: true }));
-
-        if (expectError) {
-          testError();
-        } else {
-          testNoError();
-        }
-      };
-
-      describe('selecting sequence with no maximum check value', getTestFunc(0));
-      describe('selecting sequence with maximum check value "below_threshold"', getTestFunc(4));
-      describe('selecting sequence with maximum check value "over_threshold"', getTestFunc(5));
-      describe('selecting sequence with maximum check value "at_maximum"', getTestFunc(2, true));
+        describe.each([
+          {
+            type: 'warning',
+            includesArray: expectWarnings,
+            text: '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> is approaching <strong>{maxVal}</strong>, its maximum value.'
+          },
+          {
+            type: 'error',
+            includesArray: expectErrors,
+            text: '<strong>Error:</strong> The number was not generated because the sequence <strong>{name}</strong> has reached <strong>{maxVal}</strong>, its maximum value. Please select a different sequence or contact your administrator.'
+          },
+        ])('', ({ includesArray, text, type }) => {
+          if (includesArray.includes(maxCheckValue)) {
+            test(`${type} renders`, async () => {
+              const { queryByText } = renderedComponent;
+              await waitFor(() => {
+                expect(queryByText(text, { exact: false })).toBeInTheDocument();
+              });
+            });
+          } else {
+            test(`${type} does not render`, async () => {
+              const { queryByText } = renderedComponent;
+              await waitFor(() => {
+                expect(queryByText(text, { exact: false })).not.toBeInTheDocument();
+              });
+            });
+          }
+        });
+      });
     });
   });
 });
