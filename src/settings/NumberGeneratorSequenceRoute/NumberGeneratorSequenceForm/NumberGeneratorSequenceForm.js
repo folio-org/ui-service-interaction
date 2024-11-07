@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Field, useFormState } from 'react-final-form';
+import { Field, useForm, useFormState } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { NumberField, composeValidators, required as requiredValidator } from '@k-int/stripes-kint-components';
@@ -7,6 +7,7 @@ import { NumberField, composeValidators, required as requiredValidator } from '@
 import {
   Checkbox,
   Col,
+  Headline,
   Layout,
   Row,
   Select,
@@ -16,7 +17,9 @@ import {
 
 import { preventMinusKey, preventPasteNegative } from '@folio/stripes-erm-components';
 
-import useSIRefdata from '../../hooks/useSIRefdata';
+import { BASE_TEMPLATE } from '../../../public';
+import { useChecksumAlgorithms } from '../../../hooks';
+
 import {
   ChecksumAlgoInfo,
   CodeInfo,
@@ -28,41 +31,15 @@ import {
   NextValueInfo,
   OutputTemplateInfo,
   PreChecksumTemplateInfo
-} from '../InfoPopovers';
+} from '../../InfoPopovers';
 
-import css from './SequenceSearch.css';
+import css from '../Styles.css';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
+  const { change } = useForm();
 
-  const { 0: { values: checksums = [] } = {} } = useSIRefdata({
-    desc: 'NumberGeneratorSequence.CheckDigitAlgo',
-  });
-
-  // I'd like a smarter way to do this in future, potentially "custom" checksums set up by the users.
-  const currentlySupportedChecksums = [
-    'none',
-    'ean13',
-    'isbn10checkdigit',
-    'luhncheckdigit',
-    '1793ltrmod10',
-    '12ltrmod10',
-    'issncheckdigit'
-  ];
-
-  const checkDigitAlgoOptions = [
-    { value: '', label: '', disabled: true },
-    ...checksums?.filter(cdao => currentlySupportedChecksums.includes(cdao.value))?.map(cdao => ({ value: cdao.id, label: cdao.label })) ?? []
-  ];
-
-  const validateChecksum = (val, allVal) => {
-    const checksumVal = checksums?.find(cs => cs.id === val);
-    if (checksumVal?.value && checksumVal.value !== 'none' && allVal.nextValue && parseInt(allVal.nextValue, 10) < 1) {
-      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checksumError" />;
-    }
-
-    return null;
-  };
+  const { checkDigitAlgoOptions, noneChecksumId, validateChecksum } = useChecksumAlgorithms();
 
   const validateMaximumNumber = (val, allVal) => {
     if (!!val && val > parseInt('9'.repeat(allVal.format?.length ?? 1), 10)) {
@@ -163,6 +140,23 @@ const NumberGeneratorSequenceForm = () => {
         </Col>
       </Row>
       <Row>
+        <Col xs={12}>
+          <Field
+            component={TextArea}
+            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
+            maxLength="255"
+            name="description"
+            parse={v => v}
+          />
+        </Col>
+      </Row>
+      <Headline
+        margin="xx-small"
+        size="large"
+      >
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.section.sequenceSettings" />
+      </Headline>
+      <Row>
         <Col xs={6}>
           <Layout className="flex">
             <Field
@@ -244,29 +238,59 @@ const NumberGeneratorSequenceForm = () => {
           />
         </Col>
       </Row>
+      <Headline
+        margin="xx-small"
+        size="large"
+      >
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.section.checksumSettings" />
+      </Headline>
       <Row>
         <Col xs={6}>
           <Field
-            component={Select}
-            dataOptions={checkDigitAlgoOptions}
-            fullWidth
-            label={
-              <>
-                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />
-                <ChecksumAlgoInfo />
-              </>
-            }
             name="checkDigitAlgo.id" // checkDigitAlgo should deal with the id
             parse={v => v}
-            required
             validate={composeValidators(validateChecksum, requiredValidator)}
-          />
+          >
+            {({ input, meta }) => {
+              return (
+                <Select
+                  dataOptions={checkDigitAlgoOptions}
+                  fullWidth
+                  input={input}
+                  label={
+                    <>
+                      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />
+                      <ChecksumAlgoInfo />
+                    </>
+                  }
+                  meta={meta}
+                  onChange={e => {
+                    if (
+                      input.value === noneChecksumId &&
+                      e.target.value !== noneChecksumId
+                    ) {
+                      change('preChecksumTemplate', BASE_TEMPLATE);
+                    } else if (
+                      input.value !== noneChecksumId &&
+                      e.target.value === noneChecksumId
+                    ) {
+                      change('preChecksumTemplate', undefined);
+                    }
+                    // Do the thing we would do normally
+                    input.onChange(e);
+                  }}
+                  required
+                />
+              );
+            }}
+          </Field>
         </Col>
       </Row>
       <Row>
         <Col xs={12}>
           <Field
             component={TextArea}
+            disabled={values.checkDigitAlgo?.id === noneChecksumId}
             label={
               <>
                 <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.preChecksumTemplate" />
@@ -278,6 +302,12 @@ const NumberGeneratorSequenceForm = () => {
           />
         </Col>
       </Row>
+      <Headline
+        margin="xx-small"
+        size="large"
+      >
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.section.outputSettings" />
+      </Headline>
       <Row>
         <Col xs={12}>
           <Field
@@ -290,17 +320,8 @@ const NumberGeneratorSequenceForm = () => {
             }
             name="outputTemplate"
             parse={v => v}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <Field
-            component={TextArea}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
-            maxLength="255"
-            name="description"
-            parse={v => v}
+            required
+            validate={requiredValidator}
           />
         </Col>
       </Row>

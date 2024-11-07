@@ -1,4 +1,4 @@
-import refdata from '../../../test/jest/refdata';
+import refdata from '../../../../test/jest/refdata';
 
 module.exports = ({ desc }) => {
   if (desc && Array.isArray(desc)) {

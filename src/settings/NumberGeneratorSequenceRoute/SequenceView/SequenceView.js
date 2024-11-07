@@ -10,6 +10,7 @@ import {
   Button,
   Col,
   ConfirmationModal,
+  Headline,
   Icon,
   KeyValue,
   Pane,
@@ -28,10 +29,10 @@ import {
   NextValueInfo,
   OutputTemplateInfo,
   PreChecksumTemplateInfo
-} from '../InfoPopovers';
+} from '../../InfoPopovers';
 
-import { useMutateNumberGeneratorSequence, useNumberGeneratorSequence } from '../../public';
-import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
+import { useMutateNumberGeneratorSequence, useNumberGeneratorSequence } from '../../../public';
+import NumberGeneratorSequenceForm from '../NumberGeneratorSequenceForm';
 
 const NumberGeneratorSequence = ({
   match: { params: { seqId } },
@@ -176,6 +177,20 @@ const NumberGeneratorSequence = ({
           </Col>
         </Row>
         <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
+              value={sequence.description}
+            />
+          </Col>
+        </Row>
+        <Headline
+          margin="xx-small"
+          size="large"
+        >
+          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.section.sequenceSettings" />
+        </Headline>
+        <Row>
           <Col xs={6}>
             <KeyValue
               label={
@@ -223,6 +238,12 @@ const NumberGeneratorSequence = ({
             />
           </Col>
         </Row>
+        <Headline
+          margin="xx-small"
+          size="large"
+        >
+          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.section.checksumSettings" />
+        </Headline>
         <Row>
           <Col xs={6}>
             <KeyValue
@@ -249,6 +270,12 @@ const NumberGeneratorSequence = ({
             />
           </Col>
         </Row>
+        <Headline
+          margin="xx-small"
+          size="large"
+        >
+          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.section.outputSettings" />
+        </Headline>
         <Row>
           <Col xs={12}>
             <KeyValue
@@ -259,14 +286,6 @@ const NumberGeneratorSequence = ({
                 </>
               }
               value={sequence.outputTemplate}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
-              value={sequence.description}
             />
           </Col>
         </Row>

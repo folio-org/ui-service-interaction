@@ -10,7 +10,7 @@ import {
 } from '@folio/stripes-erm-testing';
 
 import SequenceFilters from './SequenceFilters';
-import { renderWithTranslations } from '../../../test/helpers';
+import { renderWithTranslations } from '../../../../../test/helpers';
 
 const KVLabel = 'JSON FILTERS';
 const enabledLabel = 'Enabled';
