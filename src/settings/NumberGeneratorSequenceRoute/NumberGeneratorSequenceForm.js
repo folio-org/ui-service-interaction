@@ -16,7 +16,6 @@ import {
 
 import { preventMinusKey, preventPasteNegative } from '@folio/stripes-erm-components';
 
-import useSIRefdata from '../../hooks/useSIRefdata';
 import {
   ChecksumAlgoInfo,
   CodeInfo,
@@ -31,38 +30,12 @@ import {
 } from '../InfoPopovers';
 
 import css from './SequenceSearch.css';
+import { useChecksumAlgorithms } from '../../hooks';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
 
-  const { 0: { values: checksums = [] } = {} } = useSIRefdata({
-    desc: 'NumberGeneratorSequence.CheckDigitAlgo',
-  });
-
-  // I'd like a smarter way to do this in future, potentially "custom" checksums set up by the users.
-  const currentlySupportedChecksums = [
-    'none',
-    'ean13',
-    'isbn10checkdigit',
-    'luhncheckdigit',
-    '1793ltrmod10',
-    '12ltrmod10',
-    'issncheckdigit'
-  ];
-
-  const checkDigitAlgoOptions = [
-    { value: '', label: '', disabled: true },
-    ...checksums?.filter(cdao => currentlySupportedChecksums.includes(cdao.value))?.map(cdao => ({ value: cdao.id, label: cdao.label })) ?? []
-  ];
-
-  const validateChecksum = (val, allVal) => {
-    const checksumVal = checksums?.find(cs => cs.id === val);
-    if (checksumVal?.value && checksumVal.value !== 'none' && allVal.nextValue && parseInt(allVal.nextValue, 10) < 1) {
-      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checksumError" />;
-    }
-
-    return null;
-  };
+  const { checkDigitAlgoOptions, validateChecksum } = useChecksumAlgorithms();
 
   const validateMaximumNumber = (val, allVal) => {
     if (!!val && val > parseInt('9'.repeat(allVal.format?.length ?? 1), 10)) {

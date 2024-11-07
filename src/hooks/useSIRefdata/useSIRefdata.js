@@ -1,7 +1,8 @@
 import orderBy from 'lodash/orderBy';
 import { useRefdata, refdataOptions } from '@k-int/stripes-kint-components';
-import { REFDATA_ENDPOINT } from '../public/constants';
+import { REFDATA_ENDPOINT } from '../../public/constants';
 
+// TODO should this be centralised?
 const sortRefdata = (refdataData) => {
   const sortedRefData = [...(refdataData ?? [])];
   if (Array.isArray(refdataData)) {
