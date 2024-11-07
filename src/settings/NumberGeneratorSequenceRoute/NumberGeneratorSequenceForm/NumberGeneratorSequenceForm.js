@@ -18,7 +18,7 @@ import {
 import { preventMinusKey, preventPasteNegative } from '@folio/stripes-erm-components';
 
 import { BASE_TEMPLATE } from '../../../public';
-import { useChecksumAlgorithms, useSIRefdata } from '../../../hooks';
+import { useChecksumAlgorithms } from '../../../hooks';
 
 import {
   ChecksumAlgoInfo,
@@ -38,10 +38,6 @@ import css from '../Styles.css';
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
   const { change } = useForm();
-
-  const { 0: { values: checksums = [] } = {} } = useSIRefdata({
-    desc: 'NumberGeneratorSequence.CheckDigitAlgo',
-  });
 
   const { checkDigitAlgoOptions, noneChecksumId, validateChecksum } = useChecksumAlgorithms();
 

@@ -5,7 +5,7 @@ import { TextField as MockTextField } from '@folio/stripes/components';
 
 import { Button, Callout, KeyValue, TextField } from '@folio/stripes-erm-testing';
 
-import SequenceView from '.';
+import SequenceView from './SequenceView';
 import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
 import { renderWithTranslations } from '../../../../test/helpers';
 
@@ -15,8 +15,8 @@ const mockGenerators = [numberGenerator1, numberGenerator2];
 
 const fakeCalloutInfo = { id: '123', label: 'numgenName', code: 'numgenCode' };
 
-jest.mock('../../public', () => ({
-  ...jest.requireActual('../../public'),
+jest.mock('../../../public', () => ({
+  ...jest.requireActual('../../../public'),
   useNumberGeneratorSequence: jest.fn(() => ({ data: mockSequence })),
   useMutateNumberGeneratorSequence: ({ afterQueryCalls: { delete: deleteQueryCalls, put: putQueryCalls } }) => ({
     put: () => Promise.resolve(true).then(() => putQueryCalls(mockGenerators[0], fakeCalloutInfo)),
@@ -37,7 +37,7 @@ jest.mock('../../public', () => ({
   });
 }); */
 
-jest.mock('./NumberGeneratorSequenceForm', () => () => {
+jest.mock('../NumberGeneratorSequenceForm', () => () => {
   return (
     <>
       NumberGeneratorSequenceForm
@@ -80,7 +80,7 @@ describe('SequenceView', () => {
   });
 
   test('renders expected sequence checkDigitAlgo', async () => {
-    await KeyValue('Checksum').has({ value: 'EAN13' });
+    await KeyValue('Method').has({ value: '31-RTL-mod10-I (EAN)' });
   });
 
   test('renders expected sequence enabled', async () => {

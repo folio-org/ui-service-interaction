@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { Field as MockField } from 'react-final-form';
 
-import { Button as MockButton, TextField as MockTextField } from '@folio/stripes/components';
+import { TextField as MockTextField } from '@folio/stripes/components';
 import {
   Button,
   Callout,
@@ -13,7 +13,7 @@ import {
   TextField,
 } from '@folio/stripes-erm-testing';
 
-import SequenceSearch from '.';
+import SequenceSearch from './SequenceSearch';
 import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
 import { renderWithTranslations } from '../../../../test/helpers';
 
@@ -30,29 +30,6 @@ const mockUseNumberGenerators = jest.fn(() => {
   });
 });
 
-jest.mock('./SequenceView', () => (props) => {
-  return (
-    <div>
-      NumberGeneratorSequence
-      <MockButton
-        onClick={props.onClose}
-      >
-        CloseSequence
-      </MockButton>
-      <MockButton
-        onClick={props.onDelete}
-      >
-        DeleteSequence
-      </MockButton>
-      <MockButton
-        onClick={props.setEditing}
-      >
-        EditSequence
-      </MockButton>
-    </div>
-  );
-});
-
 /* EXAMPLE Mocking form modal by passing in intlKey to get around intl shenanigans */
 /* This is no longer required because our default harness instead sets those up, with the ability to override with extraOptions */
 /* jest.mock('@k-int/stripes-kint-components', () => {
@@ -66,7 +43,7 @@ jest.mock('./SequenceView', () => (props) => {
   });
 }); */
 
-jest.mock('./NumberGeneratorSequenceForm', () => () => {
+jest.mock('../NumberGeneratorSequenceForm', () => () => {
   return (
     <>
       NumberGeneratorSequenceForm
@@ -82,9 +59,9 @@ jest.mock('./NumberGeneratorSequenceForm', () => () => {
 
 const fakeCalloutInfo = { id: '123', label: 'numgenName', code: 'numgenCode' };
 
-jest.mock('../../public', () => {
+jest.mock('../../../public', () => {
   return ({
-    ...jest.requireActual('../../public'),
+    ...jest.requireActual('../../../public'),
     useNumberGenerators: (code) => mockUseNumberGenerators(code),
     useNumberGeneratorSequences: () => ({ data: { results: mockGenerators[0].sequences } }),
     useMutateNumberGeneratorSequence: ({ afterQueryCalls: { post: postQueryCalls } }) => ({
