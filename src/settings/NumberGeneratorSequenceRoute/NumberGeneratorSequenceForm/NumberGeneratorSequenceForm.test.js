@@ -7,8 +7,8 @@ import {
   TextField,
 } from '@folio/stripes-erm-testing';
 
-import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
-import { renderWithTranslations } from '../../../test/helpers';
+import NumberGeneratorSequenceForm from '.';
+import { renderWithTranslations } from '../../../../test/helpers';
 
 const onSubmit = jest.fn();
 

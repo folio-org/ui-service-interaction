@@ -13,9 +13,9 @@ import {
   TextField,
 } from '@folio/stripes-erm-testing';
 
-import SequenceSearch from './SequenceSearch';
-import { numberGenerator1, numberGenerator2 } from '../../../test/jest/mockGenerators';
-import { renderWithTranslations } from '../../../test/helpers';
+import SequenceSearch from '.';
+import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
+import { renderWithTranslations } from '../../../../test/helpers';
 
 const push = jest.fn();
 // const changeGenerator = jest.fn();

@@ -7,6 +7,7 @@ import { NumberField, composeValidators, required as requiredValidator } from '@
 import {
   Checkbox,
   Col,
+  Headline,
   Layout,
   Row,
   Select,
@@ -16,8 +17,8 @@ import {
 
 import { preventMinusKey, preventPasteNegative } from '@folio/stripes-erm-components';
 
-import { BASE_TEMPLATE } from '../../public';
-import { useChecksumAlgorithms } from '../../hooks';
+import { BASE_TEMPLATE } from '../../../public';
+import { useChecksumAlgorithms } from '../../../hooks';
 
 import {
   ChecksumAlgoInfo,
@@ -30,9 +31,9 @@ import {
   NextValueInfo,
   OutputTemplateInfo,
   PreChecksumTemplateInfo
-} from '../InfoPopovers';
+} from '../../InfoPopovers';
 
-import css from './SequenceSearch.css';
+import css from '../Styles.css';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
@@ -140,6 +141,23 @@ const NumberGeneratorSequenceForm = () => {
         </Col>
       </Row>
       <Row>
+        <Col xs={12}>
+          <Field
+            component={TextArea}
+            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
+            maxLength="255"
+            name="description"
+            parse={v => v}
+          />
+        </Col>
+      </Row>
+      <Headline
+        margin="xx-small"
+        size="large"
+      >
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.section.sequenceSettings" />
+      </Headline>
+      <Row>
         <Col xs={6}>
           <Layout className="flex">
             <Field
@@ -221,6 +239,12 @@ const NumberGeneratorSequenceForm = () => {
           />
         </Col>
       </Row>
+      <Headline
+        margin="xx-small"
+        size="large"
+      >
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.section.checksumSettings" />
+      </Headline>
       <Row>
         <Col xs={6}>
           <Field
@@ -280,6 +304,12 @@ const NumberGeneratorSequenceForm = () => {
           />
         </Col>
       </Row>
+      <Headline
+        margin="xx-small"
+        size="large"
+      >
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.section.outputSettings" />
+      </Headline>
       <Row>
         <Col xs={12}>
           <Field
@@ -294,17 +324,6 @@ const NumberGeneratorSequenceForm = () => {
             parse={v => v}
             required
             validate={requiredValidator}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <Field
-            component={TextArea}
-            label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.description" />}
-            maxLength="255"
-            name="description"
-            parse={v => v}
           />
         </Col>
       </Row>

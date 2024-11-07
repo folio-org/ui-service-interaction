@@ -5,9 +5,9 @@ import { TextField as MockTextField } from '@folio/stripes/components';
 
 import { Button, Callout, KeyValue, TextField } from '@folio/stripes-erm-testing';
 
-import SequenceView from './SequenceView';
-import { numberGenerator1, numberGenerator2 } from '../../../test/jest/mockGenerators';
-import { renderWithTranslations } from '../../../test/helpers';
+import SequenceView from '.';
+import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
+import { renderWithTranslations } from '../../../../test/helpers';
 
 const onClose = jest.fn();
 const mockSequence = numberGenerator1?.sequences[0];

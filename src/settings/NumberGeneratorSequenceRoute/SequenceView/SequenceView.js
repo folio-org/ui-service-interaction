@@ -28,10 +28,10 @@ import {
   NextValueInfo,
   OutputTemplateInfo,
   PreChecksumTemplateInfo
-} from '../InfoPopovers';
+} from '../../InfoPopovers';
 
-import { useMutateNumberGeneratorSequence, useNumberGeneratorSequence } from '../../public';
-import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
+import { useMutateNumberGeneratorSequence, useNumberGeneratorSequence } from '../../../public';
+import NumberGeneratorSequenceForm from '../NumberGeneratorSequenceForm';
 
 const NumberGeneratorSequence = ({
   match: { params: { seqId } },

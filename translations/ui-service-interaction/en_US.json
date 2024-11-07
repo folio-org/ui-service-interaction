@@ -37,7 +37,7 @@
     "settings.numberGeneratorSequences.code.info": "Unique code of the number generator sequence. This must be unique within the number generator and contain no whitespaces. Once set, this field can no longer be changed.",
     "settings.numberGeneratorSequences.name": "Name",
     "settings.numberGeneratorSequences.name.info": "Name of the number generator sequence. In cases where a selection from number sequences is required, this name will be displayed in the Modal for generating a new number. This field is editable.",
-    "settings.numberGeneratorSequences.checkDigitAlgo": "Checksum",
+    "settings.numberGeneratorSequences.checkDigitAlgo": "Method",
     "settings.numberGeneratorSequences.checkDigitAlgo.info": "The check method for the check digit. Select “None” for no checksum calculation - please see documentation for further information on checksum.",
     "settings.numberGeneratorSequences.format": "Format",
     "settings.numberGeneratorSequences.format.info": "The Format field defines the length of the generated number. Use # to define the length without padding, e.g. \"####\". Or use a character to include padding. E.g. \"0000\" will set the length to 4 and add zeros to produce outputs such as 0045.",
@@ -92,6 +92,6 @@
     "numberGenerator.modal.exactCodeMatch": "Exact code match",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set",
-    "settings.numberGeneratorSequences.preChecksumTemplate": "Pre-checksum template",
-    "settings.numberGeneratorSequences.preChecksumTemplate.info": "The pre-checksum template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information."
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Input template",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "The input template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information."
 }

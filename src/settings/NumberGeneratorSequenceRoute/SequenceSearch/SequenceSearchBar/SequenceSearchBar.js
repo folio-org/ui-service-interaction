@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Button, Col, Icon, Row, SearchField } from '@folio/stripes/components';
 
 import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
-import css from './SequenceSearch.css';
+import css from '../../Styles.css';
 
 const SequenceSearchBar = ({
   disableReset,
