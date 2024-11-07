@@ -1,87 +1,87 @@
 const refdata = [
   {
-    id: 'b764b4c3658a321c0eecd3c12f187222',
-    desc: 'DashboardAccess.Access',
-    internal: true,
-    values: [
+    'id': 'c1f991d4231f894603c9bbc7dba882c7',
+    'desc': 'DashboardAccess.Access',
+    'internal': true,
+    'values': [
       {
-        id: 'ff80818184ec8e940184ec8f22620008',
-        value: 'edit',
-        label: 'Edit'
+        'id': 'ff8081819307299001930729dcb90004',
+        'value': 'edit',
+        'label': 'Edit'
       },
       {
-        id: 'ff80818184ec8e940184ec8f226b0009',
-        value: 'view',
-        label: 'View'
+        'id': 'a8c30e72a44734a64ff248768f51e9cd',
+        'value': 'manage',
+        'label': 'Manage'
       },
       {
-        id: '52881ea1f688714b6d6e362924376002',
-        value: 'manage',
-        label: 'Manage'
+        'id': 'ff8081819307299001930729dcc60005',
+        'value': 'view',
+        'label': 'View'
       }
     ]
   },
   {
-    id: 'ff80818184ec8e940184ec8f21e40000',
-    desc: 'NumberGeneratorSequence.CheckDigitAlgo',
-    internal: false,
-    values: [
+    'id': 'ff8081819307299001930729dc8c0000',
+    'desc': 'NumberGeneratorSequence.MaximumCheck',
+    'internal': true,
+    'values': [
       {
-        id: 'ff80818184ec8e940184ec8f22070001',
-        value: 'none',
-        label: 'None'
+        'id': 'ff8081819307299001930729dc9a0002',
+        'value': 'over_threshold',
+        'label': 'Over threshold'
       },
       {
-        id: 'ff80818184ec8e940184ec8f22310005',
-        value: 'modulo16',
-        label: 'Modulo16'
+        'id': 'ff8081819307299001930729dc930001',
+        'value': 'below_threshold',
+        'label': 'Below threshold'
       },
       {
-        id: 'ff80818184ec8e940184ec8f223b0006',
-        value: 'modulo43',
-        label: 'Modulo43'
-      },
-      {
-        id: 'ff80818184ec8e940184ec8f221d0003',
-        value: 'modulo10',
-        label: 'Modulo10'
-      },
-      {
-        id: 'ff80818184ec8e940184ec8f22270004',
-        value: 'modulo11',
-        label: 'Modulo11'
-      },
-      {
-        id: 'ff80818184ec8e940184ec8f22450007',
-        value: 'modulo47',
-        label: 'Modulo47'
-      },
-      {
-        id: 'ff80818184ec8e940184ec8f22130002',
-        value: 'ean13',
-        label: 'EAN13'
+        'id': 'ff8081819307299001930729dca40003',
+        'value': 'at_maximum',
+        'label': 'At maximum'
       }
     ]
   },
   {
-    id: '2c9180908eabe9f4018eabf4ab1f0000',
-    desc: 'NumberGeneratorSequence.MaximumCheck',
-    internal: true,
-    values: [
+    'id': 'ff8081819307299001930729dce80006',
+    'desc': 'NumberGeneratorSequence.CheckDigitAlgo',
+    'internal': true,
+    'values': [
       {
-        id: '2c9180908eabe9f4018eabf4ab490002',
-        value: 'over_threshold',
-        label: 'Over threshold'
+        'id': 'ff8081819307299001930729dcf10008',
+        'value': 'ean13',
+        'label': '31-RTL-mod10-I (EAN)'
       },
       {
-        id: '2c9180908eabe9f4018eabf4ab370001',
-        value: 'below_threshold',
-        label: 'Below threshold'
+        'id': 'ff8081819307299001930729dcf9000b',
+        'value': 'isbn10checkdigit',
+        'label': '123456789-RTL-mod11-R (ISBN10)'
       },
       {
-        id: '2c9180908eabe9f4018eabf4ab540003',
-        value: 'at_maximum',
-        label: 'At maximum'
+        'id': 'ff8081819307299001930729dcf50009',
+        'value': '1793_ltr_mod10_r',
+        'label': '1793-LTR-mod10-R'
+      },
+      {
+        'id': 'ff8081819307299001930729dcfe000d',
+        'value': 'luhncheckdigit',
+        'label': '21-RTL-mod10-I (Luhn)'
+      },
+      {
+        'id': 'ff8081819307299001930729dced0007',
+        'value': 'none',
+        'label': 'None'
+      },
+      {
+        'id': 'ff8081819307299001930729dcf8000a',
+        'value': '12_ltr_mod10_r',
+        'label': '12-LTR-mod10-R'
+      },
+      {
+        'id': 'ff8081819307299001930729dcfb000c',
+        'value': 'issncheckdigit',
+        'label': '2345678-RTL-mod11-R (ISSN)'
       }
     ]
   }

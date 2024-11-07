@@ -3,7 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Badge, Col, Row, Select } from '@folio/stripes/components';
 
-import css from './SequenceSearch.css';
+import css from '../../Styles.css';
 
 // Also renders the count... for reasons...
 const SequenceFilters = ({
