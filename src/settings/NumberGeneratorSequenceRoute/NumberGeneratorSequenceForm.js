@@ -292,6 +292,8 @@ const NumberGeneratorSequenceForm = () => {
             }
             name="outputTemplate"
             parse={v => v}
+            required
+            validate={requiredValidator}
           />
         </Col>
       </Row>
