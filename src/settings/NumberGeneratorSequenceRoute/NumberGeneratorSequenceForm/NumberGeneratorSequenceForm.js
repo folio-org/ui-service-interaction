@@ -18,7 +18,7 @@ import {
 import { preventMinusKey, preventPasteNegative } from '@folio/stripes-erm-components';
 
 import { BASE_TEMPLATE } from '../../../public';
-import { useChecksumAlgorithms } from '../../../hooks';
+import { useChecksumAlgorithms, useSIRefdata } from '../../../hooks';
 
 import {
   ChecksumAlgoInfo,
@@ -39,6 +39,9 @@ const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
   const { change } = useForm();
 
+  const { 0: { values: checksums = [] } = {} } = useSIRefdata({
+    desc: 'NumberGeneratorSequence.CheckDigitAlgo',
+  });
 
   const { checkDigitAlgoOptions, noneChecksumId, validateChecksum } = useChecksumAlgorithms();
 
@@ -249,6 +252,7 @@ const NumberGeneratorSequenceForm = () => {
         <Col xs={6}>
           <Field
             name="checkDigitAlgo.id" // checkDigitAlgo should deal with the id
+            parse={v => v}
             validate={composeValidators(validateChecksum, requiredValidator)}
           >
             {({ input, meta }) => {
@@ -265,7 +269,6 @@ const NumberGeneratorSequenceForm = () => {
                   }
                   meta={meta}
                   onChange={e => {
-                    // TODO TEST CASES
                     if (
                       input.value === noneChecksumId &&
                       e.target.value !== noneChecksumId
@@ -280,7 +283,6 @@ const NumberGeneratorSequenceForm = () => {
                     // Do the thing we would do normally
                     input.onChange(e);
                   }}
-                  parse={v => v}
                   required
                 />
               );
