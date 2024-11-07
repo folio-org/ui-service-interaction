@@ -36,7 +36,8 @@ describe('NumberGeneratorSequenceForm', () => {
     );
   });
 
-  // TODO this test should also check all infoPopovers are present
+  // TODO this test should also check infoPopovers are present
+  // ALSO needs to check extra validate logic
   test('renders expected name field', async () => {
     await TextField('Name*').exists();
   });
