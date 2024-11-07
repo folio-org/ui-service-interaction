@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Field, useFormState } from 'react-final-form';
+import { Field, useForm, useFormState } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { NumberField, composeValidators, required as requiredValidator } from '@k-int/stripes-kint-components';
@@ -16,6 +16,9 @@ import {
 
 import { preventMinusKey, preventPasteNegative } from '@folio/stripes-erm-components';
 
+import { BASE_TEMPLATE } from '../../public';
+import { useChecksumAlgorithms } from '../../hooks';
+
 import {
   ChecksumAlgoInfo,
   CodeInfo,
@@ -30,12 +33,13 @@ import {
 } from '../InfoPopovers';
 
 import css from './SequenceSearch.css';
-import { useChecksumAlgorithms } from '../../hooks';
 
 const NumberGeneratorSequenceForm = () => {
   const { values } = useFormState();
+  const { change } = useForm();
 
-  const { checkDigitAlgoOptions, validateChecksum } = useChecksumAlgorithms();
+
+  const { checkDigitAlgoOptions, noneChecksumId, validateChecksum } = useChecksumAlgorithms();
 
   const validateMaximumNumber = (val, allVal) => {
     if (!!val && val > parseInt('9'.repeat(allVal.format?.length ?? 1), 10)) {
@@ -220,26 +224,51 @@ const NumberGeneratorSequenceForm = () => {
       <Row>
         <Col xs={6}>
           <Field
-            component={Select}
-            dataOptions={checkDigitAlgoOptions}
-            fullWidth
-            label={
-              <>
-                <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />
-                <ChecksumAlgoInfo />
-              </>
-            }
             name="checkDigitAlgo.id" // checkDigitAlgo should deal with the id
-            parse={v => v}
-            required
             validate={composeValidators(validateChecksum, requiredValidator)}
-          />
+          >
+            {({ input, meta }) => {
+              return (
+                <Select
+                  dataOptions={checkDigitAlgoOptions}
+                  fullWidth
+                  input={input}
+                  label={
+                    <>
+                      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo" />
+                      <ChecksumAlgoInfo />
+                    </>
+                  }
+                  meta={meta}
+                  onChange={e => {
+                    // TODO TEST CASES
+                    if (
+                      input.value === noneChecksumId &&
+                      e.target.value !== noneChecksumId
+                    ) {
+                      change('preChecksumTemplate', BASE_TEMPLATE);
+                    } else if (
+                      input.value !== noneChecksumId &&
+                      e.target.value === noneChecksumId
+                    ) {
+                      change('preChecksumTemplate', undefined);
+                    }
+                    // Do the thing we would do normally
+                    input.onChange(e);
+                  }}
+                  parse={v => v}
+                  required
+                />
+              );
+            }}
+          </Field>
         </Col>
       </Row>
       <Row>
         <Col xs={12}>
           <Field
             component={TextArea}
+            disabled={values.checkDigitAlgo?.id === noneChecksumId}
             label={
               <>
                 <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.preChecksumTemplate" />

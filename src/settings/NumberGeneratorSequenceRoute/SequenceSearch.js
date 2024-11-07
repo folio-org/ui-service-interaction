@@ -28,18 +28,20 @@ import {
 
 import {
   AT_MAXIMUM,
+  BASE_TEMPLATE,
   BELOW_THRESHOLD,
   OVER_THRESHOLD,
   useMutateNumberGeneratorSequence,
   useNumberGeneratorSequences,
 } from '../../public';
 
+import { useChecksumAlgorithms } from '../../hooks';
+
 import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 
 import SequenceFilters from './SequenceFilters';
 import css from './SequenceSearch.css';
 import SequenceSearchBar from './SequenceSearchBar';
-import useChecksumAlgorithms from '../../hooks/useChecksumAlgorithms';
 
 const PER_PAGE = 25;
 
@@ -328,6 +330,7 @@ const SequenceSearch = ({
           initialValues={{
             checkDigitAlgo: { id: noneChecksumId },
             nextValue: 1,
+            outputTemplate: BASE_TEMPLATE
           }}
           modalProps={{
             dismissible: true,

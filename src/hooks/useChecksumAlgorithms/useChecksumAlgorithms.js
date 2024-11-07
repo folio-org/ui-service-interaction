@@ -1,8 +1,9 @@
 import { useCallback, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import { supportedChecksumAlgorithms } from '../../public';
+
 import useSIRefdata from '../useSIRefdata';
-import { supportedChecksumAlgorithms } from '../../constants';
 
 const useChecksumAlgorithms = () => {
   const { 0: { values: checksums = [] } = {} } = useSIRefdata({
