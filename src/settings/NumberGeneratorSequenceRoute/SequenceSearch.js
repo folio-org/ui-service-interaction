@@ -39,6 +39,7 @@ import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
 import SequenceFilters from './SequenceFilters';
 import css from './SequenceSearch.css';
 import SequenceSearchBar from './SequenceSearchBar';
+import useChecksumAlgorithms from '../../hooks/useChecksumAlgorithms';
 
 const PER_PAGE = 25;
 
@@ -116,6 +117,10 @@ const SequenceSearch = ({
   });
 
   const [creating, setCreating] = useState(false);
+
+  // We need to fetch the "none" option
+  const { checksums } = useChecksumAlgorithms();
+  const noneChecksumId = useMemo(() => checksums.find(cs => cs.value === 'none')?.id, [checksums]);
 
   const {
     post: addSeq,
@@ -322,6 +327,7 @@ const SequenceSearch = ({
       {creating &&
         <FormModal
           initialValues={{
+            checkDigitAlgo: { id: noneChecksumId },
             nextValue: 1,
           }}
           modalProps={{
