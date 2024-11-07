@@ -2,33 +2,22 @@ import { useCallback, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import useSIRefdata from '../useSIRefdata';
+import { supportedChecksumAlgorithms } from '../../constants';
 
 const useChecksumAlgorithms = () => {
   const { 0: { values: checksums = [] } = {} } = useSIRefdata({
     desc: 'NumberGeneratorSequence.CheckDigitAlgo',
   });
 
-  // I'd like a smarter way to do this in future, potentially "custom" checksums set up by the users.
-  const currentlySupportedChecksums = useMemo(() => [
-    'none',
-    'ean13',
-    'isbn10checkdigit',
-    'luhncheckdigit',
-    '1793_ltr_mod10_r',
-    '12_ltr_mod10_r',
-    'issncheckdigit'
-  ], []);
-
-
   // Neatly selectify from id.
   const checkDigitAlgoOptions = useMemo(() => (
     checksums?.filter(cdao => (
-      currentlySupportedChecksums.includes(cdao.value)
+      supportedChecksumAlgorithms.includes(cdao.value)
     ))?.map(cdao => ({
       value: cdao.id,
       label: cdao.label
     })) ?? []
-  ), [checksums, currentlySupportedChecksums]);
+  ), [checksums]);
 
   // Helpful checksum validator
   const validateChecksum = useCallback((val, allVal) => {
@@ -40,10 +29,12 @@ const useChecksumAlgorithms = () => {
     return null;
   }, [checksums]);
 
+  const noneChecksumId = useMemo(() => checksums.find(cs => cs.value === 'none')?.id, [checksums]);
+
   return ({
     checkDigitAlgoOptions,
     checksums,
-    currentlySupportedChecksums,
+    noneChecksumId, // Special case deserves its own export
     validateChecksum
   });
 };

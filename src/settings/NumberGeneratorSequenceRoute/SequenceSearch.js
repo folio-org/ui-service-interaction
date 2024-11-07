@@ -119,8 +119,7 @@ const SequenceSearch = ({
   const [creating, setCreating] = useState(false);
 
   // We need to fetch the "none" option
-  const { checksums } = useChecksumAlgorithms();
-  const noneChecksumId = useMemo(() => checksums.find(cs => cs.value === 'none')?.id, [checksums]);
+  const { noneChecksumId } = useChecksumAlgorithms();
 
   const {
     post: addSeq,
