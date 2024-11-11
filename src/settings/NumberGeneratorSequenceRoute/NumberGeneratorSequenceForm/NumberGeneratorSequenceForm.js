@@ -254,7 +254,7 @@ const NumberGeneratorSequenceForm = () => {
             {({ input, meta }) => {
               return (
                 <Select
-                  dataOptions={checkDigitAlgoOptions}
+                  dataOptions={[{ value: '', label: '', disabled: true }, ...checkDigitAlgoOptions]}
                   fullWidth
                   input={input}
                   label={
