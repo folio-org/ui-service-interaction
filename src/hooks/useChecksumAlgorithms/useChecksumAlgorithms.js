@@ -12,12 +12,17 @@ const useChecksumAlgorithms = () => {
 
   // Neatly selectify from id.
   const checkDigitAlgoOptions = useMemo(() => (
-    checksums?.filter(cdao => (
-      supportedChecksumAlgorithms.includes(cdao.value)
-    ))?.map(cdao => ({
-      value: cdao.id,
-      label: cdao.label
-    })) ?? []
+    // Grab only supported checksum algorithms that mainfest in backend returned shape
+    supportedChecksumAlgorithms.map(sca => {
+      const cdao = checksums.find(cs => cs.value === sca);
+
+      if (!cdao) { return null; }
+
+      return ({
+        value: cdao.id,
+        label: cdao.label
+      });
+    }).filter(Boolean)
   ), [checksums]);
 
   // Helpful checksum validator

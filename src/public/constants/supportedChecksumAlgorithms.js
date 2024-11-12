@@ -1,10 +1,11 @@
 // I'd like a smarter way to do this in future, potentially "custom" checksums set up by the users.
+// Ordering matters here, as it will be reflected in the dropdown (for now)
 export default [
   'none',
-  'ean13',
-  'isbn10checkdigit',
   'luhncheckdigit',
-  '1793_ltr_mod10_r',
+  'ean13',
   '12_ltr_mod10_r',
-  'issncheckdigit'
+  '1793_ltr_mod10_r',
+  'issncheckdigit',
+  'isbn10checkdigit',
 ];
