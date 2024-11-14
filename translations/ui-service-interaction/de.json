@@ -37,10 +37,10 @@
     "settings.numberGeneratorSequences.code.info": "Eindeutiger Code des Nummernkreises. Dieser muss innerhalb der Nummerngeneratoren eindeutig sein und darf keine Leerzeichen enthalten. Einmal festgelegt, kann dieses Feld nicht mehr geändert werden.",
     "settings.numberGeneratorSequences.name": "Name",
     "settings.numberGeneratorSequences.name.info": "Name des Nummernkreises. In Fällen, in denen eine Auswahl aus Nummernkreisen erforderlich ist, wird dieser Name im Modal für die Generierung einer neuen Nummer angezeigt. Dieses Feld ist editierbar.",
-    "settings.numberGeneratorSequences.checkDigitAlgo": "Prüfziffernmethode",
-    "settings.numberGeneratorSequences.checkDigitAlgo.info": "Die Methode für die Prüfziffern-Erstellung. \"None\" auswählen für keine Berechnung einer Prüfziffer. Weitere Informationen zur Prüfziffernmethode werden in der Dokumentation bereitgestellt.",
+    "settings.numberGeneratorSequences.checkDigitAlgo": "Methode",
+    "settings.numberGeneratorSequences.checkDigitAlgo.info": "Die Methode für die Prüfziffern-Erstellung. Um festzulegen, was in die Berechnung einbezogen werden soll, z.B. Präfix oder Suffix, bitte die Eingabevorlage verwenden.",
     "settings.numberGeneratorSequences.format": "Format",
-    "settings.numberGeneratorSequences.format.info": "Das Feld Format definiert die Länge der generierten Nummer. # wird verwendet, um die Länge ohne Füllzeichen zu definieren, z. B. \"####\". Oder ein Zeichen wird verwendet, um Füllzeichen hinzuzufügen. Z. B. setzt \"0000\" die Länge auf 4 Zeichen und fügt Nullen hinzu, um Ausgaben wie 0045 zu erzeugen.",
+    "settings.numberGeneratorSequences.format.info": "Das Feld Format definiert die Länge der generierten Nummer ohne Prüfziffer und Prä- und Suffix. # wird verwendet, um die Länge ohne Füllzeichen zu definieren, z. B. \"####\". Oder ein Zeichen wird verwendet, um Füllzeichen hinzuzufügen. Z. B. setzt \"0000\" die Länge auf 4 Zeichen und fügt Nullen hinzu, um Ausgaben wie 0045 zu erzeugen.",
     "settings.numberGeneratorSequences.outputTemplate": "Ausgabevorlage",
     "settings.numberGeneratorSequences.outputTemplate.info": "Die Ausgabevorlage definiert die Regeln, die bei der Verwendung des Nummernkreises angewendet werden. Vorlagen werden mit Groovy erstellt. Siehe unten für weitere Informationen.",
     "settings.numberGeneratorSequences.nextValue": "Nächster Wert",
@@ -92,6 +92,9 @@
     "numberGenerator.modal.exactCodeMatch": "Genaue Code-Übereinstimmung",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Fehler:</strong> Nummernkreis <strong>{name}</strong> wurde nicht erstellt. Bitte überprüfen, dass der <strong>Code</strong> eindeutig ist und danach erneut abspeichern. Sollte dieser Fehler erneut auftreten, bitte den Administrator kontaktieren.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Kein maximaler Wert festgelegt",
-    "settings.numberGeneratorSequences.preChecksumTemplate": "Pre-checksum template",
-    "settings.numberGeneratorSequences.preChecksumTemplate.info": "The pre-checksum template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information."
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Eingabevorlage",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Erstellung der Regel, die die Nummer definiert, die für die Berechnung der Prüfziffer angewandt wird. Sowohl Präfix als auch Suffix können einbezogen werden. Groovy markup wird genutzt. Als Platzhalter für die generierte Nummer wird ${generated_number} verwendet z.B. 05${generated_number}01",
+    "settings.numberGeneratorSequences.section.sequenceSettings": "Sequenz-Einstellungen",
+    "settings.numberGeneratorSequences.section.checksumSettings": "Prüfsummen-Einstellungen",
+    "settings.numberGeneratorSequences.section.outputSettings": "Ausgabe-Einstellungen"
 }

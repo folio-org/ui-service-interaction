@@ -92,6 +92,9 @@
     "numberGenerator.modal.exactCodeMatch": "代碼完全匹配",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "無最大設定",
-    "settings.numberGeneratorSequences.preChecksumTemplate": "Pre-checksum template",
-    "settings.numberGeneratorSequences.preChecksumTemplate.info": "The pre-checksum template defines the rules applied to create the number from which the checksum digit will be calculated. Templates are formed using Groovy. See below for more information."
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Input template",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Create rules to define the number to be inputted when calculating the check digit. Both the prefix and suffix can be templated, using Groovy markup. Use ${generated_number} as placeholder for the generated number. E.g. 05${generated_number}01",
+    "settings.numberGeneratorSequences.section.sequenceSettings": "Sequence settings",
+    "settings.numberGeneratorSequences.section.checksumSettings": "Checksum settings",
+    "settings.numberGeneratorSequences.section.outputSettings": "Output settings"
 }
