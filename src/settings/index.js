@@ -5,6 +5,7 @@ import { Settings } from '@folio/stripes/smart-components';
 
 import NumberGeneratorConfig from './NumberGeneratorConfig';
 import NumberGeneratorSequenceRoute from './NumberGeneratorSequenceRoute';
+import PickListSettings from './routes/PickListSettings';
 
 const ServintSettings = (settingProps) => {
   const renderNumberGeneratorConfig = useCallback((innerProps) => (<NumberGeneratorConfig {...innerProps} />), []);
@@ -33,7 +34,18 @@ const ServintSettings = (settingProps) => {
           perm: numberGeneratorViewPerm
         },
       ]
-    }
+    },
+    {
+      label: <FormattedMessage id="ui-agreements.settings.supplementaryPropertyPickList" />,
+      pages: [
+        {
+          component: PickListSettings,
+          label: <FormattedMessage id="ui-agreements.settings.pickLists" />,
+          perm: 'ui-agreements.picklists.view',
+          route: 'pick-lists',
+        },
+      ]
+    },
   ];
 
   return (
