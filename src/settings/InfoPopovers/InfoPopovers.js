@@ -4,7 +4,23 @@ import { Button, InfoPopover, Layout } from '@folio/stripes/components';
 const ChecksumAlgoInfo = () => (
   <InfoPopover
     content={
-      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo.info" />
+      <Layout className="flex flex-direction-column centerContent">
+        <Layout>
+          <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.checkDigitAlgo.info" />
+        </Layout>
+        <Layout className="marginTop1">
+          <Button
+            allowAnchorClick
+            buttonStyle="primary"
+            href="https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction"
+            marginBottom0
+            rel="noreferrer"
+            target="blank"
+          >
+            <FormattedMessage id="ui-service-interaction.learnMore" />
+          </Button>
+        </Layout>
+      </Layout>
     }
   />
 );
@@ -123,5 +139,5 @@ export {
   NameInfo,
   NextValueInfo,
   OutputTemplateInfo,
-  PreChecksumTemplateInfo
+  PreChecksumTemplateInfo,
 };
