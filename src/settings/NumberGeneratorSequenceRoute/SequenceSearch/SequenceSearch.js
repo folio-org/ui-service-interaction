@@ -329,7 +329,8 @@ const SequenceSearch = ({
         initialValues={{
           checkDigitAlgo: { id: noneChecksumId },
           nextValue: 1,
-          outputTemplate: BASE_TEMPLATE
+          outputTemplate: BASE_TEMPLATE,
+          enabled: true
         }}
         modalProps={{
           dismissible: true,
