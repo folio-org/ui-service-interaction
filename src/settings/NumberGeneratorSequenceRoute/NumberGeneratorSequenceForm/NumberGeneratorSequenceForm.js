@@ -274,7 +274,7 @@ const NumberGeneratorSequenceForm = () => {
                       input.value !== noneChecksumId &&
                       e.target.value === noneChecksumId
                     ) {
-                      change('preChecksumTemplate', undefined);
+                      change('preChecksumTemplate', '');
                     }
                     // Do the thing we would do normally
                     input.onChange(e);
