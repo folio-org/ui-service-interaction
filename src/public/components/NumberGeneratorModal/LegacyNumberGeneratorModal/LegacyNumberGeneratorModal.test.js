@@ -1,10 +1,10 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button, Select, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button, Select } from '@folio/stripes-erm-testing';
 
-import { translationsProperties } from '../../../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../../../test/jest/mockGenerators';
 
 import LegacyNumberGeneratorModal from './LegacyNumberGeneratorModal';
+import { renderWithTranslations } from '../../../../../test/helpers';
 
 const callback = jest.fn();
 const mockGenerateFunc = jest.fn();
@@ -83,11 +83,10 @@ describe('LegacyNumberGeneratorModal', () => {
   let renderedComponent;
   describe('LegacyNumberGeneratorModal with generator prop', () => {
     beforeEach(() => {
-      renderWithIntl(
+      renderWithTranslations(
         <LegacyNumberGeneratorModal
           {...LegacyNumberGeneratorModalProps}
         />,
-        translationsProperties
       );
     });
 
@@ -149,11 +148,10 @@ describe('LegacyNumberGeneratorModal', () => {
         });
       });
 
-      renderWithIntl(
+      renderWithTranslations(
         <LegacyNumberGeneratorModal
           {...LegacyNumberGeneratorModalPropsNoGenerator}
-        />,
-        translationsProperties
+        />
       );
     });
 
@@ -173,11 +171,10 @@ describe('LegacyNumberGeneratorModal', () => {
 
   describe('LegacyNumberGeneratorModal with no generator prop', () => {
     beforeEach(() => {
-      renderWithIntl(
+      renderWithTranslations(
         <LegacyNumberGeneratorModal
           {...LegacyNumberGeneratorModalPropsNoGenerator}
-        />,
-        translationsProperties
+        />
       );
     });
 
@@ -232,13 +229,12 @@ describe('LegacyNumberGeneratorModal', () => {
 
   describe('LegacyNumberGeneratorModal with renderBottom/renderTop properties', () => {
     beforeEach(() => {
-      renderedComponent = renderWithIntl(
+      renderedComponent = renderWithTranslations(
         <LegacyNumberGeneratorModal
           renderBottom={() => <div>BOTTOM</div>}
           renderTop={() => <div>TOP</div>}
           {...LegacyNumberGeneratorModalPropsNoGenerator}
-        />,
-        translationsProperties
+        />
       );
     });
 

@@ -1,8 +1,8 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button as MockButton } from '@folio/stripes/components';
-import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button } from '@folio/stripes-erm-testing';
 
-import { translationsProperties } from '../../../../test/helpers';
+import { renderWithTranslations } from '../../../../test/helpers';
 import {
   numberGenerator1 as mockNG,
 } from '../../../../test/jest/mockGenerators';
@@ -47,11 +47,10 @@ describe('NumberGeneratorModal', () => {
   let renderedComponent;
   describe('NumberGeneratorModal with generator prop', () => {
     beforeEach(() => {
-      renderedComponent = renderWithIntl(
+      renderedComponent = renderWithTranslations(
         <NumberGeneratorModal
           {...NumberGeneratorModalProps}
-        />,
-        translationsProperties
+        />
       );
     });
 

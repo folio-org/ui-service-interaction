@@ -8,18 +8,17 @@ import {
 import {
   Button as ButtonInteractor,
   IconButton,
-  renderWithIntl
 } from '@folio/stripes-erm-testing';
 
 import ModalButton from './ModalButton';
-import { translationsProperties } from '../../../test/helpers';
+import { renderWithTranslations } from '../../../test/helpers';
 
 const mockOnClose = jest.fn();
 let renderComponent;
 describe('ModalButton', () => {
   describe('NumberGeneratorModalButton with generator prop', () => {
     beforeEach(() => {
-      renderComponent = renderWithIntl(
+      renderComponent = renderWithTranslations(
         <ModalButton
           id="modal-button-id"
           onClose={mockOnClose}
@@ -40,7 +39,6 @@ describe('ModalButton', () => {
             </Button>
           )}
         />,
-        translationsProperties
       );
     });
 

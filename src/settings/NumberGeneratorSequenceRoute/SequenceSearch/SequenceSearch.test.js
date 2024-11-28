@@ -1,9 +1,9 @@
-import { waitFor, render } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { Field as MockField } from 'react-final-form';
 
-import { Button as MockButton, TextField as MockTextField } from '@folio/stripes/components';
+import { TextField as MockTextField } from '@folio/stripes/components';
 import {
   Button,
   Callout,
@@ -11,12 +11,11 @@ import {
   MultiColumnListHeader,
   Select,
   TextField,
-  renderWithIntl
 } from '@folio/stripes-erm-testing';
 
 import SequenceSearch from './SequenceSearch';
-import { translationsProperties } from '../../../test/helpers';
-import { numberGenerator1, numberGenerator2 } from '../../../test/jest/mockGenerators';
+import { numberGenerator1, numberGenerator2 } from '../../../../test/jest/mockGenerators';
+import { renderWithTranslations } from '../../../../test/helpers';
 
 const push = jest.fn();
 // const changeGenerator = jest.fn();
@@ -29,29 +28,6 @@ const mockUseNumberGenerators = jest.fn(() => {
     },
     isLoading: false
   });
-});
-
-jest.mock('./SequenceView', () => (props) => {
-  return (
-    <div>
-      NumberGeneratorSequence
-      <MockButton
-        onClick={props.onClose}
-      >
-        CloseSequence
-      </MockButton>
-      <MockButton
-        onClick={props.onDelete}
-      >
-        DeleteSequence
-      </MockButton>
-      <MockButton
-        onClick={props.setEditing}
-      >
-        EditSequence
-      </MockButton>
-    </div>
-  );
 });
 
 /* EXAMPLE Mocking form modal by passing in intlKey to get around intl shenanigans */
@@ -67,7 +43,7 @@ jest.mock('./SequenceView', () => (props) => {
   });
 }); */
 
-jest.mock('./NumberGeneratorSequenceForm', () => () => {
+jest.mock('../NumberGeneratorSequenceForm', () => () => {
   return (
     <>
       NumberGeneratorSequenceForm
@@ -83,9 +59,9 @@ jest.mock('./NumberGeneratorSequenceForm', () => () => {
 
 const fakeCalloutInfo = { id: '123', label: 'numgenName', code: 'numgenCode' };
 
-jest.mock('../../public', () => {
+jest.mock('../../../public', () => {
   return ({
-    ...jest.requireActual('../../public'),
+    ...jest.requireActual('../../../public'),
     useNumberGenerators: (code) => mockUseNumberGenerators(code),
     useNumberGeneratorSequences: () => ({ data: { results: mockGenerators[0].sequences } }),
     useMutateNumberGeneratorSequence: ({ afterQueryCalls: { post: postQueryCalls } }) => ({
@@ -98,7 +74,7 @@ jest.mock('../../public', () => {
 describe('SequenceSearch', () => {
   let renderComponent;
   beforeEach(async () => {
-    renderComponent = renderWithIntl(
+    renderComponent = renderWithTranslations(
       <MemoryRouter>
         <SequenceSearch
           baseUrl="baseUrl"
@@ -109,8 +85,6 @@ describe('SequenceSearch', () => {
           numberGenerators={mockGenerators}
         />
       </MemoryRouter>,
-      translationsProperties,
-      render,
       {
         intlKey: 'ui-service-interaction',
         moduleName: '@folio/service-interaction'
@@ -187,7 +161,7 @@ describe('SequenceSearch', () => {
     test('history push gets called', async () => {
       await waitFor(() => {
         expect(push).toHaveBeenCalledWith('baseUrl');
-      })
+      });
     });
   });
 });

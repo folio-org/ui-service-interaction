@@ -37,8 +37,8 @@
     "settings.numberGeneratorSequences.code.info": "Código exclusivo da sequência do gerador de números. Ele deve ser exclusivo dentro do gerador de números e não deve conter espaços em branco. Uma vez definido, esse campo não poderá mais ser alterado.",
     "settings.numberGeneratorSequences.name": "Nome",
     "settings.numberGeneratorSequences.name.info": "Nome da sequência do gerador de números. Nos casos em que for necessária uma seleção a partir de sequências numéricas, este nome será exibido no Modal para geração de um novo número. Este campo é editável.",
-    "settings.numberGeneratorSequences.checkDigitAlgo": "Soma de verificação",
-    "settings.numberGeneratorSequences.checkDigitAlgo.info": "O método de verificação para o dígito de verificação. Selecione \"Nenhum\" para nenhum cálculo de soma de verificação - consulte a documentação para obter mais informações sobre a soma de verificação.",
+    "settings.numberGeneratorSequences.checkDigitAlgo": "Método de verificação",
+    "settings.numberGeneratorSequences.checkDigitAlgo.info": "O método de soma de verificação para o dígito de verificação. Use o modelo de entrada de soma de verificação para definir o que precisa ser incluído no cálculo, por exemplo, prefixo ou sufixo.",
     "settings.numberGeneratorSequences.format": "Formato",
     "settings.numberGeneratorSequences.format.info": "O campo Formato define o comprimento do número gerado. Use # para definir o comprimento sem preenchimento, por exemplo, \"####\". Ou use um caractere para incluir preenchimento. Por exemplo, \"0000\" definirá o comprimento para 4 e adicionará zeros para produzir saídas como 0045.",
     "settings.numberGeneratorSequences.outputTemplate": "Modelo de saída",
@@ -91,5 +91,10 @@
     "numberGenerator.modal.includeAtMaxSequences": "Incluir sequências que atingiram seu valor máximo",
     "numberGenerator.modal.exactCodeMatch": "Correspondência exata de código",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Erro:</strong> A sequência <strong>{name}</strong> não foi criada. Verifique se o <strong>código</strong> é único e tente salvar novamente. Se esse erro persistir, entre em contato com seu administrador.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Sem valor máximo definido"
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Sem valor máximo definido",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Modelo de planilha de entrada",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Crie regras para definir o número a ser inserido ao calcular o dígito verificador. Tanto o prefixo quanto o sufixo podem ser modelados, usando a marcação Groovy. Use $ {generated_number} como espaço reservado para o número gerado. Por exemplo, 05$ {generated_number} 01",
+    "settings.numberGeneratorSequences.section.sequenceSettings": "Configurações de sequência",
+    "settings.numberGeneratorSequences.section.checksumSettings": "Configurações de soma de verificação",
+    "settings.numberGeneratorSequences.section.outputSettings": "Configurações de saída"
 }

@@ -4,13 +4,12 @@ import {
   Button,
   Callout,
   IconButton,
-  renderWithIntl
 } from '@folio/stripes-erm-testing';
 import { Button as MockButton } from '@folio/stripes/components';
 
-import { translationsProperties } from '../../../test/helpers';
 import { numberGenerator1, numberGenerator2 } from '../../../test/jest/mockGenerators';
 import NumberGeneratorConfig from './NumberGeneratorConfig';
+import { renderWithTranslations } from '../../../test/helpers';
 
 const push = jest.fn();
 const mockUseNumberGenerators = jest.fn((code) => {
@@ -90,12 +89,11 @@ jest.mock('@k-int/stripes-kint-components', () => {
 describe('NumberGeneratorConfig', () => {
   let renderComponent;
   beforeEach(async () => {
-    renderComponent = renderWithIntl(
+    renderComponent = renderWithTranslations(
       <NumberGeneratorConfig
         history={{ push }}
         match={{ url: 'someUrl' }}
       />,
-      translationsProperties
     );
   });
 

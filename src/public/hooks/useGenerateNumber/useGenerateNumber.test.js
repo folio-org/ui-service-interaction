@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query';
-import { render, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { Button as MockButton } from '@folio/stripes/components';
-import { Button, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button, Callout } from '@folio/stripes-erm-testing';
 
 import useGenerateNumber from './useGenerateNumber';
 import useNumberGeneratorSequences from '../useNumberGeneratorSequences';
@@ -17,8 +17,8 @@ import {
   GENERATE_WARNING_CODE_OVER_THRESHOLD,
 } from '../../constants';
 
-import { translationsProperties } from '../../../../test/helpers';
 import { numberGenerator2 } from '../../../../test/jest/mockGenerators';
+import { renderWithTranslations } from '../../../../test/helpers';
 
 jest.mock('../useNumberGeneratorSequences', () => jest.fn());
 
@@ -87,13 +87,11 @@ describe('useGenerateNumber', () => {
           ]
         }
       }));
-      renderWithIntl(
+      renderWithTranslations(
         <TestComponent
           generator="numberGen2"
           sequence="seq2.1"
         />,
-        translationsProperties,
-        render,
         {
           intlKey: 'ui-service-interaction',
           moduleName: '@folio/service-interaction'
@@ -144,13 +142,11 @@ describe('useGenerateNumber', () => {
         }
       }));
 
-      renderWithIntl(
+      renderWithTranslations(
         <TestComponent
           generator="numberGen2"
           sequence="fakesequence"
         />,
-        translationsProperties,
-        render,
         {
           intlKey: 'ui-service-interaction',
           moduleName: '@folio/service-interaction'
@@ -203,13 +199,11 @@ describe('useGenerateNumber', () => {
         }
       }));
 
-      renderWithIntl(
+      renderWithTranslations(
         <TestComponent
           generator="numberGenerator2"
           sequence="seq2.2"
         />,
-        translationsProperties,
-        render,
         {
           intlKey: 'ui-service-interaction',
           moduleName: '@folio/service-interaction'
@@ -249,14 +243,12 @@ describe('useGenerateNumber', () => {
           }
         }));
 
-        renderWithIntl(
+        renderWithTranslations(
           <TestComponent
             generator="numberGen2"
             sendWarningCallouts={sendWarningCallouts}
             sequence="seq2.1"
           />,
-          translationsProperties,
-          render,
           {
             intlKey: 'ui-service-interaction',
             moduleName: '@folio/service-interaction'
@@ -302,14 +294,12 @@ describe('useGenerateNumber', () => {
           }
         }));
 
-        renderWithIntl(
+        renderWithTranslations(
           <TestComponent
             generator="numberGen2"
             sendErrorCallouts={sendErrorCallouts}
             sequence="seq2.1"
           />,
-          translationsProperties,
-          render,
           {
             intlKey: 'ui-service-interaction',
             moduleName: '@folio/service-interaction'

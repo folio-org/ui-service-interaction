@@ -1,3 +1,11 @@
+## 3.1.1 2024-11-28
+  * SI-76 Checksum method display enhancements
+  * SI-75 Help text adjustments for modal new sequence/edit sequence and detail pane sequences
+  * SI-74 Detail pane number generator sequences display enhancements
+  * SI-73 Modal new sequence/edit sequence display enhancements
+  * SI-72 Auto-populated fields input and output template and mandatory fields
+  * SI-59 Number generator sequences - message banner when new sequences are saved - insert different token
+
 ## 3.1.0 2024-10-31
   * ERM-3184 Make use of shared NumberField from kint-components
   * SI-67 List @folio/stripes-erm-components as dependency

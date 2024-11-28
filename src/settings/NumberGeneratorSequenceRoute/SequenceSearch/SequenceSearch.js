@@ -28,17 +28,20 @@ import {
 
 import {
   AT_MAXIMUM,
+  BASE_TEMPLATE,
   BELOW_THRESHOLD,
   OVER_THRESHOLD,
   useMutateNumberGeneratorSequence,
   useNumberGeneratorSequences,
-} from '../../public';
+} from '../../../public';
 
-import NumberGeneratorSequenceForm from './NumberGeneratorSequenceForm';
+import { useChecksumAlgorithms } from '../../../hooks';
 
+import NumberGeneratorSequenceForm from '../NumberGeneratorSequenceForm';
 import SequenceFilters from './SequenceFilters';
-import css from './SequenceSearch.css';
 import SequenceSearchBar from './SequenceSearchBar';
+
+import css from '../Styles.css';
 
 const PER_PAGE = 25;
 
@@ -117,16 +120,19 @@ const SequenceSearch = ({
 
   const [creating, setCreating] = useState(false);
 
+  // We need to fetch the "none" option
+  const { noneChecksumId } = useChecksumAlgorithms();
+
   const {
     post: addSeq,
   } = useMutateNumberGeneratorSequence({
     afterQueryCalls: {
-      post: (res) => {
+      post: (res, postData) => {
         setCreating(false);
         callout.sendCallout({
           message: <FormattedMessage
             id="ui-service-interaction.settings.numberGeneratorSequences.callout.create"
-            values={{ name: res.code }}
+            values={{ name: postData.name }}
           />
         });
 
@@ -319,22 +325,23 @@ const SequenceSearch = ({
           );
         }}
       </SearchAndSortQuery>
-      {creating &&
-        <FormModal
-          initialValues={{
-            nextValue: 1,
-          }}
-          modalProps={{
-            dismissible: true,
-            label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.newModal" />,
-            onClose: () => setCreating(false),
-            open: creating
-          }}
-          onSubmit={addSeq}
-        >
-          <NumberGeneratorSequenceForm />
-        </FormModal>
-      }
+      <FormModal
+        initialValues={{
+          checkDigitAlgo: { id: noneChecksumId },
+          nextValue: 1,
+          outputTemplate: BASE_TEMPLATE,
+          enabled: true
+        }}
+        modalProps={{
+          dismissible: true,
+          label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.newModal" />,
+          onClose: () => setCreating(false),
+          open: creating
+        }}
+        onSubmit={addSeq}
+      >
+        <NumberGeneratorSequenceForm />
+      </FormModal>
     </>
   );
 };

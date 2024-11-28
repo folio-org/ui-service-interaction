@@ -91,5 +91,10 @@
     "numberGenerator.modal.includeAtMaxSequences": "Zahrnout sekvence, které dosáhly své maximální hodnoty.",
     "numberGenerator.modal.exactCodeMatch": "Přesná shoda kódu",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Chyba:</strong> Sekvence <strong>{name}</strong> nebyla vytvořena. Zkontrolujte, zda je <strong>kód</strong> jedinečný, a zkuste jej uložit znovu. Pokud se tato chyba opakuje, kontaktujte svého správce.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Není nastaveno maximální číslo"
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Není nastaveno maximální číslo",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Input template",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Create rules to define the number to be inputted when calculating the check digit. Both the prefix and suffix can be templated, using Groovy markup. Use ${generated_number} as placeholder for the generated number. E.g. 05${generated_number}01",
+    "settings.numberGeneratorSequences.section.sequenceSettings": "Sequence settings",
+    "settings.numberGeneratorSequences.section.checksumSettings": "Checksum settings",
+    "settings.numberGeneratorSequences.section.outputSettings": "Output settings"
 }

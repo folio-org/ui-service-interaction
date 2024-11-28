@@ -1,8 +1,6 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-
-import { translationsProperties } from '../test/helpers';
 
 import App from './index';
+import { renderWithTranslations } from '../test/helpers';
 
 const mockAddKey = jest.fn();
 
@@ -11,16 +9,26 @@ jest.mock('@k-int/stripes-kint-components', () => ({
   useIntlKeyStore: () => mockAddKey
 }));
 
+// EXAMPLE testing that settings renders... this is mostly useless in this module
 describe('App', () => {
   let renderComponent;
-  describe('App acting as not-settings', () => {
+
+  describe.each([
+    {
+      actAs: 'test',
+      doSettingsRender: false
+    },
+    {
+      actAs: 'settings',
+      doSettingsRender: true
+    },
+  ])('rendering app with actAs: $actAs', ({ actAs, doSettingsRender }) => {
     beforeEach(async () => {
       mockAddKey.mockReset();
-      renderComponent = renderWithIntl(
+      renderComponent = renderWithTranslations(
         <App
-          actAs="test"
-        />,
-        translationsProperties
+          actAs={actAs}
+        />
       );
     });
 
@@ -28,30 +36,13 @@ describe('App', () => {
       expect(mockAddKey).toHaveBeenCalledTimes(1);
     });
 
-    test('The settings do not render', () => {
+    test(`The settings${doSettingsRender ? '' : ' do not'} render`, () => {
       const { queryByText } = renderComponent;
-      expect(queryByText('Settings')).not.toBeInTheDocument();
-    });
-  });
-
-  describe('App acting as settings', () => {
-    beforeEach(async () => {
-      mockAddKey.mockReset();
-      renderComponent = renderWithIntl(
-        <App
-          actAs="settings"
-        />,
-        translationsProperties
-      );
-    });
-
-    test('Add key has been called', () => {
-      expect(mockAddKey).toHaveBeenCalledTimes(1);
-    });
-
-    test('The settings do render', () => {
-      const { queryByText } = renderComponent;
-      expect(queryByText('Settings')).toBeInTheDocument();
+      if (doSettingsRender) {
+        expect(queryByText('Settings')).toBeInTheDocument();
+      } else {
+        expect(queryByText('Settings')).not.toBeInTheDocument();
+      }
     });
   });
 });

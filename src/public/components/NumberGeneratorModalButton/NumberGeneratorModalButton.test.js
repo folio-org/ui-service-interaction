@@ -2,11 +2,10 @@ import { forwardRef as mockForwardRef } from 'react';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button as MockStripesButton, Modal as MockModal } from '@folio/stripes/components';
-import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
-
-import { translationsProperties } from '../../../../test/helpers';
+import { Button } from '@folio/stripes-erm-testing';
 
 import NumberGeneratorModalButton from './NumberGeneratorModalButton';
+import { renderWithTranslations } from '../../../../test/helpers';
 
 /*
  * EXAMPLE testing, mocking local Component inline
@@ -48,13 +47,12 @@ let renderComponent;
 describe('NumberGeneratorModalButton', () => {
   describe('NumberGeneratorModalButton with generator prop', () => {
     beforeEach(() => {
-      renderComponent = renderWithIntl(
+      renderComponent = renderWithTranslations(
         <NumberGeneratorModalButton
           callback={mockCallback}
           generator="numberGen1"
           id="test"
-        />,
-        translationsProperties
+        />
       );
     });
 
