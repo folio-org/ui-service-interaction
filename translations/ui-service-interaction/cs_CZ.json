@@ -94,7 +94,7 @@
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Není nastaveno maximální číslo",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Input template",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Vytvořit pravidla pro definování čísla, které se má zadat při výpočtu kontrolní číslice. Prefix i suffix lze šablonovat pomocí značky Groovy. Jako zástupný symbol pro vygenerované číslo použijte $ {generated_number}. Např. 05 $ {generated_number} 01",
-    "settings.numberGeneratorSequences.section.sequenceSettings": "Sequence settings",
-    "settings.numberGeneratorSequences.section.checksumSettings": "Checksum settings",
-    "settings.numberGeneratorSequences.section.outputSettings": "Output settings"
+    "settings.numberGeneratorSequences.section.sequenceSettings": "Nastavení pořadí",
+    "settings.numberGeneratorSequences.section.checksumSettings": "Nastavení kontrolního součtu",
+    "settings.numberGeneratorSequences.section.outputSettings": "Nastavení výstupu"
 }
