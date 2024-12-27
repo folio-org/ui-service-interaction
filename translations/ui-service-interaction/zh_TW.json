@@ -86,7 +86,7 @@
     "noResultsFound": "未找到結果",
     "separator": "·",
     "separatorStrong": "<strong> · </strong>",
-    "numberGenerator.modal.nextValue": "下一個值： {value}",
+    "numberGenerator.modal.nextValue": "下一個值 : {value}",
     "numberGenerator.modal.maximumCheck": "使用狀況",
     "numberGenerator.modal.includeAtMaxSequences": "包括已達到最大值的序列",
     "numberGenerator.modal.exactCodeMatch": "代碼完全匹配",
