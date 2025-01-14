@@ -68,7 +68,7 @@
     "settings.numberGeneratorSequences.maximumNumber.info": "Dies ist der maximal mögliche Wert für diesen Nummernkreis. Wenn das Maximum erreicht ist, ist der Nummernkreis nicht mehr verwendbar.",
     "settings.numberGeneratorSequences.maximumNumber.maximumTooLow": "Maximaler Wert muss kleiner sein als das Maximum, welches sich aus der Länge des Feldes \"Format\" ergibt.",
     "settings.numberGeneratorSequences.maximumNumberThreshold": "Warnschwelle",
-    "settings.numberGeneratorSequences.maximumNumberThreshold.info": "Wenn diese Einstellung festgelegt wird, wird den Benutzenden des Nummernkreises eine Warnung angezeigt, wenn dieser Wert erreicht ist. Muss niedriger sein als der maximale Wert.",
+    "settings.numberGeneratorSequences.maximumNumberThreshold.info": "Wenn diese Einstellung festgelegt wird, wird den Benutzenden des Nummernkreises eine Warnung angezeigt, wenn dieser Wert erreicht ist. Dieser muss niedriger sein als der maximale Wert.",
     "settings.numberGeneratorSequences.maximumNumberThreshold.thresholdNoMaximum": "Eine Warnschwelle kann nicht festgelegt werden, wenn kein maximaler Wert angegeben ist.",
     "settings.numberGeneratorSequences.maximumNumberThreshold.thresholdMustBeLowerThanMaximum": "Warnschwelle muss unbedingt niedriger als der maximale Wert sein.",
     "settings.numberGeneratorSequences.maximumCheck": "Verwendungsstatus",
