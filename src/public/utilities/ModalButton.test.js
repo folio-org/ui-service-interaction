@@ -16,10 +16,22 @@ import { renderWithTranslations } from '../../../test/helpers';
 const mockOnClose = jest.fn();
 let renderComponent;
 describe('ModalButton', () => {
-  describe('NumberGeneratorModalButton with generator prop', () => {
+  describe.each([
+    {
+      title: 'default',
+    },
+    {
+      title: 'with dismissible: true',
+      canClose: true,
+      props: {
+        dismissible: true,
+      }
+    },
+  ])('Modal button ($title)', ({ canClose = false, props = {}}) => {
     beforeEach(() => {
       renderComponent = renderWithTranslations(
         <ModalButton
+          {...props}
           id="modal-button-id"
           onClose={mockOnClose}
           renderModal={(mdProps) => (
@@ -62,26 +74,28 @@ describe('ModalButton', () => {
         });
       });
 
-      describe('Closing the modal', () => {
-        beforeEach(async () => {
-          await waitFor(async () => {
-            await IconButton('Dismiss modal').click();
+      if (canClose) {
+        describe('Closing the modal', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await IconButton('Dismiss modal').click();
+            });
           });
-        });
 
-        test('onClose has been called', async () => {
-          await waitFor(async () => {
-            await expect(mockOnClose).toHaveBeenCalled();
+          test('onClose has been called', async () => {
+            await waitFor(async () => {
+              await expect(mockOnClose).toHaveBeenCalled();
+            });
           });
-        });
 
-        test('no longer renders modal contents', async () => {
-          const { queryByText } = renderComponent;
-          await waitFor(() => {
-            expect(queryByText('Internal modal contents')).not.toBeInTheDocument();
+          test('no longer renders modal contents', async () => {
+            const { queryByText } = renderComponent;
+            await waitFor(() => {
+              expect(queryByText('Internal modal contents')).not.toBeInTheDocument();
+            });
           });
         });
-      });
+      }
     });
   });
 });
