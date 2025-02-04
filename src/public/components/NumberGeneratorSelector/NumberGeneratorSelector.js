@@ -378,7 +378,7 @@ const NumberGeneratorSelector = ({
         displayClearItem={false}
         endOfList={renderEndOFList()}
         id={uniqueId}
-        // To use this as a controlled component is currently a little fiddly, spoof an input opbject
+        // To use this as a controlled component is currently a little fiddly, spoof an input object
         input={{
           name: uniqueId,
           onChange: (seq) => changeSelectedSequence(seq),
