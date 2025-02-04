@@ -67,7 +67,7 @@
     ]
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^5.8.3",
+    "@k-int/stripes-kint-components": "^5.10.0",
     "dom-helpers": "^3.4.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
