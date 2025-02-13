@@ -2,6 +2,7 @@ import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import contains from 'dom-helpers/query/contains';
 
+// TODO should this be in kint-components?
 const ModalButton = forwardRef(({
   id,
   onClose,
@@ -49,7 +50,6 @@ const ModalButton = forwardRef(({
       {
         renderModal({
           ref: modalRef,
-          dismissible: true,
           onClose: closeModal,
           open: modalOpen,
           ...props
