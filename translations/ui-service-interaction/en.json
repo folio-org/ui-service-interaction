@@ -49,7 +49,7 @@
   "settings.numberGeneratorSequences.outputTemplate": "Output template",
   "settings.numberGeneratorSequences.outputTemplate.info": "The output template defines the rules applied to create the sequence. Templates are formed using Groovy. See below for more information.",
   "settings.numberGeneratorSequences.preChecksumTemplate": "Input template",
-  "settings.numberGeneratorSequences.preChecksumTemplate.info": "Create rules to define the number to be inputted when calculating the check digit. Both the prefix and suffix can be templated, using Groovy markup. Use '${generated_number}' as placeholder for the generated number. E.g. 05'${generated_number}'01",
+  "settings.numberGeneratorSequences.preChecksumTemplate.info": "Create rules to define the number to be inputted when calculating the check digit. Both the prefix and suffix can be templated, using Groovy markup. Use $'{'generated_number'}' as placeholder for the generated number. E.g. 05$'{'generated_number'}'01",
   "settings.numberGeneratorSequences.nextValue": "Next value",
   "settings.numberGeneratorSequences.nextValue.info": "This field shows the <strong>next value</strong> in the sequence based on the current value in the database. It can be set manually as the starting value for a new sequence.",
   "settings.numberGeneratorSequences.nextValue.changedWarning": "Changing the \"next value\" field can result in non-unique generated numbers.",
