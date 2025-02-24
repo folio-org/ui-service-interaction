@@ -24,7 +24,7 @@ const expectedText = {
   NameInfo: 'Name of the number generator sequence. In cases where a selection from number sequences is required, this name will be displayed in the Modal for generating a new number. This field is editable.',
   NextValueInfo: 'This field shows the <strong>next value</strong> in the sequence based on the current value in the database. It can be set manually as the starting value for a new sequence.',
   OutputTemplateInfo: 'The output template defines the rules applied to create the sequence. Templates are formed using Groovy. See below for more information.',
-  PreChecksumTemplateInfo: 'Create rules to define the number to be inputted when calculating the check digit. Both the prefix and suffix can be templated, using Groovy markup. Use ${generated_number} as placeholder for the generated number. E.g. 05${generated_number}01'
+  PreChecksumTemplateInfo: 'Create rules to define the number to be inputted when calculating the check digit. Both the prefix and suffix can be templated, using Groovy markup. Use ${\'generated_number\'} as placeholder for the generated number. E.g. 05${\'generated_number\'}01'
 };
 
 describe('InfoPopovers', () => {
