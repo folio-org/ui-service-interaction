@@ -93,7 +93,7 @@
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Erro:</strong> A sequência <strong>{name}</strong> não foi criada. Verifique se o <strong>código</strong> é único e tente salvar novamente. Se esse erro persistir, entre em contato com seu administrador.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Sem valor máximo definido",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Modelo de planilha de entrada",
-    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Crie regras para definir o número a ser inserido ao calcular o dígito verificador. Tanto o prefixo quanto o sufixo podem ser modelados, usando a marcação Groovy. Use $ {generated_number} como espaço reservado para o número gerado. Por exemplo, 05$ {generated_number} 01",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Crie regras para definir o número a ser inserido ao calcular o dígito de verificação. Tanto o prefixo quanto o sufixo podem ser modelados, usando a marcação Groovy. Use $'{'generated_number'}' como espaço reservado para o número gerado. Por exemplo, 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Configurações de sequência",
     "settings.numberGeneratorSequences.section.checksumSettings": "Configurações de soma de verificação",
     "settings.numberGeneratorSequences.section.outputSettings": "Configurações de saída"

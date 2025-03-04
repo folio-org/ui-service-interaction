@@ -92,7 +92,7 @@
     "numberGenerator.modal.exactCodeMatch": "Přesná shoda kódu",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Chyba:</strong> Sekvence <strong>{name}</strong> nebyla vytvořena. Zkontrolujte, zda je <strong>kód</strong> jedinečný, a zkuste jej uložit znovu. Pokud se tato chyba opakuje, kontaktujte svého správce.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Není nastaveno maximální číslo",
-    "settings.numberGeneratorSequences.preChecksumTemplate": "Input template",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Vstupní šablona",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Vytvořit pravidla pro definování čísla, které se má zadat při výpočtu kontrolní číslice. Prefix i suffix lze šablonovat pomocí značky Groovy. Jako zástupný symbol pro vygenerované číslo použijte $ {generated_number}. Např. 05 $ {generated_number} 01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Nastavení pořadí",
     "settings.numberGeneratorSequences.section.checksumSettings": "Nastavení kontrolního součtu",
