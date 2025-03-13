@@ -1,3 +1,5 @@
+## 4.1.0 IN PROGRESS
+
 ## 4.0.0 2024-03-13
   * SI-108 *BREAKING* Stripes v10 dependencies update
     Updated all stripes-* dependencies for the stripes v10 upgrade along with react-intl and formatjs/cli
