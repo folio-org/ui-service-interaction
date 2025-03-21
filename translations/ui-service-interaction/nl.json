@@ -92,9 +92,9 @@
     "numberGenerator.modal.exactCodeMatch": "Exact overeenkomende code",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Fout:</strong> Reeks <strong>{name}</strong> is niet aangemaakt. Controleer of de <strong>code</strong> uniek is en probeer opnieuw op te slaan. Neem contact op met uw FOLIO-systeembeheerder als deze fout zich opnieuw voordoet.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Geen maximum ingesteld",
-    "settings.numberGeneratorSequences.preChecksumTemplate": "Input template",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Template invoer",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Maak regels aan om het nummer te definiëren dat moet worden ingevoerd bij het berekenen van het controlecijfer. Zowel het voorvoegsel als het achtervoegsel kunnen worden getemplate, met behulp van Groovy-markup. Gebruik $'{'generated_number'}' als placeholder voor het gegenereerde nummer. Bijv. 05$'{'generated_number'}'01",
-    "settings.numberGeneratorSequences.section.sequenceSettings": "Sequence settings",
-    "settings.numberGeneratorSequences.section.checksumSettings": "Checksum settings",
-    "settings.numberGeneratorSequences.section.outputSettings": "Output settings"
+    "settings.numberGeneratorSequences.section.sequenceSettings": "Sequentie-instellingen",
+    "settings.numberGeneratorSequences.section.checksumSettings": "Checksum-instellingen",
+    "settings.numberGeneratorSequences.section.outputSettings": "Uitvoerinstellingen"
 }
