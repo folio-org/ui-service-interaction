@@ -93,7 +93,7 @@
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Fehler:</strong> Nummernkreis <strong>{name}</strong> wurde nicht erstellt. Bitte überprüfen, dass der <strong>Code</strong> eindeutig ist und danach erneut abspeichern. Sollte dieser Fehler erneut auftreten, bitte den Administrator kontaktieren.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Kein maximaler Wert festgelegt",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Eingabevorlage",
-    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Erstellung der Regel, die die Nummer definiert, die für die Berechnung der Prüfziffer angewandt wird. Sowohl Präfix als auch Suffix können einbezogen werden. Groovy markup wird genutzt. Als Platzhalter für die generierte Nummer wird $'{'generated_number'}' verwendet z.B. 05$'{'generated_number'}'01",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Erstellung der Regel, die die Nummer definiert, die für die Berechnung der Prüfziffer angewandt wird. Sowohl Präfix als auch Suffix können einbezogen werden. Groovymarkup wird genutzt. Als Platzhalter für die generierte Nummer wird $'{'generated_number'}' verwendet, z.B. 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Sequenz-Einstellungen",
     "settings.numberGeneratorSequences.section.checksumSettings": "Prüfsummen-Einstellungen",
     "settings.numberGeneratorSequences.section.outputSettings": "Ausgabe-Einstellungen"
