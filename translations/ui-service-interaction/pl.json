@@ -91,9 +91,9 @@
     "numberGenerator.modal.includeAtMaxSequences": "Uwzględnij sekwencje, które osiągnęły swoją maksymalną wartość",
     "numberGenerator.modal.exactCodeMatch": "Dokładne dopasowanie kodu",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set",
-    "settings.numberGeneratorSequences.preChecksumTemplate": "Input template",
-    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Create rules to define the number to be inputted when calculating the check digit. Both the prefix and suffix can be templated, using Groovy markup. Use $'{'generated_number'}' as placeholder for the generated number. E.g. 05$'{'generated_number'}'01",
+    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Brak maksymalnego zestawu",
+    "settings.numberGeneratorSequences.preChecksumTemplate": "Szablon wejściowy",
+    "settings.numberGeneratorSequences.preChecksumTemplate.info": "Utwórz reguły, aby zdefiniować liczbę, która ma zostać wprowadzona podczas obliczania cyfry kontrolnej. Zarówno prefiks, jak i sufiks mogą być szablonowane przy użyciu znaczników Groovy. Użyj $'{'generated_number'}' jako symbolu zastępczego dla wygenerowanej liczby. Np. 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Sequence settings",
     "settings.numberGeneratorSequences.section.checksumSettings": "Checksum settings",
     "settings.numberGeneratorSequences.section.outputSettings": "Output settings"
