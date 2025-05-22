@@ -94,7 +94,7 @@
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Brak maksymalnego zestawu",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Szablon wejściowy",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Utwórz reguły, aby zdefiniować liczbę, która ma zostać wprowadzona podczas obliczania cyfry kontrolnej. Zarówno prefiks, jak i sufiks mogą być szablonowane przy użyciu znaczników Groovy. Użyj $'{'generated_number'}' jako symbolu zastępczego dla wygenerowanej liczby. Np. 05$'{'generated_number'}'01",
-    "settings.numberGeneratorSequences.section.sequenceSettings": "Sequence settings",
-    "settings.numberGeneratorSequences.section.checksumSettings": "Checksum settings",
-    "settings.numberGeneratorSequences.section.outputSettings": "Output settings"
+    "settings.numberGeneratorSequences.section.sequenceSettings": "Ustawienia kolejności",
+    "settings.numberGeneratorSequences.section.checksumSettings": "Ustawienia sumy kontrolnej",
+    "settings.numberGeneratorSequences.section.outputSettings": "Ustawienia wyjściowe"
 }
