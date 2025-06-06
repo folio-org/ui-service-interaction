@@ -89,7 +89,7 @@
     "numberGenerator.modal.nextValue": "Наступне значення: {value}",
     "numberGenerator.modal.maximumCheck": "Статус використання",
     "numberGenerator.modal.includeAtMaxSequences": "Включити послідовності, які досягли максимального значення",
-    "numberGenerator.modal.exactCodeMatch": "Точний збіг коду",
+    "numberGenerator.modal.exactCodeMatch": "Точна відповідність коду",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Помилка:</strong> Послідовність <strong>{name}</strong> не була створена. Переконайтеся, що <strong>код</strong> є унікальним і спробуйте зберегти ще раз. Якщо ця помилка повторюється, зверніться до адміністратора.",
     "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Input template",
