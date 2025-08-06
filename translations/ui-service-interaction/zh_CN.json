@@ -44,7 +44,7 @@
     "settings.numberGeneratorSequences.outputTemplate": "输出模板",
     "settings.numberGeneratorSequences.outputTemplate.info": "输出模板定义用于创建序列的规则。模板是使用 Groovy 形成的。请参阅下面的详细信息。",
     "settings.numberGeneratorSequences.nextValue": "下一个值",
-    "settings.numberGeneratorSequences.nextValue.info": "此字段根据数据库中的当前值显示序列中的<strong>下一个值</strong> 。可以手动将其设置为新序列的起始值。",
+    "settings.numberGeneratorSequences.nextValue.info": "此字段根据数据库中的当前值显示序列中的<strong>下一个值</strong> 。可以人工将其设置为新序列的起始值。",
     "settings.numberGeneratorSequences.prefix": "前缀",
     "settings.numberGeneratorSequences.postfix": "后缀",
     "settings.numberGeneratorSequences.description": "附注",
