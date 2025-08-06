@@ -40,7 +40,7 @@
     "settings.numberGeneratorSequences.checkDigitAlgo": "Метод",
     "settings.numberGeneratorSequences.checkDigitAlgo.info": "Метод контрольної суми для контрольної цифри. Використовуйте шаблон введення контрольної суми, щоб визначити, що потрібно додати до обчислення, наприклад, префікс або суфікс.",
     "settings.numberGeneratorSequences.format": "Формат",
-    "settings.numberGeneratorSequences.format.info": "The Format field defines the length of the generated number without check digit and pre- and suffix. Use # to define the length without padding, e.g. \"####\". Or use a character to include padding. E.g. \"0000\" will set the length to 4 and add zeros to produce outputs such as 0045.",
+    "settings.numberGeneratorSequences.format.info": "Поле \"Формат\" визначає довжину згенерованого номера без контрольної цифри, префікса та суфікса. Використовуйте символ # для визначення довжини без заповнення будь-якими знаками, наприклад, \"####\". Або ж використовуйте символ, який додасть заповнення. Наприклад, \"0000\" встановить довжину як \"4\" та додасть нулі до результатів виводу, які будуть виглядати так - 0045.",
     "settings.numberGeneratorSequences.outputTemplate": "Шаблон виводу",
     "settings.numberGeneratorSequences.outputTemplate.info": "Шаблон виводу визначає правила, що застосовуються для створення послідовності. Шаблони формуються за допомогою Groovy. Див. нижче для отримання додаткової інформації.",
     "settings.numberGeneratorSequences.nextValue": "Наступне значення",
