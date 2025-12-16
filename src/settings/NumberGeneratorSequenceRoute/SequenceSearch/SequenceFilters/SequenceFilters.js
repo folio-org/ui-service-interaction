@@ -52,7 +52,7 @@ const SequenceFilters = ({
           { value: 'maximumCheck.value==at_maximum', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.atMax' }) },
           { value: 'maximumCheck.value==below_threshold', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.belowThreshold' }) },
           { value: 'maximumCheck.value==over_threshold', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.overThreshold' }) },
-          { value: 'maximumCheck isNull', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.noMaxSet' }) }
+          { value: 'maximumCheck isNull', label: intl.formatMessage({ id: 'ui-service-interaction.settings.numberGeneratorSequences.maximumCheck.noThresholdSet' }) }
         ]}
         label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumCheck" />}
         name="maximumCheck"
