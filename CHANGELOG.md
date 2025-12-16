@@ -5,6 +5,7 @@
     Updated all stripes-* dependencies for the stripes v10 upgrade along with react-intl and formatjs/cli
   * Removed dismissible from ModalButton as default
   * Fixed translations file escape characters 
+  * SI-101 Change help text for format field
 
 ## 3.1.1 2024-11-28
   * SI-76 Checksum method display enhancements
