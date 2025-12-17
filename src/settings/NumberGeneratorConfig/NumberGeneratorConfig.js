@@ -10,8 +10,8 @@ import { ActionList, required } from '@k-int/stripes-kint-components';
 import { useNumberGenerators, useMutateNumberGenerator } from '../../public';
 
 const NumberGeneratorConfig = ({
+  baseUrl,
   history,
-  match
 }) => {
   const { data: { results: data = [] } = {} } = useNumberGenerators();
   const intl = useIntl();
@@ -89,7 +89,7 @@ const NumberGeneratorConfig = ({
         defaultWidth="fill"
         dismissible
         id="settings-numberGenerators-list"
-        onClose={() => history.push(match.url)}
+        onClose={() => history.push(baseUrl)}
         paneTitle={<FormattedMessage id="ui-service-interaction.settings.numberGenerators" />}
       >
         <MessageBanner>
@@ -183,15 +183,13 @@ const NumberGeneratorConfig = ({
 };
 
 NumberGeneratorConfig.propTypes = {
+  baseUrl: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }),
   location: PropTypes.shape({
     pathName: PropTypes.string
   }),
-  match: PropTypes.shape({
-    url: PropTypes.string.isRequired
-  })
 };
 
 export default NumberGeneratorConfig;

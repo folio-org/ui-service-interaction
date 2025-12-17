@@ -91,8 +91,8 @@ describe('NumberGeneratorConfig', () => {
   beforeEach(async () => {
     renderComponent = renderWithTranslations(
       <NumberGeneratorConfig
+        baseUrl="baseUrl"
         history={{ push }}
-        match={{ url: 'someUrl' }}
       />,
     );
   });
@@ -179,7 +179,7 @@ describe('NumberGeneratorConfig', () => {
     });
 
     test('history push gets called', () => {
-      expect(push).toHaveBeenCalledWith('someUrl');
+      expect(push).toHaveBeenCalledWith('baseUrl');
     });
   });
 });
