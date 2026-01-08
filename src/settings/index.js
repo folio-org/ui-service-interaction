@@ -7,7 +7,12 @@ import NumberGeneratorConfig from './NumberGeneratorConfig';
 import NumberGeneratorSequenceRoute from './NumberGeneratorSequenceRoute';
 
 const ServintSettings = (settingProps) => {
-  const renderNumberGeneratorConfig = useCallback((innerProps) => (<NumberGeneratorConfig {...innerProps} />), []);
+  const renderNumberGeneratorConfig = useCallback((innerProps) => (
+    <NumberGeneratorConfig
+      baseUrl={settingProps.match?.url}
+      {...innerProps}
+    />
+  ), [settingProps]);
   const numberGeneratorViewPerm = 'ui-service-interaction.numberGenerator.view';
   const renderNumberGeneratorSequenceRoute = useCallback((innerProps) => (
     <NumberGeneratorSequenceRoute

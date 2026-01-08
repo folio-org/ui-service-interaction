@@ -1,4 +1,5 @@
 ## 4.1.0 IN PROGRESS
+  * SI-134 Fix close button
 
 ## 4.0.0 2024-03-13
   * SI-108 *BREAKING* Stripes v10 dependencies update
