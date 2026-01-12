@@ -1,4 +1,5 @@
 ## 4.1.0 IN PROGRESS
+* SI-143 Prevent reset of initialValues in form with each re-render
 
 ## 4.0.0 2024-03-13
   * SI-108 *BREAKING* Stripes v10 dependencies update
