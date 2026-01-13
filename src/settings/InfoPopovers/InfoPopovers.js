@@ -1,6 +1,8 @@
 import { FormattedMessage } from 'react-intl';
 import { Button, InfoPopover, Layout } from '@folio/stripes/components';
 
+import css from './Styles.css';
+
 const ChecksumAlgoInfo = () => (
   <InfoPopover
     content={
@@ -107,8 +109,16 @@ const PreChecksumTemplateInfo = () => (
 
 const FormatInfo = () => (
   <InfoPopover
+    className={css.customPopoverWidth}
     content={
-      <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format.info" />
+      <div>
+        <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format.info" />
+        <ul>
+          <li><FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format.info.item1" /></li>
+          <li><FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format.info.item2" /></li>
+          <li><FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.format.info.item3" /></li>
+        </ul>
+      </div>
     }
   />
 );
