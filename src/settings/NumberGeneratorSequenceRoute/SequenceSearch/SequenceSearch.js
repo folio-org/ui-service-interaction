@@ -123,6 +123,14 @@ const SequenceSearch = ({
   // We need to fetch the "none" option
   const { noneChecksumId } = useChecksumAlgorithms();
 
+  // Stabilize initialValues, otherwise the form values will be reset with each re-render.
+  const formInitialValues = useMemo(() => ({
+    checkDigitAlgo: { id: noneChecksumId },
+    nextValue: 1,
+    outputTemplate: BASE_TEMPLATE,
+    enabled: true
+  }), [noneChecksumId]);
+
   const {
     post: addSeq,
   } = useMutateNumberGeneratorSequence({
@@ -326,12 +334,7 @@ const SequenceSearch = ({
         }}
       </SearchAndSortQuery>
       <FormModal
-        initialValues={{
-          checkDigitAlgo: { id: noneChecksumId },
-          nextValue: 1,
-          outputTemplate: BASE_TEMPLATE,
-          enabled: true
-        }}
+        initialValues={formInitialValues}
         modalProps={{
           dismissible: true,
           label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.newModal" />,

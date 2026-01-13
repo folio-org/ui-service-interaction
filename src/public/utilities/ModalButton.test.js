@@ -27,7 +27,7 @@ describe('ModalButton', () => {
         dismissible: true,
       }
     },
-  ])('Modal button ($title)', ({ canClose = false, props = {}}) => {
+  ])('Modal button ($title)', ({ canClose = false, props = {} }) => {
     beforeEach(() => {
       renderComponent = renderWithTranslations(
         <ModalButton
