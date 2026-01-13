@@ -76,7 +76,7 @@
   "settings.numberGeneratorSequences.maximumCheck.atMax": "At maximum",
   "settings.numberGeneratorSequences.maximumCheck.overThreshold": "Over threshold",
   "settings.numberGeneratorSequences.maximumCheck.belowThreshold": "Below threshold",
-  "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "No maximum set",
+  "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
   "settings.numberGeneratorSequences.checksumError": "Using a checksum with a value < 1 is not supported.",
   "settings.numberGeneratorSequences.tooltip.viewSequence": "View sequence {seq}",
   "settings.numberGeneratorSequences.generator": "Generator",

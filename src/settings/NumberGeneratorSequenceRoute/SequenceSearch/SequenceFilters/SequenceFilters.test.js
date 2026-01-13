@@ -67,7 +67,7 @@ describe('SequenceFilters', () => {
         { label: 'At maximum', selectedJSON: '{"maximumCheck":["maximumCheck.value==at_maximum"]}' },
         { label: 'Below threshold', selectedJSON: '{"maximumCheck":["maximumCheck.value==below_threshold"]}' },
         { label: 'Over threshold', selectedJSON: '{"maximumCheck":["maximumCheck.value==over_threshold"]}' },
-        { label: 'No maximum set', selectedJSON: '{"maximumCheck":["maximumCheck isNull"]}' }
+        { label: 'No threshold set', selectedJSON: '{"maximumCheck":["maximumCheck isNull"]}' }
       ],
     }
   ])('$selectLabel select', ({ selectLabel, selectOptions }) => {
