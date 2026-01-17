@@ -91,10 +91,13 @@
     "numberGenerator.modal.includeAtMaxSequences": "Maksimum değerlerine ulaşmış dizileri dahil edin",
     "numberGenerator.modal.exactCodeMatch": "Tam kod eşleşmesi",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Hata:</strong> Sıra <strong>{name}</strong> oluşturulmadı. <strong>Kodun</strong> benzersiz olup olmadığını kontrol edin ve tekrar kaydetmeyi deneyin. Bu hata tekrarlanırsa lütfen yöneticinize başvurun.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Maksimum ayar yok",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Girdi şablonu",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Kontrol basamağı hesaplanırken girilecek sayıyı tanımlamak için kurallar oluşturun. Hem önek hem de sonek Groovy biçimlendirmesi kullanılarak şablon haline getirilebilir. Kullanım $'{'generated_number'}' oluşturulan sayı için yer tutucu olarak. Örneğin 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Sıra Ayarları",
     "settings.numberGeneratorSequences.section.checksumSettings": "Checksum ayarları",
-    "settings.numberGeneratorSequences.section.outputSettings": "Çıkış ayarları"
+    "settings.numberGeneratorSequences.section.outputSettings": "Çıkış ayarları",
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
+    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
+    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
 }
