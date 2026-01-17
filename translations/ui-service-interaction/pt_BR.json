@@ -40,7 +40,7 @@
     "settings.numberGeneratorSequences.checkDigitAlgo": "Método de verificação",
     "settings.numberGeneratorSequences.checkDigitAlgo.info": "O método de soma de verificação para o dígito de verificação. Use o modelo de entrada de soma de verificação para definir o que precisa ser incluído no cálculo, por exemplo, prefixo ou sufixo.",
     "settings.numberGeneratorSequences.format": "Formato",
-    "settings.numberGeneratorSequences.format.info": "O campo Formato define o comprimento do número gerado. Use # para definir o comprimento sem preenchimento, por exemplo, \"####\". Ou use um caractere para incluir preenchimento. Por exemplo, \"0000\" definirá o comprimento para 4 e adicionará zeros para produzir saídas como 0045.",
+    "settings.numberGeneratorSequences.format.info": "O campo Formato permite preenchimento opcional, enquanto o campo Valor máximo define o comprimento do número incremental gerado (excluindo o dígito verificador, o prefixo e o sufixo).",
     "settings.numberGeneratorSequences.outputTemplate": "Modelo de saída",
     "settings.numberGeneratorSequences.outputTemplate.info": "O modelo de saída define as regras aplicadas para criar a sequência. Os modelos são formados usando Groovy. Veja abaixo para mais informações.",
     "settings.numberGeneratorSequences.nextValue": "Próximo valor",
@@ -91,10 +91,13 @@
     "numberGenerator.modal.includeAtMaxSequences": "Incluir sequências que atingiram seu valor máximo",
     "numberGenerator.modal.exactCodeMatch": "Correspondência exata de código",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Erro:</strong> A sequência <strong>{name}</strong> não foi criada. Verifique se o <strong>código</strong> é único e tente salvar novamente. Se esse erro persistir, entre em contato com seu administrador.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Sem valor máximo definido",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Modelo de planilha de entrada",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Crie regras para definir o número a ser inserido ao calcular o dígito de verificação. Tanto o prefixo quanto o sufixo podem ser modelados, usando a marcação Groovy. Use $'{'generated_number'}' como espaço reservado para o número gerado. Por exemplo, 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Configurações de sequência",
     "settings.numberGeneratorSequences.section.checksumSettings": "Configurações de soma de verificação",
-    "settings.numberGeneratorSequences.section.outputSettings": "Configurações de saída"
+    "settings.numberGeneratorSequences.section.outputSettings": "Configurações de saída",
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "Nenhum limite definido",
+    "settings.numberGeneratorSequences.format.info.item1": "Use # para dígitos sem preenchimento (ex.: #### para quatro dígitos).",
+    "settings.numberGeneratorSequences.format.info.item2": "Para adicionar preenchimento, especifique o caractere. Por exemplo, 0000 para zeros à esquerda, resultando em saídas como 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "Se um valor máximo for definido, o comprimento do formato deverá corresponder a ele. O campo de valor máximo impõe o comprimento do campo; por exemplo, o valor máximo de 9999 indica um comprimento máximo de quatro caracteres e deve ser combinado com um valor de formato correspondente, por exemplo, #### ou 0000."
 }

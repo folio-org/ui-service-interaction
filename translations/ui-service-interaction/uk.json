@@ -91,10 +91,13 @@
     "numberGenerator.modal.includeAtMaxSequences": "Включити послідовності, які досягли максимального значення",
     "numberGenerator.modal.exactCodeMatch": "Точна відповідність коду",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Помилка:</strong> Послідовність <strong>{name}</strong> не була створена. Переконайтеся, що <strong>код</strong> є унікальним і спробуйте зберегти ще раз. Якщо ця помилка повторюється, зверніться до адміністратора.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Максимум не встановлений",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Шаблон введення",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Створіть правила для визначення числа, яке потрібно ввести під час обчислення контрольної цифри. Як префікс, так і суфікс можна використовувати як шаблони за допомогою розмітки Groovy. Використовуйте $'{'generated_number'}' як заповнювач для згенерованого числа. Наприклад, 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Налаштування послідовності",
     "settings.numberGeneratorSequences.section.checksumSettings": "Налаштування контрольної суми",
-    "settings.numberGeneratorSequences.section.outputSettings": "Налаштування виводу"
+    "settings.numberGeneratorSequences.section.outputSettings": "Налаштування виводу",
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
+    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
+    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
 }

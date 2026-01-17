@@ -91,10 +91,13 @@
     "numberGenerator.modal.includeAtMaxSequences": "Uwzględnij sekwencje, które osiągnęły maksymalną wartość",
     "numberGenerator.modal.exactCodeMatch": "Dokładne dopasowanie kodu",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Brak maksimum",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Szablon wejściowy",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Utwórz reguły, aby zdefiniować numer, który ma być używany do obliczenia cyfry kontrolnej. Zarówno prefiks, jak i sufiks mogą mieć szablon, używając składni Groovy. Użyj $'{'generated_number'}' jako symbolu zastępczego dla wygenerowanego numeru. Np. 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Ustawienia sekwencji",
     "settings.numberGeneratorSequences.section.checksumSettings": "Ustawienia sumy kontrolnej",
-    "settings.numberGeneratorSequences.section.outputSettings": "Ustawienia wyjściowe"
+    "settings.numberGeneratorSequences.section.outputSettings": "Ustawienia wyjściowe",
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
+    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
+    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
 }
