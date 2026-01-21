@@ -2,6 +2,7 @@
   * SI-94 Change Filter Usage status “No maximum set” to "No threshold set"
   * SI-101 Change help text for format field
   * SI-143 Prevent reset of initialValues in form with each re-render
+  * SI-134 Fix close button
 
 ## 4.0.0 2024-03-13
   * SI-108 *BREAKING* Stripes v10 dependencies update
