@@ -40,7 +40,7 @@
     "settings.numberGeneratorSequences.checkDigitAlgo": "Metoda",
     "settings.numberGeneratorSequences.checkDigitAlgo.info": "Metoda kontrolního součtu pro kontrolní číslici. Pomocí vstupní šablony kontrolního součtu definujte, co má být zahrnuto do výpočtu, např. prefix nebo suffix.",
     "settings.numberGeneratorSequences.format": "Formát",
-    "settings.numberGeneratorSequences.format.info": "Pole Formát definuje délku vygenerovaného čísla bez kontrolní číslice a prefixu a suffixu. Pomocí # definujte délku bez výplně, např. \"####\". Nebo použijte znak k zahrnutí výplně. Např. \"0000\" nastaví délku na 4 a přidá nuly, aby se vytvořily výstupy, jako je 0045.",
+    "settings.numberGeneratorSequences.format.info": "Pole Formát podporuje volitelné odsazení, zatímco pole Maximální hodnota definuje délku generovaného přírůstkového čísla (bez kontrolní číslice, prefixu a sufixu).",
     "settings.numberGeneratorSequences.outputTemplate": "Výstupní šablona",
     "settings.numberGeneratorSequences.outputTemplate.info": "Výstupní šablona definuje pravidla použitá k vytvoření sekvence. Šablony se vytvářejí pomocí Groovy. Další informace naleznete níže.",
     "settings.numberGeneratorSequences.nextValue": "Další hodnota",
@@ -91,10 +91,13 @@
     "numberGenerator.modal.includeAtMaxSequences": "Zahrnout sekvence, které dosáhly své maximální hodnoty.",
     "numberGenerator.modal.exactCodeMatch": "Přesná shoda kódu",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Chyba:</strong> Sekvence <strong>{name}</strong> nebyla vytvořena. Zkontrolujte, zda je <strong>kód</strong> jedinečný, a zkuste jej uložit znovu. Pokud se tato chyba opakuje, kontaktujte svého správce.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Není nastaveno maximální číslo",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Vstupní šablona",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Vytvoření pravidel pro definování čísla, které se má zadat při výpočtu kontrolní číslice. Prefix i sufix lze vytvořit pomocí značek Groovy. Jako zástupný znak pro generované číslo použijte $'{'generated_number'}'. Např. 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Nastavení pořadí",
     "settings.numberGeneratorSequences.section.checksumSettings": "Nastavení kontrolního součtu",
-    "settings.numberGeneratorSequences.section.outputSettings": "Nastavení výstupu"
+    "settings.numberGeneratorSequences.section.outputSettings": "Nastavení výstupu",
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "Není nastavena prahová hodnota",
+    "settings.numberGeneratorSequences.format.info.item1": "Pro číslice bez odsazení použijte znak # (např. #### pro čtyři číslice).",
+    "settings.numberGeneratorSequences.format.info.item2": "Chcete-li přidat odsazení, zadejte znak. Např. 0000 pro úvodní nuly, což má za následek výstup jako 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "Pokud je nastavena maximální hodnota, délka formátu se s ní musí shodovat. Pole maximální hodnoty vynucuje délku pole, např. maximální hodnota 9999 označuje maximální délku čtyři znaky a musí být spárována s odpovídající hodnotou formátu, např. #### nebo 0000."
 }

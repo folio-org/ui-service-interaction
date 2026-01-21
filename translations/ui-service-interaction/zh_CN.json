@@ -91,10 +91,13 @@
     "numberGenerator.modal.includeAtMaxSequences": "包括已达到最大值的序列",
     "numberGenerator.modal.exactCodeMatch": "代码精确匹配",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>错误 :  </strong>序列<strong> {name} </strong>未创建。请检查<strong>代码</strong>是否唯一，然后重试保存。如果此错误再次出现，请联系管理员。",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "无最大值设置",
     "settings.numberGeneratorSequences.preChecksumTemplate": "输入模板",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "创建规则来定义计算校验位时要输入的数字。前缀和后缀都可以使用 Groovy 标记进行模板化。使用 $'{'generated_number'}'作为生成数字的占位符。例如 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "序列设置",
     "settings.numberGeneratorSequences.section.checksumSettings": "校验和设置",
-    "settings.numberGeneratorSequences.section.outputSettings": "输出设置"
+    "settings.numberGeneratorSequences.section.outputSettings": "输出设置",
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
+    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
+    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
 }

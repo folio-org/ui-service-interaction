@@ -40,7 +40,7 @@
     "settings.numberGeneratorSequences.checkDigitAlgo": "الطريقة",
     "settings.numberGeneratorSequences.checkDigitAlgo.info": "طريقة المجموع الاختباري لرقم التحقق. استخدم قالب إدخال المجموع الاختباري لتحديد ما يجب إدراجه في الحساب مثل البادئة أو اللاحقة.",
     "settings.numberGeneratorSequences.format": "التنسيق",
-    "settings.numberGeneratorSequences.format.info": "The Format field defines the length of the generated number without check digit and pre- and suffix. Use # to define the length without padding, e.g. \"####\". Or use a character to include padding. E.g. \"0000\" will set the length to 4 and add zeros to produce outputs such as 0045.",
+    "settings.numberGeneratorSequences.format.info": "The Format field supports optional padding, while the Maximum value field defines the length of the generated incremental number (excluding the check digit, prefix and suffix)",
     "settings.numberGeneratorSequences.outputTemplate": "قالب الإخراج",
     "settings.numberGeneratorSequences.outputTemplate.info": "يحدد قالب الإخراج القواعد المطبقة لإنشاء التسلسل. يتم تشكيل القوالب باستخدام Groovy. انظر أدناه لمزيد من المعلومات.",
     "settings.numberGeneratorSequences.nextValue": "القيمة التالية",
@@ -91,10 +91,13 @@
     "numberGenerator.modal.includeAtMaxSequences": "إدراج التسلسلات التي بلغت قيمتها القصوى",
     "numberGenerator.modal.exactCodeMatch": "Exact code match",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "لم يتم تعيين حد أقصى",
     "settings.numberGeneratorSequences.preChecksumTemplate": "قالب الإدخال",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Create rules to define the number to be inputted when calculating the check digit. Both the prefix and suffix can be templated, using Groovy markup. Use $'{'generated_number'}' as placeholder for the generated number. E.g. 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "إعدادات التسلسل",
     "settings.numberGeneratorSequences.section.checksumSettings": "إعدادات المجموع الاختباري",
-    "settings.numberGeneratorSequences.section.outputSettings": "إعدادات الإخراج"
+    "settings.numberGeneratorSequences.section.outputSettings": "إعدادات الإخراج",
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
+    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
+    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
 }

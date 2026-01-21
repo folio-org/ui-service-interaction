@@ -91,10 +91,13 @@
     "numberGenerator.modal.includeAtMaxSequences": "Nummernkreise einbeziehen, die ihren maximalen Wert erreicht haben",
     "numberGenerator.modal.exactCodeMatch": "Genaue Code-Übereinstimmung",
     "settings.numberGeneratorSequences.callout.create.error": "<strong>Fehler:</strong> Nummernkreis <strong>{name}</strong> wurde nicht erstellt. Bitte überprüfen, dass der <strong>Code</strong> eindeutig ist und danach erneut abspeichern. Sollte dieser Fehler erneut auftreten, bitte den Administrator kontaktieren.",
-    "settings.numberGeneratorSequences.maximumCheck.noMaxSet": "Kein maximaler Wert festgelegt",
     "settings.numberGeneratorSequences.preChecksumTemplate": "Eingabevorlage",
     "settings.numberGeneratorSequences.preChecksumTemplate.info": "Erstellung der Regel, die die Nummer definiert, die für die Berechnung der Prüfziffer angewandt wird. Sowohl Präfix als auch Suffix können einbezogen werden. Groovymarkup wird genutzt. Als Platzhalter für die generierte Nummer wird $'{'generated_number'}' verwendet, z.B. 05$'{'generated_number'}'01",
     "settings.numberGeneratorSequences.section.sequenceSettings": "Sequenz-Einstellungen",
     "settings.numberGeneratorSequences.section.checksumSettings": "Prüfsummen-Einstellungen",
-    "settings.numberGeneratorSequences.section.outputSettings": "Ausgabe-Einstellungen"
+    "settings.numberGeneratorSequences.section.outputSettings": "Ausgabe-Einstellungen",
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
+    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
+    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
 }
