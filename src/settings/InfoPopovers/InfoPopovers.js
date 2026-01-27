@@ -14,7 +14,7 @@ const ChecksumAlgoInfo = () => (
           <Button
             allowAnchorClick
             buttonStyle="primary"
-            href="https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction"
+            href="https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction/#method"
             marginBottom0
             rel="noreferrer"
             target="blank"
@@ -70,7 +70,7 @@ const OutputTemplateInfo = () => (
           <Button
             allowAnchorClick
             buttonStyle="primary"
-            href="https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction"
+            href="https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction/#output-settings"
             marginBottom0
             rel="noreferrer"
             target="blank"
@@ -94,7 +94,7 @@ const PreChecksumTemplateInfo = () => (
           <Button
             allowAnchorClick
             buttonStyle="primary"
-            href="https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction"
+            href="https://docs.folio.org/docs/settings/settings_service_interaction/settings_service_interaction/#input-template"
             marginBottom0
             rel="noreferrer"
             target="blank"
