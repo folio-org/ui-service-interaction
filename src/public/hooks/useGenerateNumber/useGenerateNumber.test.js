@@ -230,7 +230,7 @@ describe('useGenerateNumber', () => {
 
 
   const approachingMaxWarningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> is approaching <strong>{maxVal}</strong>, its maximum value.';
-  const hitMaxWarningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> has now reached its maximum value of <strong>{maxVal}</strong>and cannot be used again.';
+  const hitMaxWarningText = '<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> has now reached its maximum value of <strong>{maxVal}</strong> and cannot be used again.';
   const testWarningCode = (warningCode, expectedCalloutText, sendWarningCallouts = true) => {
     describe(`Warning code: ${warningCode}`, () => {
       beforeEach(() => {

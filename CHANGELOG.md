@@ -3,6 +3,7 @@
   * SI-101 Change help text for format field
   * SI-143 Prevent reset of initialValues in form with each re-render
   * SI-134 Fix close button
+  * SI-145 Add space character in callout message "numberGenerator.warning.sequenceHitMaximumWarning"
   * SI-146 Change links in help texts in Settings > Service interaction > Number generator sequences
 
 ## 4.0.0 2024-03-13
