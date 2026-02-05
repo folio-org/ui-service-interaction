@@ -80,7 +80,7 @@
     "settings.numberGeneratorSequences.nextValue.changedWarning": "Changing the \"next value\" field can result in non-unique generated numbers.",
     "numberGenerator.warning": "<strong>Warning:</strong> The number was generated successfully but with an unspecified warning. It could be a temporary glitch. If this issue recurs please contact your administrator.",
     "numberGenerator.warning.sequenceOverThresholdWarning": "<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> is approaching <strong>{maxVal}</strong>, its maximum value.",
-    "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> has now reached its maximum value of <strong>{maxVal}</strong>and cannot be used again.",
+    "numberGenerator.warning.sequenceHitMaximumWarning": "<strong>Warning:</strong> The number generator sequence <strong>{name}</strong> has now reached its maximum value of <strong>{maxVal}</strong> and cannot be used again.",
     "numberGenerator.error": "<strong>Error:</strong> Unable to generate a number using the sequence <strong>{name}</strong>. Please try again. If this error recurs contact your administrator.",
     "numberGenerator.error.sequenceOverMaximumError": "<strong>Error:</strong> The number was not generated because the sequence <strong>{name}</strong> has reached <strong>{maxVal}</strong>, its maximum value. Please select a different sequence or contact your administrator.",
     "noResultsFound": "No results found",
@@ -96,8 +96,8 @@
     "settings.numberGeneratorSequences.section.sequenceSettings": "Sequence settings",
     "settings.numberGeneratorSequences.section.checksumSettings": "Checksum settings",
     "settings.numberGeneratorSequences.section.outputSettings": "Output settings",
-    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
-    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
-    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
-    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "Sin umbral",
+    "settings.numberGeneratorSequences.format.info.item1": "Utilice # para los dígitos sin relleno (por ejemplo, #### para cuatro dígitos).",
+    "settings.numberGeneratorSequences.format.info.item2": "Para añadir algún relleno, especifique el carácter que desea rellenar. Por ejemplo, 0000 para ceros a la izquierda, lo que da como resultado 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "Si se establece un valor máximo, la longitud del formato debe coincidir con él. El campo de valor máximo impone la longitud del campo, por ejemplo, el valor máximo de 9999 indica una longitud máxima de cuatro caracteres y debe ir emparejado con un valor de formato que coincida, por ejemplo, #### o 0000."
 }

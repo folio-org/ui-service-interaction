@@ -96,8 +96,8 @@
     "settings.numberGeneratorSequences.section.sequenceSettings": "Sequentie-instellingen",
     "settings.numberGeneratorSequences.section.checksumSettings": "Checksum-instellingen",
     "settings.numberGeneratorSequences.section.outputSettings": "Uitvoerinstellingen",
-    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
-    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
-    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
-    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "Geen drempel ingesteld",
+    "settings.numberGeneratorSequences.format.info.item1": "Gebruik # voor cijfers zonder opvulling (bijv. #### voor vier cijfers).",
+    "settings.numberGeneratorSequences.format.info.item2": "Om opvulling toe te voegen, geeft u het teken op. Bijvoorbeeld 0000 voor voorloopnullen, wat resulteert in uitvoer zoals 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "Als er een maximumwaarde is ingesteld, moet de lengte van het Format daarmee overeenstemmen. Het veld Maximumwaarde dwingt de lengte van het veld af, bijv. de maximumwaarde 9999 geeft een maximumlengte van vier tekens aan en moet gekoppeld worden aan een overeenkomende Formatwaarde, bijv. #### of 0000."
 }
