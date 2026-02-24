@@ -96,8 +96,8 @@
     "settings.numberGeneratorSequences.section.sequenceSettings": "Sequence settings",
     "settings.numberGeneratorSequences.section.checksumSettings": "Checksum settings",
     "settings.numberGeneratorSequences.section.outputSettings": "Output settings",
-    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
-    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
-    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
-    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "ยังไม่ได้กำหนดค่าเกณฑ์",
+    "settings.numberGeneratorSequences.format.info.item1": "ใช้ # สำหรับตัวเลขโดยไม่ต้องเติมศูนย์นำหน้า (เช่น #### สำหรับตัวเลขสี่หลัก)",
+    "settings.numberGeneratorSequences.format.info.item2": "หากต้องการเพิ่มการเติมเต็ม ให้ระบุอักขระ เช่น 0000 สำหรับการเติมเลขศูนย์ด้านหน้า ซึ่งจะได้ผลลัพธ์เป็น 0045",
+    "settings.numberGeneratorSequences.format.info.item3": "หากมีการกำหนดค่า “ค่าสูงสุด” ความยาวของรูปแบบจะต้องสอดคล้องกับค่าสูงสุดนั้น ช่องค่าสูงสุดจะใช้บังคับความยาวของฟิลด์ เช่น ค่าสูงสุด 9999 หมายถึงความยาวสูงสุด 4 อักขระ และต้องใช้คู่กับค่ารูปแบบที่สอดคล้องกัน เช่น #### หรือ 0000"
 }
