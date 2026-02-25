@@ -32,8 +32,7 @@
         "displayName": "UI: ui-service-interaction module is enabled",
         "visible": true,
         "subPermissions": [
-          "mod-settings.global.read.stripes-core.prefs.manage",
-          "mod-settings.entries.collection.get"
+          "stripes-core.settings.read"
         ]
       },
       {
@@ -41,8 +40,7 @@
         "displayName": "Settings (service-interaction): display list of settings pages",
         "subPermissions": [
           "settings.enabled",
-          "mod-settings.global.read.stripes-core.prefs.manage",
-          "mod-settings.entries.collection.get"
+          "stripes-core.settings.read"
         ],
         "visible": true
       },
