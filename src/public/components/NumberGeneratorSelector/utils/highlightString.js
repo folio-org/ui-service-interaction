@@ -11,6 +11,7 @@ const highlightString = (match, str, ignoreNull = true, simpleSplit = true) => {
         return (
           <mark
             key={i}
+            style={{ whiteSpace: 'pre' }}
           >
             {part}
           </mark>
@@ -18,7 +19,7 @@ const highlightString = (match, str, ignoreNull = true, simpleSplit = true) => {
       }
 
       return (
-        <span key={i}>
+        <span key={i} style={{ whiteSpace: 'pre' }}>
           {part}
         </span>
       );
