@@ -26,10 +26,10 @@ const matchString = (match, str, ignoreNull = true, simpleSplit = true) => {
   }
 
   if (simpleSplit) {
-    return [str.split(regexSimple)?.filter(s => s && s.trim()), regexSimple];
+    return [str.split(regexSimple)?.filter(s => s != null && s !== ''), regexSimple];
   }
 
-  return [str.split(regex)?.filter(s => s && s.trim()), regex];
+  return [str.split(regex)?.filter(s => s != null && s !== ''), regex];
 };
 
 export default matchString;
