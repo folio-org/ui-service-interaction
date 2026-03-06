@@ -9,8 +9,9 @@ import noop from 'lodash/noop';
 import {
   QueryTypedown,
   generateKiwtQueryParams,
-  highlightString
 } from '@k-int/stripes-kint-components';
+
+import highlightString from './utils/highlightString';
 
 import { Checkbox, Layout } from '@folio/stripes/components';
 import { InfoBox, useParallelBatchFetch } from '@folio/stripes-erm-components';
