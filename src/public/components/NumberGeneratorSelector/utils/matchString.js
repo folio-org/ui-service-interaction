@@ -4,13 +4,14 @@ const matchString = (match, str, ignoreNull = true, simpleSplit = true) => {
   // Simple regex split -- this is default behaviour
   const regexSimple = new RegExp(`${match.split(/(\s+)/).filter(h => h.trim()).map(hl => '(' + escapeRegExp(hl) + ')').join('|')}`, 'gi');
 
-  // Split Elivis "The King" Presley into [Elvis, The King, Presley]
+  // Split Elvis "The King" Presley into [Elvis, The King, Presley]
+  const quotedParts = match.match(/"[^"]*"|\S+/g) || [];
   const regex = new RegExp(`${
-    match.split(/(?!\B"[^"]*)\s+(?![^"]*"\B)/)
+    quotedParts
          .filter(h => h.trim())
          .map(quotedSection => {
             if (quotedSection.charAt(0) === '"' && quotedSection.charAt(quotedSection.length - 1) === '"') {
-              return quotedSection.slice(1, quotedSection.length - 1);
+              return quotedSection.slice(1, -1);
             }
             return quotedSection;
           })

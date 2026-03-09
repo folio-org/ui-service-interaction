@@ -4,13 +4,13 @@ const highlightString = (match, str, ignoreNull = true, simpleSplit = true) => {
   const [parts, regex] = matchString(match, str, ignoreNull, simpleSplit);
 
   return (
-    parts.map((part, i) => {
+    parts.map((part) => {
       // RegExp is stateful, set up a new one to work with
       const immutableRegex = new RegExp(regex);
       if (immutableRegex.exec(part) !== null) {
         return (
           <mark
-            key={i}
+            key={`mark-${part}`}
             style={{ whiteSpace: 'pre' }}
           >
             {part}
@@ -19,7 +19,7 @@ const highlightString = (match, str, ignoreNull = true, simpleSplit = true) => {
       }
 
       return (
-        <span key={i} style={{ whiteSpace: 'pre' }}>
+        <span key={`span-${part}`} style={{ whiteSpace: 'pre' }}>
           {part}
         </span>
       );
