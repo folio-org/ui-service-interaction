@@ -40,7 +40,7 @@
     "settings.numberGeneratorSequences.checkDigitAlgo": "方式",
     "settings.numberGeneratorSequences.checkDigitAlgo.info": "校验位的校验和方法。使用校验和输入模板来定义计算中需要包含的内容，例如前缀或后缀。",
     "settings.numberGeneratorSequences.format": "格式",
-    "settings.numberGeneratorSequences.format.info": "格式字段定义生成的数字的长度 : 不包括校验位和前后缀 ) 。使用 # 定义不带填充的长度，例如“####”。或者使用字符来包含填充。例如，“0000”将长度设置为 4，并添加零以产生输出，例如 0045。",
+    "settings.numberGeneratorSequences.format.info": "“格式”字段支持可选填充，“最大值”字段定义生成的递增数字的长度（不包括校验位、前缀和后缀）。",
     "settings.numberGeneratorSequences.outputTemplate": "输出模板",
     "settings.numberGeneratorSequences.outputTemplate.info": "输出模板定义用于创建序列的规则。模板是使用 Groovy 形成的。请参阅下面的详细信息。",
     "settings.numberGeneratorSequences.nextValue": "下一个值",
@@ -96,8 +96,8 @@
     "settings.numberGeneratorSequences.section.sequenceSettings": "序列设置",
     "settings.numberGeneratorSequences.section.checksumSettings": "校验和设置",
     "settings.numberGeneratorSequences.section.outputSettings": "输出设置",
-    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
-    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
-    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
-    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "未设置阈值",
+    "settings.numberGeneratorSequences.format.info.item1": "对于没有填充的数字，请使用 #（例如，四位数字，请使用 ####）。",
+    "settings.numberGeneratorSequences.format.info.item2": "要添加填充，请指定字符。例如，0000 表示前导零，输出结果类似于 0045。",
+    "settings.numberGeneratorSequences.format.info.item3": "如果设置了最大值，则格式长度必须与之匹配。最大值字段强制规定字段长度，例如，最大值 9999 表示最大长度为四个字符，并且必须与匹配的格式值（例如 #### 或 0000）配对。"
 }
