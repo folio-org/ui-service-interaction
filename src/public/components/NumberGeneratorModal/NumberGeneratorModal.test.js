@@ -1,6 +1,7 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button as MockButton } from '@folio/stripes/components';
 import { Button } from '@folio/stripes-erm-testing';
+import { useStripes } from '@folio/stripes/core';
 
 import { renderWithTranslations } from '../../../../test/helpers';
 import {
@@ -43,7 +44,7 @@ const NumberGeneratorModalProps = {
 };
 
 // This test is now remarkably small and ought to be improved to get test coverage up later...
-describe('NumberGeneratorModal', () => {
+describe('NumberGeneratorModal - with permission', () => {
   let renderedComponent;
   describe('NumberGeneratorModal with generator prop', () => {
     beforeEach(() => {
@@ -96,5 +97,30 @@ describe('NumberGeneratorModal', () => {
         });
       });
     });
+  });
+});
+
+describe('NumberGeneratorModal - without permission', () => {
+  let renderedComponent;
+
+  beforeEach(() => {
+    useStripes.mockReturnValue({
+      hasPerm: jest.fn().mockReturnValue(false),
+    });
+    renderedComponent = renderWithTranslations(
+      <NumberGeneratorModal
+        {...NumberGeneratorModalProps}
+      />
+    );
+  });
+
+  test('renders noPermission message', () => {
+    const { getByText } = renderedComponent;
+    expect(getByText('You do not have the necessary permissions to use number generator sequences. Please contact your system administrator.')).toBeInTheDocument();
+  });
+
+  test('does not render the selector', () => {
+    const { queryByText } = renderedComponent;
+    expect(queryByText('NumberGeneratorSelector')).not.toBeInTheDocument();
   });
 });

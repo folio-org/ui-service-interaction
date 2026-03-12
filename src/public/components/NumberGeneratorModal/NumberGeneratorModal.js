@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Button, Modal, ModalFooter } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
 
 import NumberGeneratorButton from '../NumberGeneratorButton';
 import NumberGeneratorSelector from '../NumberGeneratorSelector';
@@ -24,6 +25,8 @@ const NumberGeneratorModal = forwardRef(({
   ...modalProps
 }, ref) => {
   const [selectedSequence, setSelectedSequence] = useState();
+  const stripes = useStripes();
+  const hasPerms = stripes.hasPerm('ui-service-interaction.numberGenerator.view');
 
   return (
     <Modal
@@ -56,15 +59,20 @@ const NumberGeneratorModal = forwardRef(({
       label={<FormattedMessage id="ui-service-interaction.numberGenerator.selectGenerator" />}
       {...modalProps}
     >
-      {renderTop ? renderTop() : null}
-      <NumberGeneratorSelector
-        displayError={displayError}
-        displayWarning={displayWarning}
-        generator={generator}
-        onSequenceChange={(seq) => setSelectedSequence(seq)}
-        {...selectorProps}
-      />
-      {renderBottom ? renderBottom() : null}
+      {hasPerms ? (
+        <>
+          {renderTop ? renderTop() : null}
+          <NumberGeneratorSelector
+            displayError={displayError}
+            displayWarning={displayWarning}
+            generator={generator}
+            onSequenceChange={(seq) => setSelectedSequence(seq)}
+            {...selectorProps}
+          />
+          {renderBottom ? renderBottom() : null}
+        </>
+      ) : <FormattedMessage id="ui-service-interaction.numberGenerator.noPermission" />
+      }
     </Modal>
   );
 });

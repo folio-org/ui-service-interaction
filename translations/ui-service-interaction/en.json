@@ -89,6 +89,7 @@
   "settings.numberGeneratorSequences.callout.create.error": "<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.", 
   "numberGenerator.generateDisabledSequenceError": "This sequence is marked as disabled and cannot be generated from. Please contact a system admin",
   "numberGenerator.generate": "Generate",
+  "numberGenerator.noPermission": "You do not have the necessary permissions to use number generator sequences. Please contact your system administrator.",
   "numberGenerator.selectGenerator": "Select generator",
   "numberGenerator.generator": "Generator",
   "numberGenerator.warning": "<strong>Warning:</strong> The number was generated successfully but with an unspecified warning. It could be a temporary glitch. If this issue recurs please contact your administrator.",
