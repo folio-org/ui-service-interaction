@@ -5,6 +5,7 @@
   * SI-134 Fix close button
   * SI-145 Add space character in callout message "numberGenerator.warning.sequenceHitMaximumWarning"
   * SI-146 Change links in help texts in Settings > Service interaction > Number generator sequences
+  * SI-139 Add notice when searching sequences in number generators modal without permissions
 
 ## 4.0.0 2024-03-13
   * SI-108 *BREAKING* Stripes v10 dependencies update
