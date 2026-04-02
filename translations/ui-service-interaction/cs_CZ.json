@@ -99,5 +99,6 @@
     "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "Není nastavena prahová hodnota",
     "settings.numberGeneratorSequences.format.info.item1": "Pro číslice bez odsazení použijte znak # (např. #### pro čtyři číslice).",
     "settings.numberGeneratorSequences.format.info.item2": "Chcete-li přidat odsazení, zadejte znak. Např. 0000 pro úvodní nuly, což má za následek výstup jako 0045.",
-    "settings.numberGeneratorSequences.format.info.item3": "Pokud je nastavena maximální hodnota, délka formátu se s ní musí shodovat. Pole maximální hodnoty vynucuje délku pole, např. maximální hodnota 9999 označuje maximální délku čtyři znaky a musí být spárována s odpovídající hodnotou formátu, např. #### nebo 0000."
+    "settings.numberGeneratorSequences.format.info.item3": "Pokud je nastavena maximální hodnota, délka formátu se s ní musí shodovat. Pole maximální hodnoty vynucuje délku pole, např. maximální hodnota 9999 označuje maximální délku čtyři znaky a musí být spárována s odpovídající hodnotou formátu, např. #### nebo 0000.",
+    "numberGenerator.noPermission": "Nemáte potřebná oprávnění k používání sekvencí generátoru čísel. Obraťte se na správce systému."
 }

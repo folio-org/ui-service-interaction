@@ -99,5 +99,6 @@
     "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "未设置阈值",
     "settings.numberGeneratorSequences.format.info.item1": "对于没有填充的数字，请使用 #（例如，四位数字，请使用 ####）。",
     "settings.numberGeneratorSequences.format.info.item2": "要添加填充，请指定字符。例如，0000 表示前导零，输出结果类似于 0045。",
-    "settings.numberGeneratorSequences.format.info.item3": "如果设置了最大值，则格式长度必须与之匹配。最大值字段强制规定字段长度，例如，最大值 9999 表示最大长度为四个字符，并且必须与匹配的格式值（例如 #### 或 0000）配对。"
+    "settings.numberGeneratorSequences.format.info.item3": "如果设置了最大值，则格式长度必须与之匹配。最大值字段强制规定字段长度，例如，最大值 9999 表示最大长度为四个字符，并且必须与匹配的格式值（例如 #### 或 0000）配对。",
+    "numberGenerator.noPermission": "You do not have the necessary permissions to use number generator sequences. Please contact your system administrator."
 }
