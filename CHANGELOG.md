@@ -1,8 +1,9 @@
-## 4.1.0 IN PROGRESS
+## 4.1.0 2026-04-17
   * SI-94 Change Filter Usage status “No maximum set” to "No threshold set"
   * SI-101 Change help text for format field
   * SI-143 Prevent reset of initialValues in form with each re-render
   * SI-134 Fix close button
+  * SI-136 Include global permissions in package.json base permissions
   * SI-145 Add space character in callout message "numberGenerator.warning.sequenceHitMaximumWarning"
   * SI-146 Change links in help texts in Settings > Service interaction > Number generator sequences
   * SI-139 Add notice when searching sequences in number generators modal without permissions
