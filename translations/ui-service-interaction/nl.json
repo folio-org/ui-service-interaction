@@ -99,5 +99,6 @@
     "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "Geen drempel ingesteld",
     "settings.numberGeneratorSequences.format.info.item1": "Gebruik # voor cijfers zonder opvulling (bijv. #### voor vier cijfers).",
     "settings.numberGeneratorSequences.format.info.item2": "Om opvulling toe te voegen, geeft u het teken op. Bijvoorbeeld 0000 voor voorloopnullen, wat resulteert in uitvoer zoals 0045.",
-    "settings.numberGeneratorSequences.format.info.item3": "Als er een maximumwaarde is ingesteld, moet de lengte van het Format daarmee overeenstemmen. Het veld Maximumwaarde dwingt de lengte van het veld af, bijv. de maximumwaarde 9999 geeft een maximumlengte van vier tekens aan en moet gekoppeld worden aan een overeenkomende Formatwaarde, bijv. #### of 0000."
+    "settings.numberGeneratorSequences.format.info.item3": "Als er een maximumwaarde is ingesteld, moet de lengte van het Format daarmee overeenstemmen. Het veld Maximumwaarde dwingt de lengte van het veld af, bijv. de maximumwaarde 9999 geeft een maximumlengte van vier tekens aan en moet gekoppeld worden aan een overeenkomende Formatwaarde, bijv. #### of 0000.",
+    "numberGenerator.noPermission": "U hebt niet de vereiste machtigingen om nummergeneratorreeksen te gebruiken. Neem contact op met uw Systeembeheerder."
 }

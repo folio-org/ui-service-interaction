@@ -99,5 +99,6 @@
     "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "Sin umbral",
     "settings.numberGeneratorSequences.format.info.item1": "Utilice # para los dígitos sin relleno (por ejemplo, #### para cuatro dígitos).",
     "settings.numberGeneratorSequences.format.info.item2": "Para añadir algún relleno, especifique el carácter que desea rellenar. Por ejemplo, 0000 para ceros a la izquierda, lo que da como resultado 0045.",
-    "settings.numberGeneratorSequences.format.info.item3": "Si se establece un valor máximo, la longitud del formato debe coincidir con él. El campo de valor máximo impone la longitud del campo, por ejemplo, el valor máximo de 9999 indica una longitud máxima de cuatro caracteres y debe ir emparejado con un valor de formato que coincida, por ejemplo, #### o 0000."
+    "settings.numberGeneratorSequences.format.info.item3": "Si se establece un valor máximo, la longitud del formato debe coincidir con él. El campo de valor máximo impone la longitud del campo, por ejemplo, el valor máximo de 9999 indica una longitud máxima de cuatro caracteres y debe ir emparejado con un valor de formato que coincida, por ejemplo, #### o 0000.",
+    "numberGenerator.noPermission": "You do not have the necessary permissions to use number generator sequences. Please contact your system administrator."
 }
