@@ -1,4 +1,5 @@
-## 4.2.0 IN PROGRESS
+## 4.1.1 2026-05-28
+  * Updated dependencies for Trillium release
 
 ## 4.1.0 2026-04-17
   * SI-94 Change Filter Usage status “No maximum set” to "No threshold set"
