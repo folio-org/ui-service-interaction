@@ -18,7 +18,7 @@
     "saveAndClose": "Zapisz i zamknij",
     "save": "Zapisz",
     "settings.numberGenerators.helpDocumentationLink": "Dokumentacja pomocy",
-    "settings.numberGenerators.helpText": "New number generators need development work to integrate them with FOLIO apps. Please review the {helpDocumentationLink} before creating a new number generator.",
+    "settings.numberGenerators.helpText": "Nowe generatory numerów wymagają prac programistycznych, aby zintegrować je z aplikacjami FOLIO. Przed utworzeniem nowego generatora numerów proszę zapoznać się z {helpDocumentationLink}.",
     "settings.numberGenerators.name": "Nazwa",
     "settings.numberGenerators.name.info": "Etykieta wyświetlana dla generatora numerów. Używana do grupowania sekwencji generatora numerów i wybierania ich w odpowiednich sytuacjach.",
     "settings.numberGenerators.code": "Kod",
@@ -99,5 +99,6 @@
     "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
     "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
     "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
-    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
+    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000.",
+    "numberGenerator.noPermission": "You do not have the necessary permissions to use number generator sequences. Please contact your system administrator."
 }

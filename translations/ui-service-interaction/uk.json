@@ -1,7 +1,7 @@
 {
     "meta.title": "Взаємодія сервісів",
     "settings.numberGenerators": "Генератори номерів",
-    "settings.numberGeneratorSequences": "Послідовності генератора номерів",
+    "settings.numberGeneratorSequences": "Генератор послідовності номерів",
     "settings.numberGeneratorSequences.edit": "Редагування послідовності генератора номерів",
     "settings.numberGenerator.edit": "Редагування генератора номерів",
     "numberGenerator.generate": "Згенерувати",
@@ -20,7 +20,7 @@
     "settings.numberGenerators.helpDocumentationLink": "довідкова документація",
     "settings.numberGenerators.helpText": "Нові генератори номерів потребують розробки для інтеграції з додатками FOLIO. Будь ласка, перегляньте {helpDocumentationLink} перед створенням нового генератора номерів.",
     "settings.numberGenerators.name": "Ім'я/Назва",
-    "settings.numberGenerators.name.info": "Мітка відображення генератора номерів. Використовується для групування послідовностей генераторів номерів та вибору з них за певних обставин.",
+    "settings.numberGenerators.name.info": "Мітка відображення генератора номерів. Використовується для групування генераторів послідовних номерів та вибору з них за певних обставин.",
     "settings.numberGenerators.code": "Код",
     "settings.numberGenerators.code.info": "Унікальний рядок, що представляє генератор чисел для технічних цілей. Не повинен містити пробілів.",
     "settings.numberGenerators.sequences": "Послідовності",
@@ -96,8 +96,9 @@
     "settings.numberGeneratorSequences.section.sequenceSettings": "Налаштування послідовності",
     "settings.numberGeneratorSequences.section.checksumSettings": "Налаштування контрольної суми",
     "settings.numberGeneratorSequences.section.outputSettings": "Налаштування виводу",
-    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "No threshold set",
-    "settings.numberGeneratorSequences.format.info.item1": "Use # for digits without padding (e.g., #### for four digits).",
-    "settings.numberGeneratorSequences.format.info.item2": "To add padding, specify the character. E.g., 0000 for leading zeros, resulting in outputs like 0045.",
-    "settings.numberGeneratorSequences.format.info.item3": "If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000."
+    "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "Порогове значення не встановлено",
+    "settings.numberGeneratorSequences.format.info.item1": "Використовуйте # для цифр без заповнювача (наприклад, #### для чотирьох цифр).",
+    "settings.numberGeneratorSequences.format.info.item2": "Щоб додати заповнювач, вкажіть символ. Наприклад, 0000 для початкових нулів; в результаті отримаємо вихідні дані типу 0045.",
+    "settings.numberGeneratorSequences.format.info.item3": "Якщо встановлено максимальне значення, довжина формату повинна відповідати цьому значенню. Поле максимального значення визначає довжину поля, наприклад, максимальне значення 9999 вказує на максимальну довжину в чотири символи і має бути поєднане з відповідним значенням формату, наприклад, #### або 0000.",
+    "numberGenerator.noPermission": "Ви не маєте необхідних прав для використання генератора послідовностей номерів. Зверніться до системного адміністратора."
 }

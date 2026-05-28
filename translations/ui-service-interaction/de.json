@@ -99,5 +99,6 @@
     "settings.numberGeneratorSequences.maximumCheck.noThresholdSet": "Kein Warnwert festgelegt",
     "settings.numberGeneratorSequences.format.info.item1": "Verwende # für generierte Nummern ohne Füllzeichen (z. B. #### für vier Ziffern).",
     "settings.numberGeneratorSequences.format.info.item2": "Um Füllzeichen hinzuzufügen, definiere das entsprechende Zeichen, z. B. 0000 für führende Nullen, was zu Ausgaben wie 0045 führt.",
-    "settings.numberGeneratorSequences.format.info.item3": "Wenn ein maximaler Wert festgelegt ist, muss die Formatlänge mit diesem übereinstimmen. Der maximale Wert bestimmt die Länge, z. B. ein maximaler Wert von 9999 definiert eine Länge von vier Ziffern und muss mit dem passenden Formatwert kombiniert werden, z. B. #### oder 0000."
+    "settings.numberGeneratorSequences.format.info.item3": "Wenn ein maximaler Wert festgelegt ist, muss die Formatlänge mit diesem übereinstimmen. Der maximale Wert bestimmt die Länge, z. B. ein maximaler Wert von 9999 definiert eine Länge von vier Ziffern und muss mit dem passenden Formatwert kombiniert werden, z. B. #### oder 0000.",
+    "numberGenerator.noPermission": "Derzeit keine erforderlichen Berechtigungen, um Nummernkreise zu verwenden. Bitte den Administrator kontaktieren."
 }
