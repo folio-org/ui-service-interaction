@@ -49,7 +49,7 @@ const NumberGeneratorSelector = ({
   onSequenceChange = noop,
   // Turn this off to render selector with no sequence selected automatically
   selectFirstSequenceOnMount = true,
-  ...queryTypedownProps
+  ...typedownProps
 }) => {
   const uniqueId = id ? SEQUENCE_TYPEDOWN_ID_UNIQUE(id) : SEQUENCE_TYPEDOWN_ID;
 
@@ -368,7 +368,7 @@ const NumberGeneratorSelector = ({
         onType={(e) => setQuery(e.target.value)}
         renderFooter={renderTypedownFooter}
         renderListItem={renderListItem}
-        {...queryTypedownProps}
+        {...typedownProps}
       />
       {renderWarningText()}
       {renderErrorText()}

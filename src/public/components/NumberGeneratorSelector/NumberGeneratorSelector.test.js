@@ -16,22 +16,6 @@ import { renderWithTranslations } from '../../../../test/helpers';
 
 
 /* ****** MOCKS ****** */
-const mockUseNumberGenerators = jest.fn((code) => {
-  let generators = [];
-  if (!code) {
-    generators = [mockNumberGenerator3, numberGenerator2];
-  } else {
-    generators = [mockNumberGenerator3];
-  }
-
-  return ({
-    data: {
-      results: generators
-    },
-    isLoading: false
-  });
-});
-
 const mockUseParallelBatchFetch = jest.fn(({ generateQueryKey }) => {
   // Ensure generateQueryKey gets called for stupid coverage reasons
   generateQueryKey({ batchParams: 'wibble', offset: 0 });
@@ -54,10 +38,6 @@ const mockUseParallelBatchFetch = jest.fn(({ generateQueryKey }) => {
     isLoading: false
   });
 });
-
-jest.mock('../../hooks', () => ({
-  useNumberGenerators: (code) => mockUseNumberGenerators(code)
-}));
 
 jest.mock('@folio/stripes-erm-components', () => {
   const { mockErmComponents } = jest.requireActual('@folio/stripes-erm-testing');
@@ -214,7 +194,7 @@ describe('NumberGeneratorSelector', () => {
       }
     });
 
-    test('QueryTypedown KeyValue shows expected value', async () => {
+    test('Typedown KeyValue shows expected value', async () => {
       if (componentProps.selectFirstSequenceOnMount !== false) {
         await KeyValue(`${typedownGetterString}-selected-option`).has({ value: getTypedownLabelFromSequence(mockNumberGenerator3.sequences[0]) });
       } else {
