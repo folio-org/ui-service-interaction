@@ -83,6 +83,7 @@ const NumberGeneratorSelector = ({
 
   const [query, setQuery] = useState('');
 
+  // Since we're already fetching all sequences, we are using Typedown instead of QueryTypedown
   const { items: standaloneSequences, isLoading: isStandaloneSequencesFetching } = useParallelBatchFetch({
     batchParams: kiwtQueryParamOptions,
     endpoint: NUMBER_GENERATOR_SEQUENCES_ENDPOINT,
