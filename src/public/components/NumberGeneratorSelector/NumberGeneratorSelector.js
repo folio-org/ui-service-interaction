@@ -7,8 +7,7 @@ import isEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 
 import {
-  QueryTypedown,
-  generateKiwtQueryParams,
+  Typedown,
   highlightString
 } from '@k-int/stripes-kint-components';
 
@@ -50,7 +49,7 @@ const NumberGeneratorSelector = ({
   onSequenceChange = noop,
   // Turn this off to render selector with no sequence selected automatically
   selectFirstSequenceOnMount = true,
-  ...queryTypedownProps
+  ...typedownProps
 }) => {
   const uniqueId = id ? SEQUENCE_TYPEDOWN_ID_UNIQUE(id) : SEQUENCE_TYPEDOWN_ID;
 
@@ -63,14 +62,7 @@ const NumberGeneratorSelector = ({
   // Track "first mount" selection of first sequence
   const [selectFirstSequence, setSelectFirstSequence] = useState(selectFirstSequenceOnMount);
 
-  // Separate this out, so we know initial fetch will have same shape as queryTypedown does
-  // This will mean standalone won't know about any user facing queries, but that's fine
   const kiwtQueryParamOptions = useMemo(() => ({
-    ...(exactCodeMatch && {
-      filterKeys: {
-        code: 'code',
-      },
-    }),
     filters: [
       {
         path: 'enabled',
@@ -86,24 +78,27 @@ const NumberGeneratorSelector = ({
         value: '!(maximumCheck isNotNull&&maximumCheck.value==at_maximum)'
       }),
     ],
-    perPage: 10,
-    // Do not do match if exactCodeMatch is set
-    ...(!exactCodeMatch && {
-      searchKey: 'name,code',
-    }),
-    stats: false,
     sort: [{ path: 'owner.code' }, { path: 'name' }, { path: 'code' }],
-  }), [exactCodeMatch, generator, includeSequencesAtMaximum]);
+  }), [generator, includeSequencesAtMaximum]);
 
-  // We need extra call to ensure data integrity _after_selection.
-  // This will _only_ be used for updating after generation and initial population
+  const [query, setQuery] = useState('');
 
-  // Since we're already fetching all sequences, should we refactor from QueryTypedown to just Typedown?
+  // Since we're already fetching all sequences, we are using Typedown instead of QueryTypedown
   const { items: standaloneSequences, isLoading: isStandaloneSequencesFetching } = useParallelBatchFetch({
     batchParams: kiwtQueryParamOptions,
     endpoint: NUMBER_GENERATOR_SEQUENCES_ENDPOINT,
     generateQueryKey: ({ batchParams, offset }) => [NUMBER_GENERATOR_SEQUENCES_ENDPOINT, batchParams, offset, 'ui-service-interaction', 'useNumberGeneratorSequences']
   });
+
+  const filteredSequences = useMemo(() => {
+    if (!query) return standaloneSequences;
+    if (exactCodeMatch) {
+      return standaloneSequences.filter(s => s.code === query);
+    }
+    const regex = new RegExp(query.toLowerCase());
+    return standaloneSequences.filter(s => s.name?.toLowerCase().match(regex) ||
+      s.code?.toLowerCase().match(regex));
+  }, [exactCodeMatch, query, standaloneSequences]);
 
   const changeSelectedSequence = useCallback((seq) => {
     setSelectedSequence(seq);
@@ -214,20 +209,6 @@ const NumberGeneratorSelector = ({
 
     return undefined;
   };
-
-  const pathMutator = useCallback((input, path) => {
-    const queryParams = generateKiwtQueryParams(
-      kiwtQueryParamOptions,
-      {
-        query: input,
-        ...(exactCodeMatch && {
-          filters: `code.${input}`,
-        }),
-      }
-    );
-
-    return `${path}?${queryParams.join('&')}`;
-  }, [exactCodeMatch, kiwtQueryParamOptions]);
 
   const renderListItem = useCallback((sequence, input, _e, isSelected) => {
     const keyBase = `${uniqueId}-${sequence.id}`;
@@ -374,21 +355,21 @@ const NumberGeneratorSelector = ({
 
   return (
     <>
-      <QueryTypedown
+      <Typedown
+        dataOptions={filteredSequences}
         displayClearItem={false}
         endOfList={renderEndOFList()}
         id={uniqueId}
-        // To use this as a controlled component is currently a little fiddly, spoof an input object
         input={{
           name: uniqueId,
           onChange: (seq) => changeSelectedSequence(seq),
           value: selectedSequence
         }}
-        path={NUMBER_GENERATOR_SEQUENCES_ENDPOINT}
-        pathMutator={pathMutator}
+        // To use this as a controlled component is currently a little fiddly, spoof an input object
+        onType={(e) => setQuery(e.target.value)}
         renderFooter={renderTypedownFooter}
         renderListItem={renderListItem}
-        {...queryTypedownProps}
+        {...typedownProps}
       />
       {renderWarningText()}
       {renderErrorText()}
