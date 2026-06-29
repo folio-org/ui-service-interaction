@@ -3,10 +3,10 @@ import {
   Button,
   Checkbox,
   KeyValue,
-  mockTypedownGetter,
 } from '@folio/stripes-erm-testing';
 
 import {
+  numberGenerator1,
   numberGenerator2,
   numberGenerator3 as mockNumberGenerator3
 } from '../../../../test/jest/mockGenerators';
@@ -16,22 +16,6 @@ import { renderWithTranslations } from '../../../../test/helpers';
 
 
 /* ****** MOCKS ****** */
-const mockUseNumberGenerators = jest.fn((code) => {
-  let generators = [];
-  if (!code) {
-    generators = [mockNumberGenerator3, numberGenerator2];
-  } else {
-    generators = [mockNumberGenerator3];
-  }
-
-  return ({
-    data: {
-      results: generators
-    },
-    isLoading: false
-  });
-});
-
 const mockUseParallelBatchFetch = jest.fn(({ generateQueryKey }) => {
   // Ensure generateQueryKey gets called for stupid coverage reasons
   generateQueryKey({ batchParams: 'wibble', offset: 0 });
@@ -55,10 +39,6 @@ const mockUseParallelBatchFetch = jest.fn(({ generateQueryKey }) => {
   });
 });
 
-jest.mock('../../hooks', () => ({
-  useNumberGenerators: (code) => mockUseNumberGenerators(code)
-}));
-
 jest.mock('@folio/stripes-erm-components', () => {
   const { mockErmComponents } = jest.requireActual('@folio/stripes-erm-testing');
   const ErmComps = jest.requireActual('@folio/stripes-erm-components');
@@ -69,15 +49,58 @@ jest.mock('@folio/stripes-erm-components', () => {
     useParallelBatchFetch: (props) => mockUseParallelBatchFetch(props)
   });
 });
-// Perhaps typedown should have a proper interactor, if not for jest tests at least for cypress tests
+
 jest.mock('@k-int/stripes-kint-components', () => {
+  const { useState } = jest.requireActual('react');
   const { mockKintComponents } = jest.requireActual('@folio/stripes-erm-testing');
   const KintComps = jest.requireActual('@k-int/stripes-kint-components');
+  const {
+    Button: FactoryButton,
+    KeyValue: FactoryKeyValue,
+    TextField: FactoryTextField,
+  } = jest.requireActual('@folio/stripes/components');
+
+  const MockTypedown = ({
+    id,
+    input: { onChange, value },
+    onType,
+    dataOptions = [],
+    renderFooter = () => {},
+    renderListItem,
+  }) => {
+    const [typed, setTyped] = useState('');
+    return (
+      <div>
+        {`Typedown-${id}`}
+        <FactoryTextField
+          label={`Typedown-${id}-textfield`}
+          onChange={e => {
+            if (onType) onType(e);
+            setTyped(e.target.value);
+          }}
+          value={typed}
+        />
+        <FactoryKeyValue
+          label={`Typedown-${id}-selected-option`}
+          value={value ? renderListItem(value, '') : 'Nothing selected'}
+        />
+        {dataOptions.map(seq => (
+          <FactoryButton
+            key={`Typedown-${id}-option-${seq.id}`}
+            onClick={() => onChange(seq)}
+          >
+            {`Typedown-${id}-option-${seq.id}`}
+          </FactoryButton>
+        ))}
+        {renderFooter()}
+      </div>
+    );
+  };
 
   return ({
     ...KintComps,
     ...mockKintComponents,
-    QueryTypedown: mockTypedownGetter(mockNumberGenerator3.sequences)
+    Typedown: MockTypedown,
   });
 });
 
@@ -171,12 +194,36 @@ describe('NumberGeneratorSelector', () => {
       }
     });
 
-    test('QueryTypedown KeyValue shows expected value', async () => {
+    test('Typedown KeyValue shows expected value', async () => {
       if (componentProps.selectFirstSequenceOnMount !== false) {
         await KeyValue(`${typedownGetterString}-selected-option`).has({ value: getTypedownLabelFromSequence(mockNumberGenerator3.sequences[0]) });
       } else {
         await KeyValue(`${typedownGetterString}-selected-option`).has({ value: 'Nothing selected' });
       }
+    });
+  });
+
+  describe('NumberGeneratorSelector displays all sequences (no perPage limit)', () => {
+    const allSequences = [mockNumberGenerator3, numberGenerator2, numberGenerator1].flatMap(gen => gen.sequences.map(s => ({ ...s, owner: { id: gen.id, name: gen.name, code: gen.code } })));
+
+    beforeEach(() => {
+      mockUseParallelBatchFetch.mockImplementationOnce(({ generateQueryKey }) => {
+        generateQueryKey({ batchParams: 'wibble', offset: 0 });
+        return { items: allSequences, isLoading: false };
+      });
+
+      renderedComponent = renderWithTranslations(
+        <NumberGeneratorSelector
+          {...NumberGeneratorSelectorProps}
+          selectFirstSequenceOnMount={false}
+        />,
+      );
+    });
+
+    test(`all ${allSequences.length} sequences are rendered as selectable options`, () => {
+      const { getAllByText } = renderedComponent;
+      const options = getAllByText(/^Typedown-sequence_typedown-option-/);
+      expect(options).toHaveLength(allSequences.length);
     });
   });
 
