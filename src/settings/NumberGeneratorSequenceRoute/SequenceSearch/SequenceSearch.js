@@ -128,7 +128,8 @@ const SequenceSearch = ({
     checkDigitAlgo: { id: noneChecksumId },
     nextValue: 1,
     outputTemplate: BASE_TEMPLATE,
-    enabled: true
+    enabled: true,
+    resetOnYearChange: false
   }), [noneChecksumId]);
 
   const {

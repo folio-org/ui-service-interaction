@@ -59,4 +59,22 @@ describe('InfoPopovers', () => {
       });
     });
   });
+
+  describe('OutputTemplateInfo token table', () => {
+    beforeEach(async () => {
+      renderedComponent = renderWithTranslations(<OutputTemplateInfo />);
+
+      await waitFor(async () => {
+        await Button().click();
+      });
+    });
+
+    test('lists the ${current_year} token and its description', async () => {
+      const { getByText } = renderedComponent;
+      await waitFor(() => {
+        expect(getByText('${current_year}')).toBeInTheDocument();
+        expect(getByText('Inserts the current calendar year based on the system date at the time the value is generated.')).toBeInTheDocument();
+      });
+    });
+  });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string -- matchers contain literal ${...} tokens, not interpolation */
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import {
   Checkbox,
@@ -13,6 +14,10 @@ import refdata from '../../../../test/jest/refdata';
 import { BASE_TEMPLATE } from '../../../public';
 
 const onSubmit = jest.fn();
+
+const RESET_LABEL = "If a ${'current_year'} token is used, reset the next value to 1 as soon as the year changes";
+const TOKEN_MISSING_MSG = "Requires ${'current_year'} in the output template.";
+const YEAR_TEMPLATE = '${current_year}-${generated_number}';
 
 // Need to specify each manual mock I guess...
 // TODO I think the agreements one is borked
@@ -48,6 +53,10 @@ describe('NumberGeneratorSequenceForm', () => {
 
   test('renders expected enabled field', async () => {
     await Checkbox('Enabled').exists();
+  });
+
+  test('renders expected resetOnYearChange field', async () => {
+    await Checkbox(RESET_LABEL).exists();
   });
 
   test('renders expected next value field', async () => {
@@ -137,6 +146,34 @@ describe('NumberGeneratorSequenceForm', () => {
 
     test('renders validation error', async () => {
       await Select('Method*').has({ error: 'Using a checksum with a value < 1 is not supported.' });
+    });
+  });
+
+  describe('checking resetOnYearChange without the current_year token in the output template', () => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await Checkbox(RESET_LABEL).click();
+      });
+    });
+
+    test('renders validation error', async () => {
+      await waitFor(async () => {
+        await Checkbox(RESET_LABEL).has({ feedbackText: TOKEN_MISSING_MSG });
+      });
+    });
+
+    describe('adding the current_year token to the output template', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await TextArea('Output template*').fillIn(YEAR_TEMPLATE);
+        });
+      });
+
+      test('validation error clears', async () => {
+        await waitFor(async () => {
+          await Checkbox(RESET_LABEL).has({ hasError: false });
+        });
+      });
     });
   });
 });

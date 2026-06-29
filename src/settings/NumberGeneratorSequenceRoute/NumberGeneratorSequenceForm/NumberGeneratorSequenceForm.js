@@ -41,6 +41,14 @@ const NumberGeneratorSequenceForm = () => {
 
   const { checkDigitAlgoOptions, noneChecksumId, validateChecksum } = useChecksumAlgorithms();
 
+  const validateResetOnYearChange = (val, allVal) => {
+    // eslint-disable-next-line no-template-curly-in-string -- literal token, not interpolation
+    if (val && !allVal.outputTemplate?.includes('${current_year}')) {
+      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.resetOnYearChange.tokenMissing" />;
+    }
+    return null;
+  };
+
   const validateMaximumNumber = (val, allVal) => {
     if (!!val && val > parseInt('9'.repeat(allVal.format?.length ?? 1), 10)) {
       return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber.maximumTooLow" />;
@@ -236,6 +244,23 @@ const NumberGeneratorSequenceForm = () => {
             required={!!values.maximumNumber}
             validate={validateFormatField}
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <Field
+            name="resetOnYearChange"
+            type="checkbox"
+            validate={validateResetOnYearChange}
+          >
+            {({ input, meta }) => (
+              <Checkbox
+                {...input}
+                error={meta.error}
+                label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.resetOnYearChange" />}
+              />
+            )}
+          </Field>
         </Col>
       </Row>
       <Headline

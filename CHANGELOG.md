@@ -1,4 +1,5 @@
 ## 4.2.0 IN PROGRESS
+  * SI-151 Enable dynamic ${current_year} token in number generator output templates
 
 ## 4.1.1 2026-05-28
   * Updated dependencies for Trillium release

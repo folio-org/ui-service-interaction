@@ -37,7 +37,8 @@ const numberGenerator1 = {
       owner: {
         id: 'number-generator-1'
       },
-      enabled: true
+      enabled: true,
+      resetOnYearChange: true
     },
     {
       id: 'ng1-seq3',
