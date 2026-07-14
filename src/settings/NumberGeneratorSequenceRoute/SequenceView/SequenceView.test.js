@@ -18,8 +18,9 @@ const fakeCalloutInfo = { id: '123', label: 'numgenName', code: 'numgenCode' };
 jest.mock('../../../public', () => ({
   ...jest.requireActual('../../../public'),
   useNumberGeneratorSequence: jest.fn(() => ({ data: mockSequence })),
-  useMutateNumberGeneratorSequence: ({ afterQueryCalls: { delete: deleteQueryCalls, put: putQueryCalls } }) => ({
+  useMutateNumberGeneratorSequence: ({ afterQueryCalls: { delete: deleteQueryCalls, put: putQueryCalls, post: postQueryCalls } }) => ({
     put: () => Promise.resolve(true).then(() => putQueryCalls(mockGenerators[0], fakeCalloutInfo)),
+    post: () => Promise.resolve(true).then(() => postQueryCalls(mockGenerators[0], fakeCalloutInfo)),
     delete: () => Promise.resolve(true).then(() => deleteQueryCalls()),
   }),
 }));
@@ -46,6 +47,16 @@ jest.mock('../NumberGeneratorSequenceForm', () => () => {
         component={MockTextField}
         label="TEST FIELD"
         name="name"
+      />
+      <MockField
+        component={MockTextField}
+        label="TEST FIELD CODE"
+        name="code"
+      />
+      <MockField
+        component={MockTextField}
+        label="TEST FIELD NEXT VALUE"
+        name="nextValue"
       />
     </>
   );
@@ -137,6 +148,55 @@ describe('SequenceView', () => {
           // EXAMPLE currently callout interactor doesn't notice variable insertion?
           await waitFor(async () => {
             await Callout('Number generator sequence <strong>{name}</strong> was successfully <strong>edited</strong>.').exists();
+          });
+        });
+      });
+    });
+
+    describe('duplicating the sequence', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Duplicate').click();
+        });
+      });
+
+      test('FormModal renders with the duplicate title', async () => {
+        const { getByText } = renderComponent;
+        await waitFor(() => {
+          expect(getByText('Duplicate sequence')).toBeInTheDocument();
+        });
+      });
+
+      test('code field starts blank, not copied from the original sequence', async () => {
+        await waitFor(async () => {
+          await TextField('TEST FIELD CODE').has({ value: '' });
+        });
+      });
+
+      test('next value field resets to 1', async () => {
+        await waitFor(async () => {
+          await TextField('TEST FIELD NEXT VALUE').has({ value: '1' });
+        });
+      });
+
+      describe('saving the duplicate', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await TextField('TEST FIELD').fillIn('new name');
+            await TextField('TEST FIELD CODE').fillIn('new-code');
+            await Button('Save & close').click();
+          });
+        });
+
+        test('clone callout fires', async () => {
+          await waitFor(async () => {
+            await Callout('Number generator sequence <strong>{name}</strong> was successfully <strong>duplicated</strong>.').exists();
+          });
+        });
+
+        test('onClose is called, returning to the sequence list', async () => {
+          await waitFor(() => {
+            expect(onClose).toHaveBeenCalled();
           });
         });
       });
