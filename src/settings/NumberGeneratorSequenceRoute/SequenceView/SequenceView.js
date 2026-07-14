@@ -55,6 +55,7 @@ const NumberGeneratorSequence = ({
 
   const {
     put: editSeq,
+    post: cloneSeq,
     delete: removeSeq
   } = useMutateNumberGeneratorSequence({
     afterQueryCalls: {
@@ -75,14 +76,15 @@ const NumberGeneratorSequence = ({
           />
         });
       },
-      clone: (putValues) => {
+      post: (postValues, data) => {
         setClone(false);
         callout.sendCallout({
           message: <FormattedMessage
             id="ui-service-interaction.settings.numberGeneratorSequences.callout.clone"
-            values={{ name: putValues?.sequences?.find(s => s.id === sequence.id)?.name }}
+            values={{ name: postValues?.sequences?.find(s => s.code === data.code)?.name }}
           />
         });
+        onClose();
       },
     },
     id: sequence?.owner?.id
@@ -126,16 +128,18 @@ const NumberGeneratorSequence = ({
   const renderForm = useCallback(() => {
     if (!editing && !clone) return null;
 
-    const { initialValues, label, onClose: onModalClose } = editing
+    const { initialValues, label, onClose: onModalClose, onSubmit } = editing
       ? {
         initialValues: sequence,
         label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.editModal" />,
         onClose: () => setEditing(false),
+        onSubmit: editSeq,
       }
       : {
         initialValues: { ...sequence, name: '', id: null, code: '', nextValue: 1 },
         label: <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.cloneModal" />,
         onClose: () => setClone(false),
+        onSubmit: cloneSeq,
       };
 
     return (
@@ -147,12 +151,12 @@ const NumberGeneratorSequence = ({
           onClose: onModalClose,
           open: true,
         }}
-        onSubmit={editSeq}
+        onSubmit={onSubmit}
       >
         <NumberGeneratorSequenceForm />
       </FormModal>
     );
-  }, [clone, editSeq, editing, sequence]);
+  }, [clone, cloneSeq, editSeq, editing, sequence]);
 
   return (
     <>
