@@ -41,6 +41,21 @@ const NumberGeneratorSequenceForm = () => {
 
   const { checkDigitAlgoOptions, noneChecksumId, validateChecksum } = useChecksumAlgorithms();
 
+  // - This restricts enabling reset-on-year-change to templates that include the year token,
+  //   so the sequence can't reset without the output ever changing between years.
+  // - The restriction is designed to meet the current only known use case, and reduce
+  //   complexity for the end user. A non-blocking "may produce duplicate values" warning
+  //   was considered instead (keeps options open, e.g. sequences reset without the year
+  //   appearing in the output), but was rejected in favour of the simpler/safer default.
+  // - Discussed in https://github.com/folio-org/ui-service-interaction/pull/179#discussion_r3513407912
+  const validateResetOnYearChange = (val, allVal) => {
+    // eslint-disable-next-line no-template-curly-in-string -- literal token, not interpolation
+    if (val && !allVal.outputTemplate?.includes('${current_year}')) {
+      return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.resetOnYearChange.tokenMissing" />;
+    }
+    return null;
+  };
+
   const validateMaximumNumber = (val, allVal) => {
     if (!!val && val > parseInt('9'.repeat(allVal.format?.length ?? 1), 10)) {
       return <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.maximumNumber.maximumTooLow" />;
@@ -236,6 +251,23 @@ const NumberGeneratorSequenceForm = () => {
             required={!!values.maximumNumber}
             validate={validateFormatField}
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <Field
+            name="resetOnYearChange"
+            type="checkbox"
+            validate={validateResetOnYearChange}
+          >
+            {({ input, meta }) => (
+              <Checkbox
+                {...input}
+                error={meta.error}
+                label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.resetOnYearChange" />}
+              />
+            )}
+          </Field>
         </Col>
       </Row>
       <Headline

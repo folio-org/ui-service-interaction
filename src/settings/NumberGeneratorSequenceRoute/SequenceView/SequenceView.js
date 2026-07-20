@@ -272,6 +272,14 @@ const NumberGeneratorSequence = ({
             />
           </Col>
         </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.resetOnYearChange" />}
+              value={sequence.resetOnYearChange ? <FormattedMessage id="ui-service-interaction.true" /> : <FormattedMessage id="ui-service-interaction.false" />}
+            />
+          </Col>
+        </Row>
         <Headline
           margin="xx-small"
           size="large"

@@ -3,6 +3,15 @@ import { Button, InfoPopover, Layout } from '@folio/stripes/components';
 
 import css from './Styles.css';
 
+// Literal output-template tokens shown in the info popover — not string interpolation.
+/* eslint-disable no-template-curly-in-string */
+const TOKENS = [
+  { token: '${current_year}', descriptionId: 'ui-service-interaction.settings.numberGeneratorSequences.outputTemplate.info.currentYear' },
+  { token: '${generated_number}', descriptionId: 'ui-service-interaction.settings.numberGeneratorSequences.outputTemplate.info.generatedNumber' },
+  { token: '${checksum}', descriptionId: 'ui-service-interaction.settings.numberGeneratorSequences.outputTemplate.info.checksum' },
+];
+/* eslint-enable no-template-curly-in-string */
+
 const ChecksumAlgoInfo = () => (
   <InfoPopover
     content={
@@ -65,6 +74,17 @@ const OutputTemplateInfo = () => (
       <Layout className="flex flex-direction-column centerContent">
         <Layout>
           <FormattedMessage id="ui-service-interaction.settings.numberGeneratorSequences.outputTemplate.info" />
+        </Layout>
+        <Layout className="marginTop1">
+          <ul>
+            {TOKENS.map(({ token, descriptionId }) => (
+              <li key={token}>
+                <code>{token}</code>
+                {' : '}
+                <FormattedMessage id={descriptionId} />
+              </li>
+            ))}
+          </ul>
         </Layout>
         <Layout className="marginTop1">
           <Button

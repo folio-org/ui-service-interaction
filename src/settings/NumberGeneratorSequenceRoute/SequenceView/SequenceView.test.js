@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string -- matcher contains a literal ${...} token, not interpolation */
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Field as MockField } from 'react-final-form';
 
@@ -96,6 +97,10 @@ describe('SequenceView', () => {
 
   test('renders expected sequence enabled', async () => {
     await KeyValue('Enabled').has({ value: 'True' });
+  });
+
+  test('renders expected sequence resetOnYearChange', async () => {
+    await KeyValue("If a ${'current_year'} token is used, reset the next value to 1 as soon as the year changes").has({ value: 'True' });
   });
 
   test('renders expected sequence next value', async () => {

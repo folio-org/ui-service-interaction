@@ -26,7 +26,7 @@ const expectedText = {
   FormatInfoItem3: 'If a Maximum value is set, the Format length must match it. The maximum value field enforces the length of the field, e.g. the maximum value of 9999 indicates a maximum length of four characters and must be paired with a matching format value, e.g. #### or 0000.',
   NameInfo: 'Name of the number generator sequence. In cases where a selection from number sequences is required, this name will be displayed in the Modal for generating a new number. This field is editable.',
   NextValueInfo: 'This field shows the <strong>next value</strong> in the sequence based on the current value in the database. It can be set manually as the starting value for a new sequence.',
-  OutputTemplateInfo: 'The output template defines the rules applied to create the sequence. Templates are formed using Groovy. See below for more information.',
+  OutputTemplateInfo: 'The output template defines the rules applied to create the sequence. Templates are formed using Groovy.',
   PreChecksumTemplateInfo: 'Create rules to define the number to be inputted when calculating the check digit. Both the prefix and suffix can be templated, using Groovy markup. Use ${\'generated_number\'} as placeholder for the generated number. E.g. 05${\'generated_number\'}01'
 };
 
@@ -56,6 +56,24 @@ describe('InfoPopovers', () => {
       const { getByText } = renderedComponent;
       await waitFor(() => {
         expect(getByText(expectedText[key])).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('OutputTemplateInfo token list', () => {
+    beforeEach(async () => {
+      renderedComponent = renderWithTranslations(<OutputTemplateInfo />);
+
+      await waitFor(async () => {
+        await Button().click();
+      });
+    });
+
+    test('lists the ${current_year} token and its description', async () => {
+      const { getByText } = renderedComponent;
+      await waitFor(() => {
+        expect(getByText('${current_year}')).toBeInTheDocument();
+        expect(getByText(/Inserts the current calendar year based on the system date at the time the value is generated\./)).toBeInTheDocument();
       });
     });
   });
