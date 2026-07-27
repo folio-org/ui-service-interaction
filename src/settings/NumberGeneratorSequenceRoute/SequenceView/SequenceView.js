@@ -87,6 +87,21 @@ const NumberGeneratorSequence = ({
         onClose();
       },
     },
+    catchQueryCalls: {
+      // Catch post error here instead of in onError of FormModal as we have access to postData here
+      post: (err, postData) => {
+        callout.sendCallout({
+          type: 'error',
+          message: <FormattedMessage
+            id="ui-service-interaction.settings.numberGeneratorSequences.callout.create.error"
+            values={{ name: postData.code, err: err.message }}
+          />
+        });
+
+        // FormModal needs errors rethrown to avoid restarting form
+        throw err;
+      }
+    },
     id: sequence?.owner?.id
   });
 

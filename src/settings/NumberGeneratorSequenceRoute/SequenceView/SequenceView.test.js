@@ -15,13 +15,23 @@ const mockSequence = numberGenerator1?.sequences[0];
 const mockGenerators = [numberGenerator1, numberGenerator2];
 
 const fakeCalloutInfo = { id: '123', label: 'numgenName', code: 'numgenCode' };
+const fakeError = { message: 'Duplicate code' };
+
+// Controls whether the mocked `post` mutation (used for duplicating a sequence) resolves or rejects
+let mockShouldPostFail = false;
 
 jest.mock('../../../public', () => ({
   ...jest.requireActual('../../../public'),
   useNumberGeneratorSequence: jest.fn(() => ({ data: mockSequence })),
-  useMutateNumberGeneratorSequence: ({ afterQueryCalls: { delete: deleteQueryCalls, put: putQueryCalls, post: postQueryCalls } }) => ({
+  useMutateNumberGeneratorSequence: ({
+    afterQueryCalls: { delete: deleteQueryCalls, put: putQueryCalls, post: postQueryCalls },
+    catchQueryCalls: { post: postCatchQueryCalls } = {},
+  }) => ({
     put: () => Promise.resolve(true).then(() => putQueryCalls(mockGenerators[0], fakeCalloutInfo)),
-    post: () => Promise.resolve(true).then(() => postQueryCalls(mockGenerators[0], fakeCalloutInfo)),
+    post: () => (mockShouldPostFail
+      ? Promise.resolve().then(() => postCatchQueryCalls(fakeError, fakeCalloutInfo))
+      : Promise.resolve(true).then(() => postQueryCalls(mockGenerators[0], fakeCalloutInfo))
+    ),
     delete: () => Promise.resolve(true).then(() => deleteQueryCalls()),
   }),
 }));
@@ -66,6 +76,8 @@ jest.mock('../NumberGeneratorSequenceForm', () => () => {
 let renderComponent;
 describe('SequenceView', () => {
   beforeEach(async () => {
+    mockShouldPostFail = false;
+    onClose.mockClear();
     renderComponent = renderWithTranslations(
       <SequenceView
         match={{ params: { seqId: mockSequence?.id } }}
@@ -202,6 +214,29 @@ describe('SequenceView', () => {
         test('onClose is called, returning to the sequence list', async () => {
           await waitFor(() => {
             expect(onClose).toHaveBeenCalled();
+          });
+        });
+      });
+
+      describe('saving the duplicate with a code that is already taken', () => {
+        beforeEach(async () => {
+          mockShouldPostFail = true;
+          await waitFor(async () => {
+            await TextField('TEST FIELD').fillIn('new name');
+            await TextField('TEST FIELD CODE').fillIn('existing-code');
+            await Button('Save & close').click();
+          });
+        });
+
+        test('error callout fires instead of the success callout', async () => {
+          await waitFor(async () => {
+            await Callout('<strong>Error:</strong> Sequence <strong>{name}</strong> was not created. Check that the <strong>code</strong> is unique and try saving again. If this error recurs please contact your administrator.').exists();
+          });
+        });
+
+        test('the modal stays open with the entered values (form is not reset)', async () => {
+          await waitFor(async () => {
+            await TextField('TEST FIELD CODE').has({ value: 'existing-code' });
           });
         });
       });
